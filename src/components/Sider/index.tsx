@@ -11,7 +11,7 @@ const Sider = () => {
     setIsToggleOpen(!isToggleOpen)
   }
   useEffect(() => {
-    if (router.pathname === '/plan') {
+    if (router.pathname === '/list') {
       setIsToggleOpen(true)
     }
   }, [router.pathname])
@@ -46,9 +46,9 @@ const Sider = () => {
           </ImgWrapper>
         } </li>
         {isToggleOpen ?
-          <Link href='/plan'>
-            <li className={router.pathname === '/plan' ? 'selected' : ''}>
-              <StyledA className="plan">
+          <Link href='/list'>
+            <li className={router.pathname === '/list' ? 'selected' : ''}>
+              <StyledA className="list">
                 <ImgWrapper>
                 <Image src='/svg/GRAPH.svg' alt='user' width={10} height={10} />
                 </ImgWrapper>

@@ -24,7 +24,7 @@ export const StyledA = styled.a`
   &.selected{
     background-color: var(--color-blue);
   }
-  &.plan{
+  &.list{
     margin-left: 5%;
   }
 `
