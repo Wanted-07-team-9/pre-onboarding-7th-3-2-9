@@ -1,7 +1,6 @@
 import NextAuth from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import Axios from 'core/apis/axiosInstance';
-// import { NextApiRequest } from "next";
 
 export default NextAuth({
   providers: [
@@ -13,14 +12,14 @@ export default NextAuth({
         email: { label: 'email', type: 'email', placeholder: '이메일 주소' },
         password: { label: 'password', type: 'password' },
       },
-      async authorize(credentials: Record<string, string>) {
-        const response = await Axios.post('/login', {
+      async authorize(credentials: Record<'email' | 'password', string>) {
+        const { status, data } = await Axios.post('/login', {
           email: credentials.email,
-          password: credentials.password
+          password: credentials.password,
         });
-        const user = response.data;
-        if(response.status === 200 && user) {
-          return user;
+        console.log(data);
+        if (status === 200 && data) {
+          return data;
         }
         return null;
       },
@@ -30,21 +29,21 @@ export default NextAuth({
     strategy: 'jwt',
     // maxAge: 10,
     // updateAge: 20,
-    maxAge: 24 * 60 * 60,
-    updateAge: 2 * 24 * 60 * 60,
+    maxAge: 60 * 60,
+    updateAge: 2 * 60 * 60,
   },
   callbacks: {
-    jwt: async({token, user}) => {
-      if(user) {
-        token.email = user.user.email;
+    jwt: async ({ token, user }) => {
+      if (user) {
         token.accessToken = user.accessToken;
+        token.user = user.user;
       }
-      return token;
+      return Promise.resolve(token);
     },
-    session: async({session, token}) => {
-      session.user.email = token.email;
+    session: async ({ session, token }) => {
       session.accessToken = token.accessToken;
-      return session;
+      session.user = token.user;
+      return Promise.resolve(session);
     },
   },
   pages: {

@@ -1,6 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  reactStrictMode: false,
+  reactStrictMode: true,
   swcMinify: true,
   compiler: {
     styledComponents: true,
@@ -12,7 +12,7 @@ const nextConfig = {
         destination: '/login',
         permanent: true,
       },
-    ]
+    ];
   },
 };
 

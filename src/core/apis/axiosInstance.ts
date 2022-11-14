@@ -1,13 +1,13 @@
 import axios from 'axios';
 
-const BASE_URL = 'http://localhost:4000/'
+const BASE_URL = 'http://localhost:4000/';
 
-const Axios = axios.create({
+const AxiosInstance = axios.create({
   baseURL: BASE_URL,
   timeout: 5000,
 });
 
-Axios.interceptors.request.use(
+AxiosInstance.interceptors.request.use(
   config => {
     return config;
   },
@@ -15,7 +15,7 @@ Axios.interceptors.request.use(
     return Promise.reject(error.response);
   }
 );
-Axios.interceptors.response.use(
+AxiosInstance.interceptors.response.use(
   response => {
     return response;
   },
@@ -24,4 +24,4 @@ Axios.interceptors.response.use(
   }
 );
 
-export default Axios;
+export default AxiosInstance;

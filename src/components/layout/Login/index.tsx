@@ -6,23 +6,17 @@ import toast from 'react-hot-toast';
 
 import Login from './Login';
 
-
 const LoginIndex = () => {
-  const onSubmit = async (e: React.FormEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-    const email = e.target.email.value;
-    const password = e.target.password.value;
-
+  const onSubmit = async (values: { email: string; password: string }) => {
     const response = await signIn('user-credential', {
-      email,
-      password,
+      ...values,
       redirect: false,
       callbackUrl: `${window.location.origin}/admin/account`,
     });
 
-    if(response.ok) {
+    if (response.ok) {
       toast.success('로그인에 성공하였습니다.');
-      await Router.push(response.url);  
+      await Router.push(response.url);
     } else {
       toast.error('이메일 또는 비밀번호가 틀렸습니다.');
     }
@@ -30,7 +24,7 @@ const LoginIndex = () => {
 
   return (
     <>
-      <Login onSubmit={onSubmit}/>
+      <Login onSubmit={onSubmit} />
     </>
   );
 };

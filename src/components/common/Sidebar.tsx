@@ -1,12 +1,12 @@
 import React from 'react';
 import Router from 'next/router';
 import { signOut } from 'next-auth/react';
-import Image from "next/image";
+import Image from 'next/image';
 
 import styled from 'styled-components';
 import toast from 'react-hot-toast';
 
-import LogoImage from "assets/logo.png";
+import LogoImage from 'assets/logo.png';
 import ActiveLink from 'components/blocks/ActiveLink';
 
 const Sidebar = () => {
@@ -21,8 +21,8 @@ const Sidebar = () => {
     <StyledSidebar>
       <Logo>
         <div>
-          <span className='logo_image'>
-            <Image src={LogoImage} alt="Logo" placeholder="blur" width={41} height={41}/>
+          <span className="logo_image">
+            <Image src={LogoImage} alt="Logo" placeholder="blur" width={41} height={41} />
           </span>
           <span>PREFACE</span>
         </div>
@@ -87,7 +87,6 @@ const SideNav = styled.nav`
     a {
       color: #fff;
       text-decoration: none;
-
     }
   }
   li {

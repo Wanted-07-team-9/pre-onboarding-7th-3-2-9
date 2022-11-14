@@ -6,7 +6,7 @@
     "skipLibCheck": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
-    "strict": true,
+    "strict": false,
     "forceConsistentCasingInFileNames": true,
     "noFallthroughCasesInSwitch": true,
     "module": "esnext",
@@ -17,12 +17,8 @@
     "jsx": "preserve",
     "incremental": true,
     "baseUrl": "./src",
+    "typeRoots": ["/@types"]
   },
-  "include": [
-    "next-env.d.ts",
-    "**/*.ts",
-    "**/*.tsx",
-    "src/*"
-  ],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "src/*"],
   "exclude": ["node_modules"]
 }

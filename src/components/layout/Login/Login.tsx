@@ -1,13 +1,57 @@
 import React from 'react';
+import { Formik } from 'formik';
 import styled from 'styled-components';
 
-const Login = ({ onSubmit }) => {
-  
+interface ITest {
+  onSubmit: (values: { email: string; password: string }) => Promise<void>;
+}
+
+const Login = ({ onSubmit }: ITest) => {
   return (
     <StyledDiv>
       <h2>Login</h2>
       <h3>Enter your credentials</h3>
-      <form onSubmit={onSubmit}>
+      <Formik
+        initialValues={{ email: '', password: '' }}
+        onSubmit={(values, { setSubmitting }) => {
+          onSubmit(values);
+          setSubmitting(false);
+          //  setTimeout(() => {
+          //    alert(JSON.stringify(values, null, 2));
+          //    setSubmitting(false);
+          //  }, 400);
+        }}
+      >
+        {({
+          values,
+          handleChange,
+          handleBlur,
+          handleSubmit,
+          isSubmitting,
+          /* and other goodies */
+        }) => (
+          <form onSubmit={handleSubmit}>
+            <input
+              type="email"
+              name="email"
+              onChange={handleChange}
+              onBlur={handleBlur}
+              value={values.email}
+            />
+            <input
+              type="password"
+              name="password"
+              onChange={handleChange}
+              onBlur={handleBlur}
+              value={values.password}
+            />
+            <button type="submit" disabled={isSubmitting}>
+              Submit
+            </button>
+          </form>
+        )}
+      </Formik>
+      {/* <form onSubmit={onSubmit}>
         <label>
           이메일 :
           <input type="email" name="email" placeholder="이메일 주소" />
@@ -17,7 +61,7 @@ const Login = ({ onSubmit }) => {
           <input type="password" name="password" />
         </label>
         <button type="submit">로그인</button>
-      </form>
+      </form> */}
     </StyledDiv>
   );
 };
