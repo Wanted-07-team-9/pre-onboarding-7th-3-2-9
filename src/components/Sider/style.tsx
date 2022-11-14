@@ -10,11 +10,14 @@ export const SiderLayout = styled.section`
   width:15%;
 
   li{
+    font-size: 1.3rem;
+    color:#9e9e9e;
     padding: 1.5rem;
     :hover{
       cursor: pointer;
     }
     &.selected{
+      color:var(--color-white);
       background-color: var(--color-blue);
     }
   }

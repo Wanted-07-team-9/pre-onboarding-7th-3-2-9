@@ -27,13 +27,13 @@ const Sider = () => {
       <ul>
         <li>
           <ImgWrapper>
-          <Image src='/svg/DASHBOARD.svg' alt='user' width={10} height={10} />
+          <Image src='/svg/DASHBOARD.svg' alt='user' width={13} height={13} />
           </ImgWrapper>
           대시보드
           </li>
         <li onClick={handleToggle}>
           <ImgWrapper>
-          <Image src='/svg/ACCOUNT.svg' alt='user' width={10} height={10} />
+          <Image src='/svg/ACCOUNT.svg' alt='user' width={13} height={13} />
           </ImgWrapper>
           계좌목록
           {isToggleOpen ?
@@ -50,7 +50,7 @@ const Sider = () => {
             <li className={router.pathname === '/list' ? 'selected' : ''}>
               <StyledA className="list">
                 <ImgWrapper>
-                <Image src='/svg/GRAPH.svg' alt='user' width={10} height={10} />
+                <Image src='/svg/GRAPH.svg' alt='user' width={13} height={13} />
                 </ImgWrapper>
                 투자계획
               </StyledA>
@@ -60,7 +60,7 @@ const Sider = () => {
           <li className={router.pathname === '/user' ? 'selected' : ''} >
             <StyledA>
               <ImgWrapper>
-              <Image src='/svg/UserIcon.svg' alt='user' width={10} height={10} />
+              <Image src='/svg/UserIcon.svg' alt='user' width={13} height={13} />
               </ImgWrapper>
               사용자
             </StyledA>
@@ -68,7 +68,7 @@ const Sider = () => {
         </Link>
         <li>
           <ImgWrapper>
-          <Image src='/svg/LOGOUT.svg' alt='user' width={10} height={10} />
+          <Image src='/svg/LOGOUT.svg' alt='user' width={13} height={13} />
           </ImgWrapper>
           로그아웃
           </li>
