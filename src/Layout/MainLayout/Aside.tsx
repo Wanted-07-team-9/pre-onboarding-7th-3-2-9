@@ -10,6 +10,7 @@ import {
 
 import 'antd/dist/antd.css';
 import { Button, Menu } from 'antd';
+import Link from 'next/link';
 
 const Aside: React.FC = () => {
   const [collapsed, setCollapsed] = useState(false);
@@ -35,11 +36,11 @@ const Aside: React.FC = () => {
         </Menu.Item>
         <Menu.SubMenu icon={<BankOutlined />} title="계좌 목록" key="SubMenu">
           <Menu.Item key="two">
-            <a href="/main"></a> 투자 계좌
+            <Link href="/main"></Link> 투자 계좌
           </Menu.Item>
         </Menu.SubMenu>
         <Menu.Item key="three" icon={<UserOutlined />}>
-          <a href="/user">사용자</a>
+          <Link href="/user">사용자</Link>
         </Menu.Item>
       </Menu>
     </S.MainSideLayout>
