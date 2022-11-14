@@ -7,7 +7,8 @@ export const GloboalStyles = createGlobalStyle`
   box-sizing: border-box;
 }
 html {
-  width: 1440px;
+  min-width:400px ;
+  max-width: 1440px;
   margin: 0 auto;
 }
 html, body, div#root {
