@@ -1,23 +1,23 @@
 import { useEffect } from 'react';
 import instance from '../api/AxiosInstance';
 import { getTokenStorage } from '../utils/accessToken';
-import { setUserData } from '../redux/reducer/bankSlice';
+import { setUserSetting } from '../redux/reducer/bankSlice';
 import { useAppDispatch } from '../redux/reducer/hook';
-function useUserService() {
+
+function useUserSettingService() {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
     const accessCheck = async () => {
       if (getTokenStorage('login-token')) {
-        const res = await instance.get('/users');
-        dispatch(setUserData(res.data));
-        // console.log(res.data);
+        const userSettingRes = await instance.get('/userSetting');
+        dispatch(setUserSetting(userSettingRes.data));
       } else {
-        alert('토근 없음');
+        alert('서버를 확인해 주세요');
       }
     };
     accessCheck();
-  }, [dispatch]);
+  }, [dispatch, setUserSetting]);
 }
 
-export default useUserService;
+export default useUserSettingService;

@@ -1,8 +1,8 @@
 import * as S from '../styles/MainStyle';
 import useMainService from '../hooks/useMainService';
-import Aside from '../Layout/MainLayout/Aside';
-import Heading from '../Layout/MainLayout/Heading';
-import BankBoard from '../Layout/MainLayout/BankBoard';
+import Aside from '../Layout/BankLayout/Aside';
+import Heading from '../Layout/BankLayout/Heading';
+import BankBoard from '../Layout/BankLayout/BankBoard';
 import useUserService from '../hooks/useUserService';
 
 const Main = () => {

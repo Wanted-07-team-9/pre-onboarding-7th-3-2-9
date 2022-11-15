@@ -36,11 +36,11 @@ const Aside: React.FC = () => {
         </Menu.Item>
         <Menu.SubMenu icon={<BankOutlined />} title="계좌 목록" key="SubMenu">
           <Menu.Item key="two">
-            <Link href="/main"></Link> 투자 계좌
+            <Link href="main">투자 계좌</Link>
           </Menu.Item>
         </Menu.SubMenu>
         <Menu.Item key="three" icon={<UserOutlined />}>
-          <Link href="/user">사용자</Link>
+          <Link href="user">사용자</Link>
         </Menu.Item>
       </Menu>
     </S.MainSideLayout>

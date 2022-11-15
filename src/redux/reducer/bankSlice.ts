@@ -3,6 +3,7 @@ import { createSlice } from '@reduxjs/toolkit';
 export type BankSliceType = {
   bankData: [];
   userData: user[];
+  userSetting: user[];
 };
 
 type user = {
@@ -11,6 +12,7 @@ type user = {
 const initialState: BankSliceType = {
   bankData: [],
   userData: [],
+  userSetting: [],
 };
 
 export const bankSlice = createSlice({
@@ -23,8 +25,11 @@ export const bankSlice = createSlice({
     setUserData(state, action) {
       state.userData = action.payload;
     },
+    setUserSetting(state, action) {
+      state.userSetting = action.payload;
+    },
   },
 });
 
-export const { setBankData, setUserData } = bankSlice.actions;
+export const { setBankData, setUserData, setUserSetting } = bankSlice.actions;
 export default bankSlice.reducer;
