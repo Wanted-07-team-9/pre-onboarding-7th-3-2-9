@@ -14,7 +14,6 @@ export const COLUMNS = [
     accessor: 'broker_id',
     Cell: (props: { value: string }) => {
       const bkCompany = bkCompanyNm(props.value);
-      console.log(bkCompany);
       return bkCompany;
     },
   },

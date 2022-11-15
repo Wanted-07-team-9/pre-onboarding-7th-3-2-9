@@ -2,14 +2,13 @@ import React, { useEffect, useMemo } from 'react';
 import { useAppSelector } from '../../../redux/reducer/hook';
 import { usePagination, useTable } from 'react-table';
 import * as S from '../../../styles/TableStyle';
-import { COLUMNS } from '../../../utils/TableColumn';
+import { USER_COLUMNS } from '../../../utils/UserTableColumn';
 
-const BankTable = () => {
-  const { bankData } = useAppSelector(state => state.bankBoardData);
-
-  const BANK_DATA = bankData;
-  const columns = useMemo(() => COLUMNS, []);
-  const data = useMemo(() => BANK_DATA, [BANK_DATA]);
+const UserTable = () => {
+  const { userData } = useAppSelector(state => state.bankBoardData);
+  const USER_DATA = userData;
+  const columns = useMemo(() => USER_COLUMNS, []);
+  const data = useMemo(() => USER_DATA, [USER_DATA]);
 
   // console.log(BANK_DATA);
   const {
@@ -116,4 +115,4 @@ const BankTable = () => {
   );
 };
 
-export default BankTable;
+export default UserTable;
