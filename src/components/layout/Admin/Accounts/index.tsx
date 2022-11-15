@@ -1,13 +1,13 @@
 import React from 'react';
 
-import Account from './account';
+import Accounts from './Accounts';
 
 const AccountIndex = () => {
   // console.log('session', session);
   // console.log('status', status);
   return (
     <>
-      <Account />
+      <Accounts />
     </>
   );
 };

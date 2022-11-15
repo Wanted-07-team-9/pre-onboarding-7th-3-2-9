@@ -8,6 +8,26 @@ import toast from 'react-hot-toast';
 
 import LogoImage from 'assets/logo.png';
 import ActiveLink from 'components/blocks/ActiveLink';
+import { SIDER } from 'utils/DataEnum';
+import SpeedOutlinedIcon from '@mui/icons-material/SpeedOutlined';
+import AccountBalanceOutlinedIcon from '@mui/icons-material/AccountBalanceOutlined';
+import PersonOutlineRoundedIcon from '@mui/icons-material/PersonOutlineRounded';
+import PowerSettingsNewRoundedIcon from '@mui/icons-material/PowerSettingsNewRounded';
+
+const getSideIcon = (id: number) => {
+  switch (id) {
+    case 1:
+      return <SpeedOutlinedIcon />;
+    case 2:
+      return <AccountBalanceOutlinedIcon />;
+    case 3:
+      return <PersonOutlineRoundedIcon />;
+    case 9999:
+      return <PowerSettingsNewRoundedIcon />;
+    default:
+      return <></>;
+  }
+};
 
 const Sidebar = () => {
   const onSignOut = async () => {
@@ -29,23 +49,25 @@ const Sidebar = () => {
       </Logo>
       <SideNav>
         <ul>
-          <ActiveLink href={'account'}>
-            <li>
-              <span>{/* <DashIcon /> */}</span>
-              <span>계좌 목록</span>
-            </li>
-          </ActiveLink>
-          <ActiveLink href={'user'}>
-            <li>
-              <span>{/* <AdIcon /> */}</span>
-              <span>사용자</span>
-            </li>
-          </ActiveLink>
+          {SIDER.map(side => {
+            return side.id === 9999 ? (
+              <a key={side.id} onClick={onSignOut}>
+                <li>
+                  <span>{getSideIcon(side.id)}</span>
+                  <span>{side.name}</span>
+                </li>
+              </a>
+            ) : (
+              <ActiveLink key={side.id} href={`/admin/${side.keyword}`}>
+                <li>
+                  <span>{getSideIcon(side.id)}</span>
+                  <span>{side.name}</span>
+                </li>
+              </ActiveLink>
+            );
+          })}
         </ul>
       </SideNav>
-      <button type="button" onClick={onSignOut}>
-        SignOut
-      </button>
     </StyledSidebar>
   );
 };
@@ -85,8 +107,9 @@ const Logo = styled.header`
 const SideNav = styled.nav`
   ul {
     a {
-      color: #fff;
+      color: #69707b;
       text-decoration: none;
+      cursor: pointer;
     }
   }
   li {

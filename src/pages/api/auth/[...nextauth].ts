@@ -1,6 +1,6 @@
 import NextAuth from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
-import Axios from 'core/apis/axiosInstance';
+import AxiosRequest from 'core/services';
 
 export default NextAuth({
   providers: [
@@ -13,11 +13,11 @@ export default NextAuth({
         password: { label: 'password', type: 'password' },
       },
       async authorize(credentials: Record<'email' | 'password', string>) {
-        const { status, data } = await Axios.post('/login', {
+        const { status, data } = await AxiosRequest.post('/login', {
           email: credentials.email,
           password: credentials.password,
         });
-        console.log(data);
+
         if (status === 200 && data) {
           return data;
         }
@@ -25,25 +25,28 @@ export default NextAuth({
       },
     }),
   ],
+  jwt: {
+    maxAge: 60 * 60,
+    // maxAge: 5
+  },
   session: {
     strategy: 'jwt',
-    // maxAge: 10,
-    // updateAge: 20,
     maxAge: 60 * 60,
-    updateAge: 2 * 60 * 60,
+    // maxAge: 5,
   },
   callbacks: {
-    jwt: async ({ token, user }) => {
+    jwt: ({ token, user }) => {
       if (user) {
         token.accessToken = user.accessToken;
         token.user = user.user;
       }
-      return Promise.resolve(token);
+      return token;
     },
-    session: async ({ session, token }) => {
+    session: ({ session, token }) => {
       session.accessToken = token.accessToken;
+      session.expires = new Date(parseInt(String(token.exp).padEnd(13, '0'))).toISOString();
       session.user = token.user;
-      return Promise.resolve(session);
+      return session;
     },
   },
   pages: {

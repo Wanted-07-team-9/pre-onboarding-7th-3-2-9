@@ -5,7 +5,7 @@ import { useRouter } from 'next/router';
 function ActiveLink({ children, href }: { children: React.ReactNode; href: string }) {
   const router = useRouter();
   const style = {
-    color: router.asPath.replace('/admin/', '') === href ? '#ff0000' : '#fff',
+    color: router.route === href ? '#f3f4f5' : '#69707b',
   };
 
   const handleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {

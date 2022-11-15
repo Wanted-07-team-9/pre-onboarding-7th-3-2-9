@@ -16,20 +16,9 @@ const Login = ({ onSubmit }: ITest) => {
         onSubmit={(values, { setSubmitting }) => {
           onSubmit(values);
           setSubmitting(false);
-          //  setTimeout(() => {
-          //    alert(JSON.stringify(values, null, 2));
-          //    setSubmitting(false);
-          //  }, 400);
         }}
       >
-        {({
-          values,
-          handleChange,
-          handleBlur,
-          handleSubmit,
-          isSubmitting,
-          /* and other goodies */
-        }) => (
+        {({ values, handleChange, handleBlur, handleSubmit, isSubmitting }) => (
           <form onSubmit={handleSubmit}>
             <input
               type="email"
@@ -51,17 +40,6 @@ const Login = ({ onSubmit }: ITest) => {
           </form>
         )}
       </Formik>
-      {/* <form onSubmit={onSubmit}>
-        <label>
-          이메일 :
-          <input type="email" name="email" placeholder="이메일 주소" />
-        </label>
-        <label>
-          비밀번호 :
-          <input type="password" name="password" />
-        </label>
-        <button type="submit">로그인</button>
-      </form> */}
     </StyledDiv>
   );
 };

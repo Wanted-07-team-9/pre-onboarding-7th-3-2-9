@@ -12,7 +12,7 @@ export const getServerSideProps: GetServerSideProps = async context => {
   if (session) {
     return {
       redirect: {
-        destination: '/admin/account',
+        destination: '/admin/accounts',
         permanent: false,
       },
     };
@@ -23,4 +23,5 @@ export const getServerSideProps: GetServerSideProps = async context => {
   };
 };
 
+LoginPage.getLayout = page => page;
 export default LoginPage;
