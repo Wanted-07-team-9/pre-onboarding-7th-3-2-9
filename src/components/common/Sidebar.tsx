@@ -37,7 +37,7 @@ const Sidebar = () => {
     const data = await signOut({ redirect: false, callbackUrl: '/login' });
 
     await Router.push(data.url);
-    toast.success('성공적으로 로그아웃 되었습니다.');
+    toast.success('로그아웃 되었습니다.');
   };
 
   return (

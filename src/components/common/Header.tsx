@@ -24,8 +24,7 @@ const hasPath = path => {
 const Header = () => {
   const router = useRouter();
   const setOpen = useSetRecoilState(sideState);
-  const { name } = hasPath(router.asPath.replace('/admin/', ''));
-
+  const title = hasPath(router.asPath.replace('/admin/', ''));
   return (
     <AppBar position="static" color="inherit">
       <Toolbar>
@@ -43,7 +42,7 @@ const Header = () => {
           component="div"
           sx={{ display: { xs: 'none', sm: 'block' } }}
         >
-          {name}
+          {title.name}
         </Typography>
         <Box sx={{ flexGrow: 1 }} />
         <Box

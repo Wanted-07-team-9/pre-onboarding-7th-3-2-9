@@ -1,8 +1,14 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { getSession } from 'next-auth/react';
+import toast from 'react-hot-toast';
 
 const DashboardPage = () => {
-  return <>준비중입니다.</>;
+  useEffect(() => {
+    toast('준비중입니다.', {
+      icon: '🚧',
+    });
+  }, []);
+  return <>Hello, Dashboard Page.</>;
 };
 
 export const getServerSideProps: GetServerSideProps = async context => {
