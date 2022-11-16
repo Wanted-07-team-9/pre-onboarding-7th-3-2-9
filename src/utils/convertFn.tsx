@@ -1,4 +1,107 @@
-const BROKER_LIST = {
+export const BROKER_LIST_OPTON = [
+  {
+    brokerCode: "209",
+    brokerName: "유안타증권"
+  },
+  {
+    brokerCode: "218",
+    brokerName: "현대증권"
+  },
+  {
+    brokerCode: "230",
+    brokerName: "미래에셋증권"
+  },
+  {
+    brokerCode: "238",
+    brokerName: "대우증권"
+  },
+  {
+    brokerCode: "240",
+    brokerName: "삼성증권"
+  },
+  {
+    brokerCode: "243",
+    brokerName: "한국투자증권"
+  },
+  {
+    brokerCode: "247",
+    brokerName: "우리투자증권"
+  },
+  {
+    brokerCode: "261",
+    brokerName: "교보증권"
+  },
+  {
+    brokerCode: "262",
+    brokerName: "하이투자증권"
+  },
+  {
+    brokerCode: "263",
+    brokerName: "HMC투자증권"
+  },
+  {
+    brokerCode: "264",
+    brokerName: "키움증권"
+  },
+  {
+    brokerCode: "265",
+    brokerName: "이베스트투자증권"
+  },
+  {
+    brokerCode: "266",
+    brokerName: "SK증권"
+  },
+  {
+    brokerCode: "267",
+    brokerName: "대신증권"
+  },
+  {
+    brokerCode: "268",
+    brokerName: "아이엠투자증권"
+  },
+  {
+    brokerCode: "269",
+    brokerName: "한화투자증권"
+  },
+  {
+    brokerCode: "270",
+    brokerName: "하나대투자증권"
+  },
+  {
+    brokerCode: "279",
+    brokerName: "동부증권"
+  },
+  {
+    brokerCode: "280",
+    brokerName: "유진투자증권"
+  },
+  {
+    brokerCode: "288",
+    brokerName: "카카오페이증권"
+  },
+  {
+    brokerCode: "287",
+    brokerName: "메리츠종합금융증권"
+  },
+  {
+    brokerCode: "290",
+    brokerName: "부국증권"
+  },
+  {
+    brokerCode: "291",
+    brokerName: "신영증권"
+  },
+  {
+    brokerCode: "292",
+    brokerName: "LIG투자증권"
+  },
+  {
+    brokerCode: "271",
+    brokerName: "토스증권"
+  }
+]
+
+export const BROKER_LIST = {
   "209": "유안타증권",
   "218": "현대증권",
   "230": "미래에셋증권",
@@ -54,13 +157,37 @@ const BROKER_FORMAT = {
   "271": "00-000-0000000"
 }
 
-const ACCOUNT_STATUS = { 
-  "9999": "관리자확인필요", 
+const ACCOUNT_STATUS = {
+  "9999": "관리자확인필요",
   "1": "입금대기",
-  "2": "운용중", 
-  "3": "투자중지", 
-  "4": "해지" 
+  "2": "운용중",
+  "3": "투자중지",
+  "4": "해지"
 }
+
+
+export const ACCOUNT_STATUS_OPTION = [
+  {
+    statusCode: 9999,
+    accountStatus: '관리자확인필요'
+  },
+  {
+    statusCode: 1,
+    accountStatus: '입금대기'
+  },
+  {
+    statusCode: 2,
+    accountStatus: '운용중'
+  },
+  {
+    statusCode: 3,
+    accountStatus: '투자중지'
+  },
+  {
+    statusCode: 4,
+    accountStatus: '해지'
+  },
+]
 
 export const convertBrokerId = (brokerID: number) => {
   const BrokerName = BROKER_LIST[brokerID]
@@ -72,8 +199,8 @@ export const convertAccountStatus = (status) => {
   return AccountStatus
 }
 
-export const convertAccountNumber = (accountNumber) => {
-  const convertedNumber  =  '**' + accountNumber?.slice(2,-2) + '**' 
+export const convertAccountNumber = (number) => {
+  const convertedNumber = '**' + number?.slice(2, -2) + '**'
   return convertedNumber
 }
 
@@ -89,6 +216,6 @@ export const convertComma = (amount) => {
 }
 
 export const convertPhoneNumber = (phonNumber) => {
-  const convertedPhoneNumber = phonNumber?.slice(0,4)+'****' + phonNumber?.slice(8,13)
+  const convertedPhoneNumber = phonNumber?.slice(0, 4) + '****' + phonNumber?.slice(8, 13)
   return convertedPhoneNumber
 }

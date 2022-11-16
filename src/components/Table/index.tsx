@@ -16,7 +16,9 @@ const Table = ({ columns, data, isAccount }: any) => {
         {isAccount ? (
           data.map((account) => (
             <tr key={account.id}>
-              <td>{convertBrokerId(account.broker_id)}</td>
+              <Link href={`/list/${account.broker_id}`}>
+              <a><td>{convertBrokerId(account.broker_id)}</td></a>
+              </Link>
               <td>{convertAccountNumber(account.number)}</td>
               <td>{convertAccountStatus(account.status)}</td>
               <td>{account.name}</td>

@@ -62,3 +62,8 @@ export const fetchAccountDetail = async(id? : any)  : Promise<any> => {
   const {data} = await axiosInstance.get(`/accounts/${id}`)
   return data
 }
+
+export const editAccount = async(id, data) => {
+  const response = await axiosInstance.patch(`/accounts/${id}`,data)
+  console.log(response)
+}
