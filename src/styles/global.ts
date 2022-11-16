@@ -10,7 +10,4 @@ export const GlobalStyles = createGlobalStyle`
   html, body, div#__next {
     height: 100%;
   }
-  body {
-    background: #fff;
-  }
 `;

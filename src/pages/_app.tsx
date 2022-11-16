@@ -1,20 +1,23 @@
 import React, { useState } from 'react';
+import { GetServerSideProps } from 'next';
 import type { AppProps } from 'next/app';
 import Head from 'next/head';
+import { Session } from 'next-auth';
 import { getSession, SessionProvider } from 'next-auth/react';
 
 import { DehydratedState, Hydrate, QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+import { RecoilRoot } from 'recoil';
 import { Toaster } from 'react-hot-toast';
+import CssBaseline from '@mui/material/CssBaseline';
+import { ThemeProvider, createTheme } from '@mui/material/styles/';
+import { config } from '@fortawesome/fontawesome-svg-core';
+import '@fortawesome/fontawesome-svg-core/styles.css';
+config.autoAddCss = false;
 
-import { GlobalStyles } from 'components/styles/global';
-import { GetServerSideProps } from 'next';
-import { Session } from 'next-auth';
+import { GlobalStyles } from 'styles/global';
 import Layout from 'components/common/Layout';
-
-// export interface ISession extends Session {
-//   accessToken: string;
-// }
+import { themeOptions } from 'styles/theme';
 
 const App = ({
   Component,
@@ -31,17 +34,24 @@ const App = ({
         },
       })
   );
+  const theme = createTheme(themeOptions);
+
   return (
     <>
       <Head>
         <title>투자 관리 서비스</title>
       </Head>
-      <GlobalStyles />
       <Toaster />
+      <GlobalStyles />
       <SessionProvider session={pageProps.session}>
         <QueryClientProvider client={queryClient}>
           <Hydrate state={pageProps.dehydratedState}>
-            {getLayout(<Component {...pageProps} />)}
+            <RecoilRoot>
+              <ThemeProvider theme={theme}>
+                <CssBaseline />
+                {getLayout(<Component {...pageProps} />)}
+              </ThemeProvider>
+            </RecoilRoot>
             <ReactQueryDevtools />
           </Hydrate>
         </QueryClientProvider>
@@ -49,10 +59,6 @@ const App = ({
     </>
   );
 };
-
-// CarDetail.getLayout = function getLayout(page) {
-//   return <CarDetailProvider>{page}</CarDetailProvider>;
-// };
 
 export const getServerSideProps: GetServerSideProps = async context => {
   const session = await getSession(context);

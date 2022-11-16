@@ -44,7 +44,6 @@ export const getServerSideProps: GetServerSideProps = async context => {
     const active = context.query.active ? context.query.active : '';
     const status = context.query.status ? context.query.status : '';
     const queryText = context.query.q ? context.query.q : '';
-
     // getQueryData({ url: '/users', headers: { Authorization: `Bearer ${session.accessToken}` } })
     // getQueryData({
     //   url: '/accounts',

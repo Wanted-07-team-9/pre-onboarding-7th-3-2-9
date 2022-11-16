@@ -27,12 +27,17 @@ const StyledWrap = styled.div`
 `;
 
 const StyledContents = styled.div`
-  width: calc(100% - 230px);
+  /* width: calc(100% - 230px); */
+  width: 100%;
   height: 100%;
 `;
 const MainLayout = styled.main`
   width: 100%;
-  height: calc(100% - 72px);
-  padding-top: 72px;
+  height: calc(100% - 128px);
+  /* height: calc(100% - 72px); */
+  padding: 20px 15px;
+
+  /* background-color: #f0f2f5; */
+  /* background-color: #7d7d7d; */
 `;
 export default Layout;

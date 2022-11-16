@@ -4,9 +4,9 @@ export const convertCurrency = (currency: string) => {
 
 export const diffAsset = (assets: number, payments: number) => {
   if (assets > payments) {
-    return 'plus_payments';
+    return 'plus';
   } else if (assets < payments) {
-    return 'minus_payments';
+    return 'minus';
   } else {
     return 'principal';
   }

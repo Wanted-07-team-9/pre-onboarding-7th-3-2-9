@@ -1,5 +1,5 @@
-import Router from 'next/router';
-import { signOut } from 'next-auth/react';
+// import Router from 'next/router';
+// import { signOut } from 'next-auth/react';
 import axios from 'axios';
 import toast from 'react-hot-toast';
 
@@ -24,35 +24,13 @@ AxiosRequest.interceptors.response.use(
   },
   async error => {
     if (error.response.status === 401) {
-      const data = await signOut({ redirect: false, callbackUrl: '/login' });
-      toast.error('세션이 만료되어 로그인 화면으로 이동합니다.');
+      toast.error('세션이 만료되었습니다.');
+      // const data = await signOut({ redirect: false, callbackUrl: '/login' });
 
-      await Router.push(data.url);
+      // await Router.push(data.url);
     }
     return Promise.reject(error.response);
   }
 );
-
-// const AxiosInstance = axios.create({
-//   baseURL: BASE_URL,
-//   timeout: 5000,
-// });
-
-// AxiosInstance.interceptors.request.use(
-//   config => {
-//     return config;
-//   },
-//   error => {
-//     return Promise.reject(error.response);
-//   }
-// );
-// AxiosInstance.interceptors.response.use(
-//   response => {
-//     return response;
-//   },
-//   error => {
-//     return Promise.reject(error.response);
-//   }
-// );
 
 export default AxiosRequest;

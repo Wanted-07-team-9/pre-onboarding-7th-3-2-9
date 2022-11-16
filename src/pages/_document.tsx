@@ -1,5 +1,7 @@
 import Document, { Html, Head, Main, NextScript } from 'next/document';
 import { ServerStyleSheet } from 'styled-components';
+import createEmotionServer from '@emotion/server/create-instance';
+import createEmotionCache from 'styles/createEmotionCache';
 
 export default class MyDocument extends Document {
   render() {
@@ -24,20 +26,33 @@ export default class MyDocument extends Document {
 
 MyDocument.getInitialProps = async ctx => {
   const sheet = new ServerStyleSheet();
-  const originalRenderPage = ctx.renderPage;
+  const cache = createEmotionCache();
+  const { extractCriticalToChunks } = createEmotionServer(cache);
 
+  const originalRenderPage = ctx.renderPage;
   try {
     ctx.renderPage = () =>
       originalRenderPage({
-        enhanceApp: App => props => sheet.collectStyles(<App {...props} />),
+        enhanceApp: App => props => sheet.collectStyles(<App emotionCache={cache} {...props} />),
       });
 
     const initialProps = await Document.getInitialProps(ctx);
+    const emotionStyles = extractCriticalToChunks(initialProps.html);
+    const emotionStyleTags = emotionStyles.styles.map(style => (
+      <style
+        data-emotion={`${style.key} ${style.ids.join(' ')}`}
+        key={style.key}
+        // eslint-disable-next-line react/no-danger
+        dangerouslySetInnerHTML={{ __html: style.css }}
+      />
+    ));
+    // styles: [...React.Children.toArray(initialProps.styles), ...emotionStyleTags],
     return {
       ...initialProps,
       styles: (
         <>
           {initialProps.styles}
+          {emotionStyleTags}
           {sheet.getStyleElement()}
         </>
       ),

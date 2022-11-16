@@ -2,10 +2,11 @@ import React from 'react';
 
 import { useRouter } from 'next/router';
 
-function ActiveLink({ children, href }: { children: React.ReactNode; href: string }) {
+const ActiveLink = ({ children, href }: { children: React.ReactNode; href: string }) => {
   const router = useRouter();
   const style = {
-    color: router.route === href ? '#f3f4f5' : '#69707b',
+    color: router.route.replace('/[id]', '') === href ? '#f3f4f5' : '#69707b',
+    textDecoration: 'none',
   };
 
   const handleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
@@ -18,6 +19,6 @@ function ActiveLink({ children, href }: { children: React.ReactNode; href: strin
       {children}
     </a>
   );
-}
+};
 
 export default ActiveLink;

@@ -1,16 +1,29 @@
 import React from 'react';
+import Image from 'next/image';
+
 import { Formik } from 'formik';
 import styled from 'styled-components';
+import FormControl from '@mui/material/FormControl';
+import TextField from '@mui/material/TextField';
+import Button from '@mui/material/Button';
 
-interface ITest {
+import LogoImage from 'assets/logo.png';
+
+interface ILogin {
   onSubmit: (values: { email: string; password: string }) => Promise<void>;
 }
 
-const Login = ({ onSubmit }: ITest) => {
+const Login = ({ onSubmit }: ILogin) => {
   return (
     <StyledDiv>
-      <h2>Login</h2>
-      <h3>Enter your credentials</h3>
+      <div>
+        <span className="logo_image">
+          <Image src={LogoImage} alt="Logo" placeholder="blur" width={41} height={41} />
+        </span>
+        <span>
+          <h2>PREFACE</h2>
+        </span>
+      </div>
       <Formik
         initialValues={{ email: '', password: '' }}
         onSubmit={(values, { setSubmitting }) => {
@@ -20,23 +33,33 @@ const Login = ({ onSubmit }: ITest) => {
       >
         {({ values, handleChange, handleBlur, handleSubmit, isSubmitting }) => (
           <form onSubmit={handleSubmit}>
-            <input
-              type="email"
-              name="email"
-              onChange={handleChange}
-              onBlur={handleBlur}
-              value={values.email}
-            />
-            <input
-              type="password"
-              name="password"
-              onChange={handleChange}
-              onBlur={handleBlur}
-              value={values.password}
-            />
-            <button type="submit" disabled={isSubmitting}>
-              Submit
-            </button>
+            <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
+              <TextField
+                type="email"
+                name="email"
+                label="이메일"
+                value={values.email}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                size="small"
+                required
+              />
+            </FormControl>
+            <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
+              <TextField
+                type="password"
+                name="password"
+                label="비밀번호"
+                value={values.password}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                size="small"
+                required
+              />
+            </FormControl>
+            <Button variant="contained" type="submit" disabled={isSubmitting}>
+              로그인
+            </Button>
           </form>
         )}
       </Formik>
@@ -45,32 +68,57 @@ const Login = ({ onSubmit }: ITest) => {
 };
 
 const StyledDiv = styled.div`
-  width: 400px;
-  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  width: 20vw;
+  height: 50vh;
+  margin: 20vh auto 0 auto;
   border-radius: 1.25rem;
-  background: #fff;
+  padding: 2em;
   text-align: center;
 
-  h2 {
-    font-size: 36px;
-    font-weight: 600;
-    margin: 0 0 6px;
-  }
-  h3 {
-    color: #837f90;
-    margin: 0 0 40px;
-    font-weight: 500;
-    font-size: 1rem;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  -moz-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  -webkit-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+
+  > div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    height: 30%;
+
+    > span {
+      margin: 0 0.4em;
+    }
+    h2 {
+      font-size: 36px;
+      font-weight: 600;
+    }
   }
 
   form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
     width: 100%;
+    height: 70%;
     margin: 0;
-    display: grid;
     gap: 16px;
 
     > div {
       position: relative;
+    }
+
+    button {
+      min-height: 45px;
+      margin: 0 0.4em;
+
+      font-size: 18px;
+      font-weight: bold;
     }
   }
 `;
