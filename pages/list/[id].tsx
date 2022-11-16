@@ -1,7 +1,8 @@
-import React, { Fragment, useState } from 'react'
+import React, {useState } from 'react'
 import { editAccount, fetchAccountDetail } from '../../src/api/api'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { convertBrokerId, convertAccountStatus, convertAccountNumber, convertComma, convertIsoToTimeStamp, BROKER_LIST_OPTON, ACCOUNT_STATUS_OPTION } from '../../src/utils/convertFn'
+import { convertBrokerId, convertAccountStatus, convertAccountNumber, convertComma, convertIsoToTimeStamp} from '../../src/utils/convertFn'
+import { BROKER_LIST_OPTON, ACCOUNT_STATUS_OPTION } from'../../src/utils/constantValue';
 import Header from "../../src/components/Header"
 import Sider from "../../src/components/Sider"
 import Footer from "../../src/components/Footer"
@@ -12,8 +13,8 @@ const AccountDetail = (props) => {
   const queryClient = useQueryClient()
   const { register, handleSubmit } = useForm()
   const [isEditMode, setIsEditMode] = useState(false)
-  const { data, isLoading, isError, error } = useQuery(
-    ['userData'], ()=>fetchAccountDetail(props.id))
+  const { data, isLoading, isError } = useQuery(
+    ['accountData'], ()=>fetchAccountDetail(props.id))
 
   const onEdit = (inputData) => {
     if(inputData.is_active === "true" || inputData.is_active==='false'){
@@ -23,7 +24,7 @@ const AccountDetail = (props) => {
   }
 
   const { mutate } = useMutation(onEdit, {
-    onSuccess: () => queryClient.invalidateQueries(['userData']),
+    onSuccess: () => queryClient.invalidateQueries(['accountData']),
   })
   return (
     <Container>
@@ -33,8 +34,8 @@ const AccountDetail = (props) => {
           <Header pageName={'투자계획'} />
           <TableWrapper>
             <div>
-              {isLoading&& <div>hello</div>}
-              {isError && <div>hello</div>}
+              {isLoading&& <div>loading</div>}
+              {isError && <div>error</div>}
               {data&&
                 <DetailWrapper>
                   <FlexWrapper>

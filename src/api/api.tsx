@@ -1,30 +1,8 @@
-
-import axios, { AxiosRequestConfig } from 'axios';
+import { axiosInstance } from "./axiosInstance";
 import { IForm } from "../types/interfaces";
 
-export const axiosInstance = axios.create({
-  timeout: 5000,
-  headers: {
-    'Content-Type': 'application/json',
-  }
-});
-
-axiosInstance.interceptors.request.use(
-  function (config: AxiosRequestConfig<any>) {
-    const accessToken = typeof window !== 'undefined' ? sessionStorage.getItem('token') : null;
-    if (accessToken) {
-      config.headers.Authorization =accessToken
-    }
-    return config;
-  },
-  function (error) {
-    return Promise.reject(error);
-  }
-);
-
-
 export const login  = async (data : IForm) => {
-  const {data : loginData} =  await axios.post('/login', {
+  const {data : loginData} =  await axiosInstance.post('/login', {
     email: data.email,
     password: data.password
   })
@@ -35,6 +13,7 @@ export const login  = async (data : IForm) => {
 }
 
 export const fetchAccount = async(page:any) => {
+  console.log(page,'api')
   const response = await axiosInstance.get('/accounts',{
     params : {
       _page: page,
