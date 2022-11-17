@@ -22,7 +22,8 @@ export const convertIsoToTimeStamp = (createdAt) => {
 };
 
 export const convertComma = (amount) => {
-  const commaAmount = amount?.toLocaleString('ko-KR')
+  let money = amount ? Number(amount) : 0
+  const commaAmount = money?.toLocaleString('ko-KR')
   return commaAmount
 }
 
