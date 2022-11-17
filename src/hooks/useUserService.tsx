@@ -1,23 +1,22 @@
-import { useEffect } from 'react';
 import instance from '../api/AxiosInstance';
-import { getTokenStorage } from '../utils/accessToken';
-import { setUserData } from '../redux/reducer/bankSlice';
-import { useAppDispatch } from '../redux/reducer/hook';
+import { useQuery } from '@tanstack/react-query';
+
 function useUserService() {
-  const dispatch = useAppDispatch();
+  type userData = {
+    data: Data[];
+  };
+  interface Data {
+    [key: string]: string | number;
+  }
 
-  useEffect(() => {
-    const accessCheck = async () => {
-      if (getTokenStorage('login-token')) {
-        const res = await instance.get('/users');
-        dispatch(setUserData(res.data));
-        // console.log(res.data);
-      } else {
-        alert('토근 없음');
-      }
-    };
-    accessCheck();
-  }, [dispatch]);
+  const getUserAxios = async () => {
+    const { data } = await instance.get('/users');
+    return data;
+  };
+  const { data, error, isLoading } = useQuery<userData, Error>(['usersData'], getUserAxios);
+
+  const usersData = data;
+
+  return { usersData, error, isLoading };
 }
-
 export default useUserService;

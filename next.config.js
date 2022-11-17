@@ -6,12 +6,14 @@ const nextConfig = {
     styledComponents: true,
   },
   async rewrites() {
-    return [
-      {
-        source: '/:path*',
-        destination: 'http://localhost:4000/:path*',
-      },
-    ];
+    return {
+      fallback: [
+        {
+          source: '/:path*',
+          destination: 'http://localhost:4000/:path*',
+        },
+      ],
+    };
   },
 };
 

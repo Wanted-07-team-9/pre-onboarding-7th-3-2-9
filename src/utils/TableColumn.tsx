@@ -1,10 +1,22 @@
 import { statusNm, bkCompanyNm, UserNm, accounNm, countMoney, isActive } from './dataUtils';
+import Link from 'next/link';
 
 export const COLUMNS = [
   {
+    Header: '케이스',
+    accessor: 'id',
+    Cell: (props: { value: string }) => {
+      return (
+        <Link key={props.value} href={`/main/${props.value}`}>
+          상세
+        </Link>
+      );
+    },
+  },
+  {
     Header: '고객명',
     accessor: 'user_id',
-    Cell: (props: { value: number }) => {
+    Cell: (props: { value: string }) => {
       const userNm = UserNm(props.value);
       return userNm;
     },

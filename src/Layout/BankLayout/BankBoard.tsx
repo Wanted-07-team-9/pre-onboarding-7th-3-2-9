@@ -5,6 +5,7 @@ import BankTable from '../../components/common/main/BankTable';
 const BankBoard = () => {
   return (
     <S.BankBoardStyle>
+      {/* <FilterButton /> */}
       <BankTable />
     </S.BankBoardStyle>
   );
