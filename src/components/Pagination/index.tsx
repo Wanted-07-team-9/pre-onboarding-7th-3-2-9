@@ -1,9 +1,8 @@
-import styled from "styled-components";
+import {Nav, Button} from './style'
 
 const Pagination = ({total, page, setPage} : any) => {
   const numPages = Math.ceil(total / 20);
   return(
-    <>
       <Nav>
         <Button onClick={() => setPage(page - 1)} disabled={page === 1}>
           &lt;
@@ -23,45 +22,7 @@ const Pagination = ({total, page, setPage} : any) => {
           &gt;
         </Button>
       </Nav>
-    </>
   )
 }
-
-const Nav = styled.nav`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 4px;
-  margin: 16px;
-`;
-
-const Button = styled.button`
-  border: none;
-  border-radius: 8px;
-  padding: 8px;
-  margin: 0;
-  background: #0F253C;
-  color: white;
-  font-size: 1rem;
-
-  &:hover {
-    background: #468FF7;
-    cursor: pointer;
-    transform: translateY(-2px);
-  }
-
-  &[disabled] {
-    background: grey;
-    cursor: revert;
-    transform: revert;
-  }
-
-  &[aria-current] {
-    background: #5160EA;
-    font-weight: bold;
-    cursor: revert;
-    transform: revert;
-  }
-`;
 
 export default Pagination
