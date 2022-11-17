@@ -41,8 +41,6 @@ const DetailTable = ({data} : any) => {
         <div className='category'>계좌개설일</div>
         <div>{convertIsoToTimeStamp(data.created_at)}</div>
       </CellWrapper>
-      <CellWrapper>
-      </CellWrapper>
     </FlexWrapper>
   </DetailWrapper>
   )

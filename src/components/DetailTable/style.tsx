@@ -3,6 +3,10 @@ import styled from "styled-components"
 export const DetailWrapper = styled.section`
   display:flex;
   justify-content:center;
+  margin: 0 2rem;
+  border: 4px solid #051528;
+  border-radius: 2rem;
+  padding: 3rem;
 
 `
 
