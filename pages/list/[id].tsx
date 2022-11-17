@@ -1,5 +1,5 @@
 import React from 'react'
-import { editAccount, fetchAccountDetail } from '../../src/api/api'
+import { editAccount, fetchAccountDetail, deleteAccount } from '../../src/api/api'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import Header from "../../src/components/Header"
 import Sider from "../../src/components/Sider"
@@ -7,17 +7,25 @@ import Footer from "../../src/components/Footer"
 import { Container, FixedWrapper, ContentWrapper, TableWrapper } from './style'
 import EditForm from '../../src/components/EditForm';
 import DetailTable from '../../src/components/DetailTable';
+import { useRouter } from 'next/router';
 const AccountDetail = (props) => {
+  const router = useRouter()
   const queryClient = useQueryClient()
   const { data, isLoading, isError } = useQuery(
-    ['accountData'], ()=>fetchAccountDetail(props.id))
+    ['accountData'], ()=>fetchAccountDetail(props.id),{
+      refetchInterval : 500
+    })
+
   const onEdit = (inputData) => {
     if(inputData.is_active === "true" || inputData.is_active==='false'){
       inputData.is_active = JSON.parse(inputData.is_active)
     }
     editAccount(props.id, inputData)
   }
-
+  const handleDelete =  () => {
+    deleteAccount(props.id)
+    router.push('/list')
+  }
   const { mutate } = useMutation(onEdit, {
     onSuccess: () => queryClient.invalidateQueries(['accountData']),
   })
@@ -35,7 +43,7 @@ const AccountDetail = (props) => {
             </div>
           </TableWrapper>
         </FixedWrapper>
-        {data &&<EditForm mutate={mutate} data={data} />}
+        {data &&<EditForm mutate={mutate} data={data} handleDelete={handleDelete} />}
         <Footer />
       </ContentWrapper>
     </Container>
