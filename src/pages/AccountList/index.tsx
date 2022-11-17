@@ -1,568 +1,214 @@
-import React, { ReactElement } from 'react';
+import React, { ReactElement, useEffect } from 'react';
 import Layout from './../../components/common/Layout';
+import { useAuth } from './../../contexts/AuthContext';
+import { useRouter } from 'next/router';
+import { useState } from 'react';
+import { QueryClient, dehydrate, useQueries } from '@tanstack/react-query';
+import { accountAPI } from './../../api/accountAPI';
+import tw, { styled } from 'twin.macro';
+import { GetServerSideProps } from 'next';
+import { userAPI } from './../../api/userAPI';
+import { accountMerged } from '../../utils/account/account';
+import { GrNext, GrPrevious } from 'react-icons/gr';
+import { useAccount } from './../../hooks/useAccount';
+import { pagination } from './../../utils/pagination';
+import { ACOOUNT_TABLE } from '../../utils/account/accountObj';
+import { accountTableType, mergedAccountType } from '../../types/accountType';
+import Link from 'next/link';
+
+// 계좌 수정..
+// 평가금액..  / 버튼 스타일링 조금만 신경쓰자.
+// 상세 페이지, 수정하기.
+// 조건에 따른 검색 구현.
 
 const AccountHome = () => {
+  const { user } = useAuth();
+  const router = useRouter();
+  const page = router.query.page ? parseInt(router.query.page as string, 10) : 1;
+  const defaultOffset = Math.ceil(page / 5) - 1;
+  const [offSet, setOffSet] = useState(0);
+  const [userData, accountData] = useAccount(page);
+
+  useEffect(() => {
+    setOffSet(defaultOffset);
+  }, [defaultOffset]);
+
+  if (userData.isLoading || accountData.isLoading) {
+    return <>Loading...</>;
+  }
+  if (!user?.accessToken) {
+    return '허가되지 않은 접근입니다.';
+  }
+  const { count, mergedData } = accountMerged(userData, accountData);
+
+  const paginationArr = pagination(parseInt(count!));
+  const paginationRender = (pagiArr: number[]) => {
+    return pagiArr.map((pageNumber: number, idx: number) => (
+      <PaginationLi
+        isActive={pageNumber === page}
+        onClick={() => router.push(`?page=${pageNumber}`)}
+        key={`${pageNumber}_${idx}`}
+      >
+        {pageNumber}
+      </PaginationLi>
+    ));
+  };
+
   return (
     <>
-      <div className="p-4 overflow-x-auto relative shadow-md sm:rounded-lg">
+      <div className="p-4 w-[720px] xl:w-[1440px] overflow-x-auto overflow-y-hidden  shadow-md sm:rounded-lg ">
         <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
           <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
             <tr>
-              <th scope="col" className="py-3 px-6">
-                Product name
-              </th>
-              <th scope="col" className="py-3 px-6">
-                Color
-              </th>
-              <th scope="col" className="py-3 px-6">
-                Category
-              </th>
-              <th scope="col" className="py-3 px-6">
-                Price
-              </th>
-              <th scope="col" className="py-3 px-6">
-                <span className="sr-only">Edit</span>
-              </th>
+              {ACOOUNT_TABLE.map((accountInfo, idx) => (
+                <HeadThBlock key={`head_${idx}`}>{accountInfo[0]}</HeadThBlock>
+              ))}
             </tr>
           </thead>
           <tbody>
-            <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-              <th
-                scope="row"
-                className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-              >
-                Apple MacBook Pro 17"
-              </th>
-              <td className="py-4 px-6">Sliver</td>
-              <td className="py-4 px-6">Laptop</td>
-              <td className="py-4 px-6">$2999</td>
-              <td className="py-4 px-6 text-right">
-                <a
-                  href="#"
-                  className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
-                >
-                  Edit
-                </a>
-              </td>
-            </tr>
-            <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-              <th
-                scope="row"
-                className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-              >
-                Microsoft Surface Pro
-              </th>
-              <td className="py-4 px-6">White</td>
-              <td className="py-4 px-6">Laptop PC</td>
-              <td className="py-4 px-6">$1999</td>
-              <td className="py-4 px-6 text-right">
-                <a
-                  href="#"
-                  className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
-                >
-                  Edit
-                </a>
-              </td>
-            </tr>
-            <tr className="bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-600">
-              <th
-                scope="row"
-                className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-              >
-                Magic Mouse 2
-              </th>
-              <td className="py-4 px-6">Black</td>
-              <td className="py-4 px-6">Accessories</td>
-              <td className="py-4 px-6">$99</td>
-              <td className="py-4 px-6 text-right">
-                <a
-                  href="#"
-                  className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
-                >
-                  Edit
-                </a>
-              </td>
-            </tr>
-          </tbody>
-          <tbody>
-            <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-              <th
-                scope="row"
-                className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-              >
-                Apple MacBook Pro 17"
-              </th>
-              <td className="py-4 px-6">Sliver</td>
-              <td className="py-4 px-6">Laptop</td>
-              <td className="py-4 px-6">$2999</td>
-              <td className="py-4 px-6 text-right">
-                <a
-                  href="#"
-                  className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
-                >
-                  Edit
-                </a>
-              </td>
-            </tr>
-            <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-              <th
-                scope="row"
-                className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-              >
-                Microsoft Surface Pro
-              </th>
-              <td className="py-4 px-6">White</td>
-              <td className="py-4 px-6">Laptop PC</td>
-              <td className="py-4 px-6">$1999</td>
-              <td className="py-4 px-6 text-right">
-                <a
-                  href="#"
-                  className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
-                >
-                  Edit
-                </a>
-              </td>
-            </tr>
-            <tr className="bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-600">
-              <th
-                scope="row"
-                className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-              >
-                Magic Mouse 2
-              </th>
-              <td className="py-4 px-6">Black</td>
-              <td className="py-4 px-6">Accessories</td>
-              <td className="py-4 px-6">$99</td>
-              <td className="py-4 px-6 text-right">
-                <a
-                  href="#"
-                  className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
-                >
-                  Edit
-                </a>
-              </td>
-            </tr>
-          </tbody>
-          <tbody>
-            <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-              <th
-                scope="row"
-                className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-              >
-                Apple MacBook Pro 17"
-              </th>
-              <td className="py-4 px-6">Sliver</td>
-              <td className="py-4 px-6">Laptop</td>
-              <td className="py-4 px-6">$2999</td>
-              <td className="py-4 px-6 text-right">
-                <a
-                  href="#"
-                  className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
-                >
-                  Edit
-                </a>
-              </td>
-            </tr>
-            <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-              <th
-                scope="row"
-                className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-              >
-                Microsoft Surface Pro
-              </th>
-              <td className="py-4 px-6">White</td>
-              <td className="py-4 px-6">Laptop PC</td>
-              <td className="py-4 px-6">$1999</td>
-              <td className="py-4 px-6 text-right">
-                <a
-                  href="#"
-                  className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
-                >
-                  Edit
-                </a>
-              </td>
-            </tr>
-            <tr className="bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-600">
-              <th
-                scope="row"
-                className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-              >
-                Magic Mouse 2
-              </th>
-              <td className="py-4 px-6">Black</td>
-              <td className="py-4 px-6">Accessories</td>
-              <td className="py-4 px-6">$99</td>
-              <td className="py-4 px-6 text-right">
-                <a
-                  href="#"
-                  className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
-                >
-                  Edit
-                </a>
-              </td>
-            </tr>
-          </tbody>
-          <tbody>
-            <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-              <th
-                scope="row"
-                className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-              >
-                Apple MacBook Pro 17"
-              </th>
-              <td className="py-4 px-6">Sliver</td>
-              <td className="py-4 px-6">Laptop</td>
-              <td className="py-4 px-6">$2999</td>
-              <td className="py-4 px-6 text-right">
-                <a
-                  href="#"
-                  className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
-                >
-                  Edit
-                </a>
-              </td>
-            </tr>
-            <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-              <th
-                scope="row"
-                className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-              >
-                Microsoft Surface Pro
-              </th>
-              <td className="py-4 px-6">White</td>
-              <td className="py-4 px-6">Laptop PC</td>
-              <td className="py-4 px-6">$1999</td>
-              <td className="py-4 px-6 text-right">
-                <a
-                  href="#"
-                  className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
-                >
-                  Edit
-                </a>
-              </td>
-            </tr>
-            <tr className="bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-600">
-              <th
-                scope="row"
-                className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-              >
-                Magic Mouse 2
-              </th>
-              <td className="py-4 px-6">Black</td>
-              <td className="py-4 px-6">Accessories</td>
-              <td className="py-4 px-6">$99</td>
-              <td className="py-4 px-6 text-right">
-                <a
-                  href="#"
-                  className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
-                >
-                  Edit
-                </a>
-              </td>
-            </tr>
-          </tbody>
-          <tbody>
-            <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-              <th
-                scope="row"
-                className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-              >
-                Apple MacBook Pro 17"
-              </th>
-              <td className="py-4 px-6">Sliver</td>
-              <td className="py-4 px-6">Laptop</td>
-              <td className="py-4 px-6">$2999</td>
-              <td className="py-4 px-6 text-right">
-                <a
-                  href="#"
-                  className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
-                >
-                  Edit
-                </a>
-              </td>
-            </tr>
-            <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-              <th
-                scope="row"
-                className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-              >
-                Microsoft Surface Pro
-              </th>
-              <td className="py-4 px-6">White</td>
-              <td className="py-4 px-6">Laptop PC</td>
-              <td className="py-4 px-6">$1999</td>
-              <td className="py-4 px-6 text-right">
-                <a
-                  href="#"
-                  className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
-                >
-                  Edit
-                </a>
-              </td>
-            </tr>
-            <tr className="bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-600">
-              <th
-                scope="row"
-                className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-              >
-                Magic Mouse 2
-              </th>
-              <td className="py-4 px-6">Black</td>
-              <td className="py-4 px-6">Accessories</td>
-              <td className="py-4 px-6">$99</td>
-              <td className="py-4 px-6 text-right">
-                <a
-                  href="#"
-                  className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
-                >
-                  Edit
-                </a>
-              </td>
-            </tr>
-          </tbody>
-          <tbody>
-            <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-              <th
-                scope="row"
-                className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-              >
-                Apple MacBook Pro 17"
-              </th>
-              <td className="py-4 px-6">Sliver</td>
-              <td className="py-4 px-6">Laptop</td>
-              <td className="py-4 px-6">$2999</td>
-              <td className="py-4 px-6 text-right">
-                <a
-                  href="#"
-                  className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
-                >
-                  Edit
-                </a>
-              </td>
-            </tr>
-            <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-              <th
-                scope="row"
-                className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-              >
-                Microsoft Surface Pro
-              </th>
-              <td className="py-4 px-6">White</td>
-              <td className="py-4 px-6">Laptop PC</td>
-              <td className="py-4 px-6">$1999</td>
-              <td className="py-4 px-6 text-right">
-                <a
-                  href="#"
-                  className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
-                >
-                  Edit
-                </a>
-              </td>
-            </tr>
-            <tr className="bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-600">
-              <th
-                scope="row"
-                className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-              >
-                Magic Mouse 2
-              </th>
-              <td className="py-4 px-6">Black</td>
-              <td className="py-4 px-6">Accessories</td>
-              <td className="py-4 px-6">$99</td>
-              <td className="py-4 px-6 text-right">
-                <a
-                  href="#"
-                  className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
-                >
-                  Edit
-                </a>
-              </td>
-            </tr>
-          </tbody>
-          <tbody>
-            <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-              <th
-                scope="row"
-                className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-              >
-                Apple MacBook Pro 17"
-              </th>
-              <td className="py-4 px-6">Sliver</td>
-              <td className="py-4 px-6">Laptop</td>
-              <td className="py-4 px-6">$2999</td>
-              <td className="py-4 px-6 text-right">
-                <a
-                  href="#"
-                  className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
-                >
-                  Edit
-                </a>
-              </td>
-            </tr>
-            <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-              <th
-                scope="row"
-                className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-              >
-                Microsoft Surface Pro
-              </th>
-              <td className="py-4 px-6">White</td>
-              <td className="py-4 px-6">Laptop PC</td>
-              <td className="py-4 px-6">$1999</td>
-              <td className="py-4 px-6 text-right">
-                <a
-                  href="#"
-                  className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
-                >
-                  Edit
-                </a>
-              </td>
-            </tr>
-            <tr className="bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-600">
-              <th
-                scope="row"
-                className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-              >
-                Magic Mouse 2
-              </th>
-              <td className="py-4 px-6">Black</td>
-              <td className="py-4 px-6">Accessories</td>
-              <td className="py-4 px-6">$99</td>
-              <td className="py-4 px-6 text-right">
-                <a
-                  href="#"
-                  className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
-                >
-                  Edit
-                </a>
-              </td>
-            </tr>
-          </tbody>
-          <tbody>
-            <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-              <th
-                scope="row"
-                className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-              >
-                Apple MacBook Pro 17"
-              </th>
-              <td className="py-4 px-6">Sliver</td>
-              <td className="py-4 px-6">Laptop</td>
-              <td className="py-4 px-6">$2999</td>
-              <td className="py-4 px-6 text-right">
-                <a
-                  href="#"
-                  className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
-                >
-                  Edit
-                </a>
-              </td>
-            </tr>
-            <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-              <th
-                scope="row"
-                className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-              >
-                Microsoft Surface Pro
-              </th>
-              <td className="py-4 px-6">White</td>
-              <td className="py-4 px-6">Laptop PC</td>
-              <td className="py-4 px-6">$1999</td>
-              <td className="py-4 px-6 text-right">
-                <a
-                  href="#"
-                  className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
-                >
-                  Edit
-                </a>
-              </td>
-            </tr>
-            <tr className="bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-600">
-              <th
-                scope="row"
-                className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-              >
-                Magic Mouse 2
-              </th>
-              <td className="py-4 px-6">Black</td>
-              <td className="py-4 px-6">Accessories</td>
-              <td className="py-4 px-6">$99</td>
-              <td className="py-4 px-6 text-right">
-                <a
-                  href="#"
-                  className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
-                >
-                  Edit
-                </a>
-              </td>
-            </tr>
-          </tbody>
-          <tbody>
-            <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-              <th
-                scope="row"
-                className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-              >
-                Apple MacBook Pro 17"
-              </th>
-              <td className="py-4 px-6">Sliver</td>
-              <td className="py-4 px-6">Laptop</td>
-              <td className="py-4 px-6">$2999</td>
-              <td className="py-4 px-6 text-right">
-                <a
-                  href="#"
-                  className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
-                >
-                  Edit
-                </a>
-              </td>
-            </tr>
-            <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-              <th
-                scope="row"
-                className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-              >
-                Microsoft Surface Pro
-              </th>
-              <td className="py-4 px-6">White</td>
-              <td className="py-4 px-6">Laptop PC</td>
-              <td className="py-4 px-6">$1999</td>
-              <td className="py-4 px-6 text-right">
-                <a
-                  href="#"
-                  className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
-                >
-                  Edit
-                </a>
-              </td>
-            </tr>
-            <tr className="bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-600">
-              <th
-                scope="row"
-                className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-              >
-                Magic Mouse 2
-              </th>
-              <td className="py-4 px-6">Black</td>
-              <td className="py-4 px-6">Accessories</td>
-              <td className="py-4 px-6">$99</td>
-              <td className="py-4 px-6 text-right">
-                <a
-                  href="#"
-                  className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
-                >
-                  Edit
-                </a>
-              </td>
-            </tr>
+            {mergedData?.map((accountData: any, idx: number) => {
+              //FIXME : any형식 사용
+              return (
+                <BodyTrBlock key={`${accountData.id}_${accountData.user_id}_${idx}`}>
+                  {ACOOUNT_TABLE.map((accountInfo, idx) => {
+                    const type = accountInfo[1];
+
+                    if (type === 'assets') {
+                      const isrevenue =
+                        parseInt(accountData.payments) - parseInt(accountData.assets) < 0;
+                      return (
+                        <BodyThBlock
+                          key={`${idx}`}
+                          scope="row"
+                          className={`${isrevenue ? 'text-red-800' : 'text-blue-800'} `}
+                        >
+                          {accountData[type].toString()}
+                        </BodyThBlock>
+                      );
+                    }
+
+                    return (
+                      <Link key={`${idx}`} href={`Account/${accountData.user_id}`}>
+                        <BodyThBlock scope="row">{accountData[type].toString()}</BodyThBlock>
+                      </Link>
+                    );
+                  })}
+                </BodyTrBlock>
+              );
+            })}
           </tbody>
         </table>
+      </div>
+      <div>
+        <PaginationWrapper>
+          <PaginationUl>
+            {offSet !== 0 && (
+              <PaginationButton onClick={() => setOffSet(prev => prev - 1)}>
+                <GrPrevious />
+              </PaginationButton>
+            )}
+
+            {paginationRender(paginationArr[offSet])}
+
+            {offSet < paginationArr.length - 1 && (
+              <PaginationButton onClick={() => setOffSet(prev => prev + 1)}>
+                <GrNext />
+              </PaginationButton>
+            )}
+          </PaginationUl>
+        </PaginationWrapper>
       </div>
     </>
   );
 };
 
 export default AccountHome;
+export const getServerSideProps: GetServerSideProps = async context => {
+  const queryClient = new QueryClient();
+  const page = context.query.page ? parseInt(context.query.page as string, 10) : 1;
+  await Promise.all([
+    queryClient.prefetchQuery(['userList'], userAPI.getUser),
+    queryClient.prefetchQuery(['AccountList', 1], () => accountAPI.getList(page)),
+  ]);
+  return {
+    props: {
+      dehydratedState: dehydrate(queryClient),
+    },
+  };
+};
+
+const HeadThBlock = tw.th`
+py-3 
+px-6
+`;
+const BodyTrBlock = tw.tr`
+bg-white 
+border-b 
+dark:bg-gray-800 
+dark:border-gray-700 
+hover:bg-gray-50 
+dark:hover:bg-gray-600
+`;
+
+const BodyThBlock = tw.th`
+py-4 px-6   whitespace-nowrap dark:text-white
+`;
+
+const PaginationWrapper = tw.div`
+py-10
+`;
+const PaginationUl = tw.ul`
+flex 
+justify-center 
+items-center
+`;
+const PaginationButton = tw.div`
+transition 
+duration-150 
+ease-in-out 
+
+flex 
+leading-tight 
+font-bold 
+text-gray-500 
+rounded 
+mx-2 
+sm:mx-4 
+px-3 
+py-2 
+
+
+text-lg
+cursor-pointer 
+
+hover:scale-125
+focus:outline-none 
+`;
+
+const PaginationLi = styled.li(({ isActive }: { isActive: boolean }) => [
+  isActive ? tw`bg-blue-200` : '',
+  tw`
+  transition 
+  duration-150 
+  ease-in-out 
+  flex 
+  mx-2 
+  sm:mx-4 
+  px-3 
+  py-2 
+  rounded 
+  text-base
+  cursor-pointer 
+  shadow 
+  
+  text-indigo-700 
+  leading-tight 
+  font-bold 
+  focus:outline-none
+  hover:bg-indigo-600 
+  hover:text-white 
+  `,
+]);
 
 AccountHome.getLayout = function getLayout(page: ReactElement) {
   return <Layout>{page}</Layout>;
