@@ -9,7 +9,7 @@ const instance = axios.create({
 });
 
 instance.interceptors.request.use(
-  function (config: AxiosRequestConfig<any>) {
+  function (config: AxiosRequestConfig) {
     const accessToken = getTokenStorage('login-token');
     if (accessToken) {
       config.headers.Authorization = `Bearer ` + accessToken;

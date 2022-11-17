@@ -6,6 +6,7 @@ import {
   MenuFoldOutlined,
   MenuUnfoldOutlined,
   BankOutlined,
+  LoginOutlined,
 } from '@ant-design/icons';
 
 import 'antd/dist/antd.css';
@@ -32,15 +33,18 @@ const Aside: React.FC = () => {
         inlineCollapsed={collapsed}
       >
         <Menu.Item key="one" icon={<DashboardOutlined />}>
-          대쉬보드
+          <Link href="/dash">대쉬보드 </Link>
         </Menu.Item>
         <Menu.SubMenu icon={<BankOutlined />} title="계좌 목록" key="SubMenu">
           <Menu.Item key="two">
-            <Link href="main">투자 계좌</Link>
+            <Link href="/main">투자 계좌</Link>
           </Menu.Item>
         </Menu.SubMenu>
         <Menu.Item key="three" icon={<UserOutlined />}>
           <Link href="user">사용자</Link>
+        </Menu.Item>
+        <Menu.Item key="four" icon={<LoginOutlined />}>
+          <Link href="/">로그아웃</Link>
         </Menu.Item>
       </Menu>
     </S.MainSideLayout>

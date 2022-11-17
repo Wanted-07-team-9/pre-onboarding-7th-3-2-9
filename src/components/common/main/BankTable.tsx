@@ -1,17 +1,24 @@
-import React, { useEffect, useMemo } from 'react';
-import { useAppSelector } from '../../../redux/reducer/hook';
+import React, { useMemo } from 'react';
 import { usePagination, useTable } from 'react-table';
 import * as S from '../../../styles/TableStyle';
 import { COLUMNS } from '../../../utils/TableColumn';
+import useMainService from '../../../hooks/useMainService';
+// import { useQuery } from '@tanstack/react-query';
+// import { useMain } from '../../../pages/main';
 
 const BankTable = () => {
-  const { bankData } = useAppSelector(state => state.bankBoardData);
+  const { accountData, isLoading } = useMainService();
 
-  const BANK_DATA = bankData;
+  console.log(accountData);
+
+  const BANK_DATA = accountData;
   const columns = useMemo(() => COLUMNS, []);
-  const data = useMemo(() => BANK_DATA, [BANK_DATA]);
+  const data = useMemo(() => (BANK_DATA ? BANK_DATA : []), [BANK_DATA]);
 
-  // console.log(BANK_DATA);
+  const onIdClick = (e: React.ChangeEvent<HTMLInputElement>) => {
+    e.preventDefault();
+    console.log(e.currentTarget.getAttribute('id'));
+  };
   const {
     getTableProps,
     getTableBodyProps,
@@ -37,9 +44,7 @@ const BankTable = () => {
   );
   const { pageIndex, pageSize } = state;
 
-  useEffect(() => {
-    setPageSize(20);
-  }, [pageSize]);
+  if (isLoading) return 'Loading....';
 
   return (
     <S.TableLaytout className="table">
@@ -63,7 +68,7 @@ const BankTable = () => {
               <tr {...row.getRowProps()} key={Math.random()}>
                 {row.cells.map((cell: any) => {
                   return (
-                    <td {...cell.getCellProps()} key={Math.random()}>
+                    <td {...cell.getCellProps()} key={Math.random()} onClick={onIdClick}>
                       {cell.render('Cell')}
                     </td>
                   );
@@ -89,18 +94,7 @@ const BankTable = () => {
             {pageIndex + 1} / {pageOptions.length}
           </strong>
         </span>
-        <span>
-          {/* Go to page:{' '}
-          <input
-            type="number"
-            defaultValue={pageIndex + 1}
-            onChange={e => {
-              const pageNumber = e.target.value ? Number(e.target.value) - 1 : 0;
-              gotoPage(pageNumber);
-            }}
-            style={{ width: '50px' }}
-          /> */}
-        </span>
+
         <button onClick={() => nextPage()} disabled={!canNextPage}>
           Next
         </button>
@@ -111,7 +105,15 @@ const BankTable = () => {
       <div
         className="table-pagesize"
         style={{ margin: '5px', display: 'flex', justifyContent: 'flex-end', alignItems: 'center' }}
-      ></div>
+      >
+        {/* <select value={pageSize} onChange={e => setPageSize(Number(e.target.value))}>
+          {[10, 25, 50].map(pageSize => (
+            <option key={pageSize} value={pageSize}>
+              {pageSize}개 씩 보기
+            </option>
+          ))}
+        </select> */}
+      </div>
     </S.TableLaytout>
   );
 };
