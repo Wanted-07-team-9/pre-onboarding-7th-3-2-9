@@ -1,4 +1,4 @@
-import { ACCOUNT_NUMBER_TYPE } from "./account/accountObj";
+import { ACCOUNT_NUMBER_TYPE } from "./accountList/accountObj";
 
 export function convertDate (inputDate:Date){
     

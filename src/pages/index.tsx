@@ -3,7 +3,6 @@ import React from 'react';
 import tw from 'twin.macro';
 import { loginForm } from '../types/authType';
 import { useAuth } from './../contexts/AuthContext';
-import { useAuthMutaion } from './../hooks/useAuthMutaion';
 import AuthForm from '../components/Auth/AuthForm';
 
 const AuthHome = () => {

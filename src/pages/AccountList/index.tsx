@@ -9,17 +9,12 @@ import tw from 'twin.macro';
 import styled from 'styled-components';
 import { GetServerSideProps } from 'next';
 import { userAPI } from './../../api/userAPI';
-import { accountMerged } from '../../utils/account/account';
+import { accountMerged } from '../../utils/accountList/account';
 import { GrNext, GrPrevious } from 'react-icons/gr';
-import { useAccount } from './../../hooks/useAccount';
+import { useAccountList } from './../../hooks/useAccount';
 import { pagination } from './../../utils/pagination';
-import { ACOOUNT_TABLE } from '../../utils/account/accountObj';
+import { ACOOUNT_TABLE } from '../../utils/accountList/accountObj';
 import Link from 'next/link';
-
-// 계좌 수정..
-// 평가금액..  / 버튼 스타일링 조금만 신경쓰자.
-// 상세 페이지, 수정하기.
-// 조건에 따른 검색 구현.
 
 const AccountHome = () => {
   const { user } = useAuth();
@@ -27,7 +22,7 @@ const AccountHome = () => {
   const page = router.query.page ? parseInt(router.query.page as string, 10) : 1;
   const defaultOffset = Math.ceil(page / 5) - 1;
   const [offSet, setOffSet] = useState(0);
-  const [userData, accountData] = useAccount(page);
+  const [userData, accountData] = useAccountList(page);
 
   useEffect(() => {
     setOffSet(defaultOffset);
@@ -69,31 +64,36 @@ const AccountHome = () => {
             {mergedData?.map((accountData: any, idx: number) => {
               //FIXME : any형식 사용
               return (
-                <BodyTrBlock key={`${accountData.id}_${accountData.user_id}_${idx}`}>
-                  {ACOOUNT_TABLE.map((accountInfo, idx) => {
-                    const type = accountInfo[1];
+                <Link
+                  key={`${accountData.id}_${accountData.user_id}_${idx}`}
+                  href={`Account/${accountData.id}/?&user_id=${accountData.user_id}`}
+                >
+                  <BodyTrBlock>
+                    {ACOOUNT_TABLE.map((accountInfo, idx) => {
+                      const type = accountInfo[1];
 
-                    if (type === 'assets') {
-                      const isrevenue =
-                        parseInt(accountData.payments) - parseInt(accountData.assets) < 0;
+                      if (type === 'assets') {
+                        const isrevenue =
+                          parseInt(accountData.payments) - parseInt(accountData.assets) < 0;
+                        return (
+                          <BodyThBlock
+                            key={`${idx}`}
+                            scope="row"
+                            className={`${isrevenue ? 'text-red-800' : 'text-blue-800'} `}
+                          >
+                            {accountData[type].toString()}
+                          </BodyThBlock>
+                        );
+                      }
+
                       return (
-                        <BodyThBlock
-                          key={`${idx}`}
-                          scope="row"
-                          className={`${isrevenue ? 'text-red-800' : 'text-blue-800'} `}
-                        >
+                        <BodyThBlock key={`${idx}`} scope="row">
                           {accountData[type].toString()}
                         </BodyThBlock>
                       );
-                    }
-
-                    return (
-                      <Link key={`${idx}`} href={`Account/${accountData.user_id}`}>
-                        <BodyThBlock scope="row">{accountData[type].toString()}</BodyThBlock>
-                      </Link>
-                    );
-                  })}
-                </BodyTrBlock>
+                    })}
+                  </BodyTrBlock>
+                </Link>
               );
             })}
           </tbody>
