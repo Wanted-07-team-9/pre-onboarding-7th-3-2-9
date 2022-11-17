@@ -20,8 +20,8 @@ export const accountMerged = (
         return {
             ...account,
             userName: userData.name,
-            broker_id:ACCOUNT_STATUS_TABLE[account.broker_id],
-            status:BROKERS_TABLE[(account.status)],
+            broker_id:BROKERS_TABLE[account.broker_id],
+            status:ACCOUNT_STATUS_TABLE[(account.status)],
             is_active :account.is_active? "활성" :"비활성", // FIX.. bool값에 따라 따로 처리.
             created_at:convertDate( account.created_at),
             payments:convertAssest(account.payments),
