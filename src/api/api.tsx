@@ -9,11 +9,11 @@ export const login  = async (data : IForm) => {
   const token = loginData.accessToken
   if(typeof window !== 'undefined') {
     sessionStorage.setItem('token', `Bearer ${token}`)
+    sessionStorage.setItem('user', `${loginData.user.id}`)
   }
 }
 
 export const fetchAccount = async(page:any) => {
-  console.log(page,'api')
   const response = await axiosInstance.get('/accounts',{
     params : {
       _page: page,
@@ -43,6 +43,13 @@ export const fetchAccountDetail = async(id? : any)  : Promise<any> => {
 }
 
 export const editAccount = async(id, data) => {
-  const response = await axiosInstance.patch(`/accounts/${id}`,data)
-  console.log(response)
+  await axiosInstance.patch(`/accounts/${id}`,data)
+}
+
+export const deleteAccount = async(id) => {
+  await axiosInstance.delete(`/accounts/${id}`)
+}
+
+export const createAccount = async(data) => {
+  await axiosInstance.post(`/accounts/`,data)
 }
