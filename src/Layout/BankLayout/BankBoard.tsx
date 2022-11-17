@@ -1,7 +1,6 @@
 import React from 'react';
 import * as S from '../../styles/MainStyle';
 import BankTable from '../../components/common/main/BankTable';
-import FilterButton from '../../components/common/main/FilterButton';
 
 const BankBoard = () => {
   return (

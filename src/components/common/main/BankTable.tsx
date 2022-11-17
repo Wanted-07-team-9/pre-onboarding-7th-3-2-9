@@ -31,7 +31,6 @@ const BankTable = () => {
     pageOptions,
     gotoPage,
     pageCount,
-    setPageSize,
     state,
     prepareRow,
   } = useTable(
@@ -42,7 +41,7 @@ const BankTable = () => {
     },
     usePagination
   );
-  const { pageIndex, pageSize } = state;
+  const { pageIndex } = state;
 
   if (isLoading) return 'Loading....';
 
@@ -105,15 +104,7 @@ const BankTable = () => {
       <div
         className="table-pagesize"
         style={{ margin: '5px', display: 'flex', justifyContent: 'flex-end', alignItems: 'center' }}
-      >
-        {/* <select value={pageSize} onChange={e => setPageSize(Number(e.target.value))}>
-          {[10, 25, 50].map(pageSize => (
-            <option key={pageSize} value={pageSize}>
-              {pageSize}개 씩 보기
-            </option>
-          ))}
-        </select> */}
-      </div>
+      ></div>
     </S.TableLaytout>
   );
 };

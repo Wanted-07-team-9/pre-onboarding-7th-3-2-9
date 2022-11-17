@@ -27,7 +27,6 @@ const useReactQueries = (queries: UseReactQueriesProps[]) => {
       select: data => {
         if (item.url === '/users') {
           return { ...data, data: data.data.map(user => ({ id: user.id, user_name: user.name })) };
-          console.log(data);
         }
 
         return data;
