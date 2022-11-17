@@ -5,7 +5,8 @@ import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { QueryClient, dehydrate, useQueries } from '@tanstack/react-query';
 import { accountAPI } from './../../api/accountAPI';
-import tw, { styled } from 'twin.macro';
+import tw from 'twin.macro';
+import styled from 'styled-components';
 import { GetServerSideProps } from 'next';
 import { userAPI } from './../../api/userAPI';
 import { accountMerged } from '../../utils/account/account';
@@ -13,7 +14,6 @@ import { GrNext, GrPrevious } from 'react-icons/gr';
 import { useAccount } from './../../hooks/useAccount';
 import { pagination } from './../../utils/pagination';
 import { ACOOUNT_TABLE } from '../../utils/account/accountObj';
-import { accountTableType, mergedAccountType } from '../../types/accountType';
 import Link from 'next/link';
 
 // 계좌 수정..

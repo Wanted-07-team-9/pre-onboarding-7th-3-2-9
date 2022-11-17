@@ -1,7 +1,5 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { adminUser, loginForm } from '../types/authType';
-import { useMutation } from '@tanstack/react-query';
-import { authAPI } from './../api/authAPI';
 import axiosInstance from './../api/axiosInstance';
 import { useRouter } from 'next/router';
 import { useAuthMutaion } from './../hooks/useAuthMutaion';
@@ -40,7 +38,7 @@ export function AuthProvider({ children, tokenRepository }: ProviderProps) {
       });
       axiosInstance.defaults.headers.Authorization = `Bearer ${token}`;
     }
-  }, []);
+  }, [tokenRepository]);
 
   const login = async ({ email, password }: loginForm) => {
     const response = await loginMutation.mutateAsync({ email, password });

@@ -12,9 +12,6 @@ const AuthHome = () => {
   const onSubmit = async (loginForm: loginForm) => {
     login(loginForm);
   };
-  if (user) {
-    return '잘못된 접근입니다.';
-  }
 
   return (
     <BackGround>

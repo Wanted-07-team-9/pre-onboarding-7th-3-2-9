@@ -1,5 +1,6 @@
 import React from 'react';
-import tw, { styled } from 'twin.macro';
+import tw from 'twin.macro';
+import styled from 'styled-components';
 import { MdMenuOpen, MdMenu } from 'react-icons/md';
 import { BsBell } from 'react-icons/bs';
 

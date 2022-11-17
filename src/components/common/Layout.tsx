@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import Footer from './Footer';
 import Header from './Header';
 import SideBar from './SideBar';
-import tw, { styled } from 'twin.macro';
+import tw from 'twin.macro';
+import styled from 'styled-components';
 
 type LaytoutProps = {
   children: React.ReactNode;
