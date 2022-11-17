@@ -1,13 +1,12 @@
 import useUserService from '../hooks/useUserService';
 
-export const ACCOUNT_STATUS = {
+export const ACCOUNT_ST = {
   '9999': '관리자확인필요',
   '1': '입금대기',
   '2': '운용중',
   '3': '투자중지',
   '4': '해지',
-} as const;
-type ACCOUNT_STATUS = typeof ACCOUNT_STATUS[keyof typeof ACCOUNT_STATUS];
+};
 
 export const BROKERS = {
   '209': '유안타증권',
@@ -35,8 +34,7 @@ export const BROKERS = {
   '291': '신영증권',
   '292': 'LIG투자증권',
   '271': '토스증권',
-} as const;
-type BROKERS = typeof BROKERS[keyof typeof BROKERS];
+};
 
 export const BROKER_FORMAT = {
   '209': '00-00000000-00',
@@ -64,8 +62,7 @@ export const BROKER_FORMAT = {
   '291': '00-0000-000000',
   '292': '00-00000-00000',
   '271': '00-000-0000000',
-} as const;
-type BROKER_FORMAT = typeof BROKER_FORMAT[keyof typeof BROKER_FORMAT];
+};
 
 type accountStatusType = {
   [key: string]: number;

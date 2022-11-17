@@ -1,5 +1,5 @@
 import * as S from '../styles/MainStyle';
-import { dehydrate, QueryClient, useQuery } from '@tanstack/react-query';
+import { dehydrate, QueryClient } from '@tanstack/react-query';
 import instance from '../api/AxiosInstance';
 import { GetServerSideProps } from 'next';
 import { getTokenStorage } from '../utils/accessToken';
