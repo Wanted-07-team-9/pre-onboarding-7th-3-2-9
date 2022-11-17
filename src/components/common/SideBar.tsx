@@ -5,16 +5,23 @@ import { IoIosArrowUp } from 'react-icons/io';
 import { BsBank, BsGraphUp, BsBell } from 'react-icons/bs';
 import Image from 'next/image';
 import tw, { styled } from 'twin.macro';
+import { useAuth } from './../../contexts/AuthContext';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
 
 const SideBar = () => {
   let menuArray = [false, false]; // DropDown EL 갯수
   const [menu, setMenu] = useState(menuArray);
+  const router = useRouter();
+  const path = router.pathname.replace('/', ' ');
 
   const setMenuValue = (props: number) => {
     let newArr = [...menu];
     newArr[props] = !newArr[props];
     setMenu(newArr);
   };
+
+  const { logout } = useAuth();
 
   return (
     <SliderBlock>
@@ -43,7 +50,9 @@ const SideBar = () => {
         <DropDownItemBlock isFocus={menu[0]}>
           <DropDownButton>
             <BsGraphUp />
-            <p className="text-base leading-4  ">투자 계좌</p>
+            <Link href="/AccountList">
+              <p className="text-base leading-4  ">투자 계좌</p>
+            </Link>
           </DropDownButton>
         </DropDownItemBlock>
       </DropDownMenuBlock>
@@ -58,7 +67,9 @@ const SideBar = () => {
       <MenuItemBlock>
         <MenbuButton>
           <AiOutlineLogout />
-          <p className="font-medium">로그아웃</p>
+          <p className="font-medium" onClick={logout}>
+            로그아웃
+          </p>
         </MenbuButton>
       </MenuItemBlock>
     </SliderBlock>
@@ -73,11 +84,12 @@ const SliderBlock = tw.div`
   items-start 
 
   h-full 
-  w-full 
+  w-screen
   bg-[#001e41]
   sm:w-64 
 
   xl:rounded-r 
+
   `;
 
 const TopLogoBlock = tw.div`

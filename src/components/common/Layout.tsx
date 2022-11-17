@@ -41,7 +41,7 @@ justify-center
 items-center 
 flex-col 
 max-h-[65vh]
-z-50
+z-10
 `;
 
 const SlideBarWrapper = styled.div(({ show }: { show: boolean }) => [
@@ -55,6 +55,7 @@ const SlideBarWrapper = styled.div(({ show }: { show: boolean }) => [
   h-full 
   absolute 
   left-0 
+  z-[9999]
 `,
 ]);
 
