@@ -5,11 +5,10 @@ import Pagination from "../../src/components/Pagination"
 import Table from "../../src/components/Table"
 import { useState } from "react"
 import { Container, FixedWrapper, ContentWrapper, TableWrapper } from './style'
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
+import { useQuery } from "@tanstack/react-query"
 import { fetchAccount } from "../../src/api/api"
 
 const List = () => {
-  const queryClient = useQueryClient()
   const columns = [
     '증권사', '계좌번호', '계좌상태', '계좌명', '평가금액', '입금금액', '수익률', '계좌활성화여부', '계좌개설일'
   ]
@@ -17,12 +16,6 @@ const List = () => {
   const { data, isLoading, isError } = useQuery(
     ['accountList', page], () => fetchAccount(page)
   )
-  const handlePage = (target) => {
-    setPage(target)
-  }
-  const {mutate} = useMutation(handlePage,{
-    onSuccess : () =>queryClient.invalidateQueries(['accountList'])
-  })
   return (
     <Container>
       <Sider />
@@ -40,8 +33,6 @@ const List = () => {
                 <Pagination total={data.totalData} page={page} setPage={setPage} /></>
             )
           }
-
-
         </FixedWrapper>
         <Footer />
       </ContentWrapper>

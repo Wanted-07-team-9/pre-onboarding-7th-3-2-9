@@ -16,6 +16,5 @@ export const GlobalStyles = createGlobalStyle`
     background-color:#F0F2F5;
   }
   body {
-    /* font-family: 'Noto Serif KR', serif; */
   }
 `;
