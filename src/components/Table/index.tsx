@@ -1,14 +1,15 @@
 import React from "react";
 import Link from "next/link"
 import { convertBrokerId, convertAccountStatus, convertAccountNumber, convertComma, convertIsoToTimeStamp, convertPhoneNumber } from '../../utils/convertFn';
-import styled from "styled-components";
+import {StyledTd, StyledTable, TableLayout} from './style'
 
 const Table = ({ columns, data, isAccount }: any) => {
 
   return (
-    <table>
+    <TableLayout>      
+        <StyledTable>
       <thead>
-        <tr>
+        <tr >
           {columns.map((column, idx: any) => (
             <th key={idx}>{column}</th>
           ))}
@@ -28,7 +29,7 @@ const Table = ({ columns, data, isAccount }: any) => {
               <td>{convertComma(account.payments)}</td>
               <StyledTd className={account.assets-account.payments  >= 0 ? (account.assets - account.payments === 0 ? 'zeor' : 'plus'): 'minus'
                 }>{convertComma(account.assets-account.payments)}</StyledTd>
-              <td>{account.is_active ? 'O' : 'X'}</td>
+              <td>{account.is_active ? '활성화' : '비활성화'}</td>
               <td>{convertIsoToTimeStamp(account.created_at)}</td>
             </tr>
           ))
@@ -46,20 +47,10 @@ const Table = ({ columns, data, isAccount }: any) => {
           ))
         )}
       </tbody>
-    </table>
+    </StyledTable>
+    </TableLayout>
   );
 }
 
-const StyledTd = styled.div`
-  &.zero{
-    color: black;
-  }
-  &.plus{
-    color : red;
-  }
-  &.minus{
-    color : blue;
-  }
-`
 
 export default Table;
