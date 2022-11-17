@@ -1,17 +1,14 @@
 import { useQueries } from '@tanstack/react-query';
 
 import AxiosRequest from 'core/services';
-import { UseReactQueriesProps } from '../types';
+import { UseAccountsQueriesProps } from '../types';
 
-const useReactQueries = (queries: UseReactQueriesProps[]) => {
+const useAccountsQueries = (queries: UseAccountsQueriesProps[]) => {
   const [accounts, users] = useQueries({
     queries: queries.map(item => ({
       queryKey: item.queryKey,
       queryFn: async () => {
-        const { headers, data } = await AxiosRequest.get(item.url, {
-          headers: item.headers,
-          params: item.params,
-        });
+        const { headers, data } = await AxiosRequest.get(item.url, item.config);
         const mergedData = {
           totalCount: headers['x-total-count'] || 0,
           data: data,
@@ -29,11 +26,11 @@ const useReactQueries = (queries: UseReactQueriesProps[]) => {
   });
 
   const addData = accounts.data?.data.map(account => {
-    const findUser = users.data?.data.find(user => user.id === account.user_id);
+    const findUser = users.data?.data.find(user => user.id === +account.user_id);
     account.user_name = findUser?.user_name;
     return account;
   });
   return { ...accounts, data: { ...accounts.data, data: addData } };
 };
 
-export default useReactQueries;
+export default useAccountsQueries;

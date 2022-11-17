@@ -1,9 +1,6 @@
-// import Router from 'next/router';
-// import { signOut } from 'next-auth/react';
 import axios from 'axios';
-import toast from 'react-hot-toast';
 
-const BASE_URL = process.env.NEXT_PUBLIC_URL;
+const BASE_URL = 'https://wanted-3-2-9-json-server.herokuapp.com';
 
 const AxiosRequest = axios.create({
   baseURL: BASE_URL,
@@ -22,13 +19,7 @@ AxiosRequest.interceptors.response.use(
   response => {
     return response;
   },
-  async error => {
-    if (error.response.status === 401) {
-      toast.error('세션이 만료되었습니다.');
-      // const data = await signOut({ redirect: false, callbackUrl: '/login' });
-
-      // await Router.push(data.url);
-    }
+  error => {
     return Promise.reject(error.response);
   }
 );

@@ -1,8 +1,7 @@
-import { ThemeOptions } from '@material-ui/core/styles/createMuiTheme';
+import { ThemeOptions } from '@mui/material/styles';
 
 export const themeOptions: ThemeOptions = {
   palette: {
-    type: 'light',
     primary: {
       main: '#3f51b5',
     },
@@ -11,13 +10,6 @@ export const themeOptions: ThemeOptions = {
     },
   },
   components: {
-    MuiBox: {
-      styleOverrides: {
-        root: {
-          backgroundColor: '#fff',
-        },
-      },
-    },
     MuiInputLabel: {
       styleOverrides: {
         root: {

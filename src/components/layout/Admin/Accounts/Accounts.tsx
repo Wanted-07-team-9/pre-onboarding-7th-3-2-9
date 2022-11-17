@@ -10,6 +10,7 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faInbox } from '@fortawesome/free-solid-svg-icons';
+import toast from 'react-hot-toast';
 
 import RowItem from 'components/blocks/Accounts/RowItem';
 import AccountFooter from 'components/blocks/Accounts/Footer';
@@ -21,13 +22,16 @@ const Accounts = ({ data, isLoading }) => {
 
   const onRowClick = (e: React.MouseEvent<HTMLTableRowElement>) => {
     const accountId = e.currentTarget.getAttribute('data-account-id');
-    router.push(`accounts/${accountId}`);
+    const myPromise = router.push(`accounts/${accountId}`);
+    toast.promise(myPromise, {
+      loading: '계좌 상세 불러오기...',
+      success: '데이터 불러오기 성공!',
+      error: '데이터 불러오기 실패',
+    });
   };
 
   const onNameClick = (e: React.MouseEvent<HTMLSpanElement>) => {
     e.stopPropagation();
-    // console.log(e.target.getAttribute('data-user-id'));
-    // toast.success('name Click!');
   };
 
   return (
@@ -37,10 +41,9 @@ const Accounts = ({ data, isLoading }) => {
       ) : (
         <>
           <AccountFilterBar />
-          {/* <AccountTable /> */}
           <div style={{ margin: '10px 0' }}>
-            <TableContainer component={Paper} sx={{ minHeight: 600, maxHeight: 600 }}>
-              <Table stickyHeader aria-label="sticky table">
+            <TableContainer component={Paper} sx={{ minHeight: '50%', maxHeight: '70vh' }}>
+              <Table stickyHeader aria-label="sticky table" sx={{ maxHeight: '10px' }}>
                 <TableHead>
                   <TableRow>
                     {ACCOUNT_COLUMN.map((val, index) => (

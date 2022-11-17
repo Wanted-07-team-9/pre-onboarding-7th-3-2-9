@@ -5,6 +5,7 @@
   "scripts": {
     "postinstall": "husky install",
     "dev": "next dev",
+    "dev:ts": "next dev & tsc --noEmit --watch",
     "build": "next build",
     "start": "next start",
     "format": "prettier --check --ignore-path .gitignore .",

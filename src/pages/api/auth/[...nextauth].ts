@@ -17,7 +17,6 @@ export default NextAuth({
           email: credentials.email,
           password: credentials.password,
         });
-
         if (status === 200 && data) {
           return data;
         }
@@ -27,12 +26,10 @@ export default NextAuth({
   ],
   jwt: {
     maxAge: 60 * 60,
-    // maxAge: 5
   },
   session: {
     strategy: 'jwt',
     maxAge: 60 * 60,
-    // maxAge: 5,
   },
   callbacks: {
     jwt: ({ token, user }) => {
@@ -44,7 +41,6 @@ export default NextAuth({
     },
     session: ({ session, token }) => {
       session.accessToken = token.accessToken;
-      session.expires = new Date(parseInt(String(token.exp).padEnd(13, '0'))).toISOString();
       session.user = token.user;
       return session;
     },

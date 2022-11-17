@@ -2,89 +2,92 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { useSession } from 'next-auth/react';
 
-import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { Card } from '@mui/material';
 import toast from 'react-hot-toast';
 
-import AxiosRequest from 'core/services';
+import { IAccountData } from 'core/services/types';
 import AccountDetail from './AccountDetail';
-import useReactQuery from 'core/services/hooks/useReactQuery';
-
-export interface IDetailData {
-  id: number;
-  user_id: number;
-  uuid: string;
-  broker_id: string;
-  status: number;
-  number: string;
-  name: string;
-  assets: string;
-  payments: string;
-  is_active: boolean;
-  created_at: string;
-  updated_at: string;
-  user_name: string;
-}
+import useAccountQuery from 'core/services/hooks/useAccountQuery';
+import { useMutateAccount } from 'core/services/hooks/useMutateAccount';
+import { useFormattedNowDate } from 'core/services/hooks/useFormattedDate';
 
 const AccountDetailIndex = () => {
   const router = useRouter();
-  const queryClient = useQueryClient();
   const { data: session } = useSession();
 
+  const account_id = +router.query.id;
   const [isEdit, setIsEdit] = useState(false);
-
-  const { data }: { data: IDetailData } = useReactQuery({
-    queryKey: ['account', router.query.id],
-    url: `/accounts/${router.query.id}`,
+  const config = {
     headers: {
       Authorization: `Bearer ${session?.accessToken}`,
     },
+  };
+  const { data }: { data: IAccountData } = useAccountQuery({
+    queryKey: ['account', account_id],
+    url: `/accounts/${account_id}`,
+    config,
     enabled: !!session?.accessToken,
   });
 
-  const { mutate, isSuccess } = useMutation({
-    mutationFn: data => {
-      return AxiosRequest.patch(
-        `/accounts/${router.query.id}`,
-        {
-          ...data,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${session?.accessToken}`,
-            'Content-Type': 'application/x-www-form-urlencoded',
-          },
-        }
-      );
-    },
-    onSuccess: data => {
-      console.log(data);
-      queryClient.setQueryData(['account', router.query.id], oldData =>
-        oldData
-          ? {
-              ...oldData,
-              name: data.data.name,
-            }
-          : oldData
-      );
+  const editMutate = useMutateAccount({
+    method: 'patch',
+    id: account_id,
+    config: {
+      ...config,
+      headers: {
+        ...config.headers,
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
     },
   });
 
-  const onEditName = (values: { name: string }) => {
-    mutate({ id: data.id, name: values.name });
+  const deleteMutate = useMutateAccount({
+    method: 'delete',
+    id: account_id,
+    config: {
+      ...config,
+      headers: {
+        ...config.headers,
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+    },
+  });
+
+  const newDate = useFormattedNowDate();
+  const onEditAccount = (values: { name: string; is_active: boolean }) => {
+    editMutate.mutate({ ...values, updated_at: newDate });
+  };
+
+  const onDeleteAccount = () => {
+    deleteMutate.mutate({ id: account_id });
   };
 
   useEffect(() => {
-    if (isSuccess) {
+    if (editMutate.isSuccess) {
       toast.success('수정이 완료되었습니다.');
       setIsEdit(false);
     }
-  }, [isSuccess]);
+    if (deleteMutate.isSuccess) {
+      const myPromise = router.push('/admin/accounts');
+      toast.promise(myPromise, {
+        loading: '삭제중...',
+        success: '삭제 성공!',
+        error: '삭제 실패',
+      });
+    }
+  }, [router, editMutate.isSuccess, deleteMutate.isSuccess]);
 
+  const props = {
+    data: data,
+    isEdit: isEdit,
+    setIsEdit: setIsEdit,
+    onEditAccount: onEditAccount,
+    onDeleteAccount: onDeleteAccount,
+  };
   return (
     <>
-      <Card sx={{ maxWidth: 700 }}>
-        <AccountDetail data={data} onEditName={onEditName} isEdit={isEdit} setIsEdit={setIsEdit} />
+      <Card sx={{ maxWidth: 700, m: '0 auto' }}>
+        <AccountDetail {...props} />
       </Card>
     </>
   );

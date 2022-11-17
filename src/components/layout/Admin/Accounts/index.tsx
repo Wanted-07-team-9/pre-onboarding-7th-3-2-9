@@ -4,55 +4,63 @@ import { useSession } from 'next-auth/react';
 import { useRecoilState } from 'recoil';
 
 import Accounts from './Accounts';
-import useReactQueries from 'core/services/hooks/useReactQueries';
+import useAccountsQueries from 'core/services/hooks/useAccountsQueries';
 import { queriesState } from 'core/states';
 
 const AccountIndex = () => {
   const { data: session } = useSession();
   const router = useRouter();
   const [queries, setQueries] = useRecoilState(queriesState);
-  const { page, limit, broker, active, status, q } = router.query;
+
+  const { broker = '', active = '', status = '', q = '', ...pages } = router.query;
+  const page = pages.page ? +pages.page : 1;
+  const limit = pages.limit ? +pages.limit : 10;
 
   useEffect(() => {
     if (page && limit) {
-      setQueries({ ...queries, page: parseInt(page), limit: parseInt(limit) });
+      setQueries({ ...queries, page: page, limit: limit });
     }
   }, [router]);
 
-  const { data, isLoading } = useReactQueries([
+  const { data, isLoading } = useAccountsQueries([
     {
       queryKey: [
         'accounts',
         page ? page : queries.page,
         limit ? limit : queries.limit,
-        broker ? broker : queries.broker,
-        active ? active : queries.active,
-        status ? status : queries.status,
-        q ? q : queries.q,
+        broker ? broker.toString() : queries.broker,
+        active ? active.toString() : queries.active,
+        status ? status.toString() : queries.status,
+        q ? q.toString() : queries.q,
       ],
       url: '/accounts',
-      headers: {
-        Authorization: `Bearer ${session?.accessToken}`,
-      },
-      params: {
-        _page: page ? page : queries.page,
-        _limit: limit ? limit : queries.limit,
-        broker_id_like: broker ? broker : queries.broker,
-        is_active_like: active ? active : queries.active,
-        status_like: status ? status : queries.status,
-        q: q ? q : queries.q,
+      config: {
+        headers: {
+          Authorization: `Bearer ${session?.accessToken}`,
+        },
+        params: {
+          _page: page ? page : queries.page,
+          _limit: limit ? limit : queries.limit,
+          broker_id_like: broker ? broker : queries.broker,
+          is_active_like: active ? active : queries.active,
+          status_like: status ? status : queries.status,
+          q: q ? q.toString() : queries.q,
+        },
       },
       enabled: !!session?.accessToken,
     },
     {
       queryKey: ['users'],
       url: '/users',
-      headers: {
-        Authorization: `Bearer ${session?.accessToken}`,
+      config: {
+        headers: {
+          Authorization: `Bearer ${session?.accessToken}`,
+        },
       },
       enabled: !!session?.accessToken,
     },
   ]);
+
   return (
     <>
       <Accounts data={data} isLoading={isLoading} />

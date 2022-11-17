@@ -42,7 +42,7 @@ const Header = () => {
           component="div"
           sx={{ display: { xs: 'none', sm: 'block' } }}
         >
-          {title.name}
+          {title?.name}
         </Typography>
         <Box sx={{ flexGrow: 1 }} />
         <Box

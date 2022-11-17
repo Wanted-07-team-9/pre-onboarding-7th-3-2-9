@@ -50,7 +50,7 @@ const Sidebar = () => {
           <StyledTitleSpan open={open}>PREFACE</StyledTitleSpan>
         </div>
       </Logo>
-      <SideNav open={open}>
+      <SideNav>
         <ul>
           {SIDER.map(side => {
             return side.id === 9999 ? (
@@ -75,7 +75,10 @@ const Sidebar = () => {
   );
 };
 
-const StyledSidebar = styled.aside`
+interface ISidebar {
+  open: boolean;
+}
+const StyledSidebar = styled.aside<ISidebar>`
   height: 100%;
   width: ${({ open }) => (open ? '230px' : '65px')};
   background-color: #041527;
@@ -104,7 +107,7 @@ const Logo = styled.header`
     }
   }
 `;
-const StyledTitleSpan = styled.span`
+const StyledTitleSpan = styled.span<ISidebar>`
   display: ${({ open }) => (open ? 'block' : 'none')};
 `;
 const SideNav = styled.nav`
@@ -127,7 +130,7 @@ const SideNav = styled.nav`
     }
   }
 `;
-const StyledTextSpan = styled.span`
+const StyledTextSpan = styled.span<ISidebar>`
   opacity: ${({ open }) => (open ? 1 : 0)};
   transition: opacity 0.5s;
 `;

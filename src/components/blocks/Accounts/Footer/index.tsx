@@ -7,6 +7,7 @@ import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import InputLabel from '@mui/material/InputLabel';
+import { SelectChangeEvent } from '@mui/material/Select';
 
 import { queriesState } from 'core/states';
 import { getAccountPath } from 'utils/AccountPath';
@@ -23,8 +24,9 @@ const AccountFooter = ({ totalCount }) => {
   };
 
   const onLimitChange = (e: SelectChangeEvent) => {
-    setQueries({ ...queries, limit: e.target.value });
-    router.push(getAccountPath({ ...queries, limit: e.target.value }), undefined, {
+    const limit = parseInt(e.target.value);
+    setQueries({ ...queries, page: 1, limit: limit });
+    router.push(getAccountPath({ ...queries, page: 1, limit: limit }), undefined, {
       shallow: true,
     });
   };
@@ -41,14 +43,15 @@ const AccountFooter = ({ totalCount }) => {
           variant="outlined"
           color="primary"
           className="pagination"
+          sx={{ ul: { flexWrap: 'nowrap' } }}
         />
       </div>
       <div>
-        <InputLabel>페이지당 개수 :</InputLabel>
         <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
+          <InputLabel>페이지당 개수</InputLabel>
           <Select
             size="small"
-            value={queries.limit}
+            value={queries.limit.toString()}
             onChange={onLimitChange}
             displayEmpty
             inputProps={{ 'aria-label': 'Without label' }}
@@ -65,8 +68,11 @@ const AccountFooter = ({ totalCount }) => {
 
 const StyledFooterDiv = styled.div`
   display: flex;
+  align-items: center;
   justify-content: center;
+  overflow-x: auto;
   margin: 1em 0;
+
   > div {
     display: flex;
     align-items: center;
@@ -74,6 +80,9 @@ const StyledFooterDiv = styled.div`
     width: 33%;
   }
   > div:last-child {
+    @media screen and (max-width: 800px) {
+      display: none;
+    }
     justify-content: flex-start;
   }
 `;

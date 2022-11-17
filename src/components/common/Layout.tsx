@@ -5,7 +5,6 @@ import styled from 'styled-components';
 import Sidebar from './Sidebar';
 import Header from './Header';
 import Footer from './Footer';
-
 const Layout = ({ children }: { children: React.ReactNode }) => {
   return (
     <StyledWrap>

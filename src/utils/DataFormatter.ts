@@ -1,6 +1,6 @@
 import { BROKER_FORMAT } from './DataEnum';
 
-export const convertAccountNumber = (broker_id: string, accNumber: number) => {
+export const convertAccountNumber = (broker_id: string, accNumber: string) => {
   const format = BROKER_FORMAT[broker_id];
   const regex = /-/g;
   const arrIndex = [...format.matchAll(regex)].map(s => s.index);

@@ -1,29 +1,22 @@
-import { useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 
-export const useMutateAccount = ({ data, headers }) => {
+import { IMutateData, UseMutateAccount } from '../types';
+import AxiosRequest from '../index';
+
+export const useMutateAccount = ({ method, id, config }: UseMutateAccount) => {
   const queryClient = useQueryClient();
+  const url = id ? `/accounts/${id}` : '/accounts';
 
   return useMutation({
-    mutationFn: () => {
-      return AxiosRequest.patch(
-        `/accounts/${router.query.id}`,
-        {
-          ...data,
-        },
-        {
-          headers,
-        }
-      );
+    mutationFn: (data: IMutateData) => {
+      return AxiosRequest({ method: method, url: url, headers: config.headers, data });
     },
-    onSuccess: data => {
-      queryClient.setQueryData(['account', router.query.id], oldData =>
-        oldData
-          ? {
-              ...oldData,
-              name: data.name,
-            }
-          : oldData
-      );
+    onSuccess: () => {
+      if (method === 'patch') {
+        queryClient.invalidateQueries(['account', id]);
+      } else {
+        queryClient.invalidateQueries(['accounts']);
+      }
     },
   });
 };
