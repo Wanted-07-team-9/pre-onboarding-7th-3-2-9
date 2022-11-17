@@ -1,28 +1,20 @@
 import styled from "styled-components";
 
+export const EditFormWrapper = styled.section`
+  display:flex;
+  justify-content:center;
+`
+
 export const FormWrapper = styled.section`
   display:flex;
   section{
     display:flex;
     flex-direction: column;
   }
-  button{
-    margin-top: auto;
-    height:100%;
-    margin-bottom: 1.5rem;
-    background-color: #5160EA;
-    color : white;
-    border-radius:2rem;
-    padding: 0.5rem;
-    border: none;
-    :hover{
-      cursor: pointer;
-    }
-  }
 `
-export const EditFormWrapper = styled.section`
-  display:flex;
-  justify-content:center;
+
+export const ColumnSection = styled.section`
+  margin: 1rem;
 `
 
 export const InputWrapper = styled.section`
@@ -42,6 +34,21 @@ export const InputWrapper = styled.section`
   }
 `
 
-export const ColumnSection = styled.section`
-  margin: 1rem;
+
+export const EventWrapper = styled.div`
+  display:flex;
+  flex-direction: column;
+  margin-top: 1rem;
+  .event{
+    margin-bottom: 1.5rem;
+    background-color: #5160EA;
+    color : white;
+    border-radius:2rem;
+    padding: 0.5rem;
+    border: none;
+    :hover{
+      cursor: pointer;
+      background-color: #468FF7;;
+    }
+  }
 `

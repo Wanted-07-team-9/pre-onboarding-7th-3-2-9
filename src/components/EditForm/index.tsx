@@ -1,8 +1,7 @@
-import styled from "styled-components"
 import { useForm } from 'react-hook-form'
 import { BROKER_LIST_OPTON, ACCOUNT_STATUS_OPTION } from "../../utils/constantValue"
-import { EditFormWrapper, FormWrapper, ColumnSection, InputWrapper } from "./style"
-const EditForm = ({ mutate, data }: any) => {
+import { EditFormWrapper, FormWrapper, ColumnSection, InputWrapper, EventWrapper } from "./style"
+const EditForm = ({ mutate, data, handleDelete }: any) => {
   const { register, handleSubmit } = useForm()
   const is_active_status = (data ? JSON.parse(data.is_active) : '')
   return (
@@ -30,7 +29,6 @@ const EditForm = ({ mutate, data }: any) => {
               ))}
             </select>
             </InputWrapper>
-
           </ColumnSection>
           <ColumnSection>
             <InputWrapper>
@@ -55,7 +53,10 @@ const EditForm = ({ mutate, data }: any) => {
             </select>
             </InputWrapper>
           </ColumnSection>
-          <button>수정하기</button>
+          <EventWrapper>
+          <button type="button" className='event'  onClick={handleDelete}>삭제하기</button>
+          <button className='event'>수정하기</button>
+          </EventWrapper>
         </FormWrapper>
       </form>
     </EditFormWrapper>
