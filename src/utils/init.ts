@@ -1,6 +1,6 @@
-import { TokenRepository } from "../repository/tokenRepositiory";
+import { TokenRepository } from '../repository/tokenRepositiory';
 
 export default function init() {
-  const tokenRepository = new TokenRepository
-  return {  tokenRepository};
+  const tokenRepository = new TokenRepository();
+  return { tokenRepository };
 }

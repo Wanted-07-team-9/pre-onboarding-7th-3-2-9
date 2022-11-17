@@ -1,9 +1,8 @@
 const VIEW_PAGE_COUNT = 5;
-const LIMIT = 10
+const LIMIT = 10;
 
 export function pagination(count: number) {
-
-    let totalCount = Math.ceil(count/LIMIT)
+  let totalCount = Math.ceil(count / LIMIT);
 
   let originCntArr = [];
   let resultArr = [];
