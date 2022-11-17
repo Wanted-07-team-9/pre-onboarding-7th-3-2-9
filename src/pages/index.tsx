@@ -1,10 +1,21 @@
 import Image from 'next/image';
-import React, { useState } from 'react';
+import React from 'react';
 import tw from 'twin.macro';
-import { AiOutlineUser } from 'react-icons/ai';
-import { useRouter } from 'next/router';
+import { loginForm } from '../types/authType';
+import { useAuth } from './../contexts/AuthContext';
+import { useAuthMutaion } from './../hooks/useAuthMutaion';
+import AuthForm from '../components/Auth/AuthForm';
 
 const AuthHome = () => {
+  const { user, login } = useAuth();
+
+  const onSubmit = async (loginForm: loginForm) => {
+    login(loginForm);
+  };
+  if (user) {
+    return '잘못된 접근입니다.';
+  }
+
   return (
     <BackGround>
       <AuthWrapper>
@@ -12,27 +23,7 @@ const AuthHome = () => {
           <Image src="/Logo/fintLogo.svg" alt="" width={80} height={80} />
           <div>PreFace</div>
         </LogoBlock>
-        <FormBlock>
-          <AuthTypeTextBlock>
-            <AiOutlineUser />
-            <p className="ml-2">로그인</p>
-          </AuthTypeTextBlock>
-          <RecommendTextBlock>
-            계정이 아직 없으신가요?
-            <RecommendLinkBlock>회원가입 바로가기</RecommendLinkBlock>
-          </RecommendTextBlock>
-          <div>
-            <InputLabelBlock>Email</InputLabelBlock>
-            <InputBlock type="email" />
-          </div>
-          <div className="mt-6">
-            <InputLabelBlock>Password</InputLabelBlock>
-            <InputBlock type="password" />
-          </div>
-          <div className="mt-8">
-            <SubmitButton>로그인</SubmitButton>
-          </div>
-        </FormBlock>
+        <AuthForm onSubmit={onSubmit} />
       </AuthWrapper>
       <FooterBlock>ⓒ December and Company </FooterBlock>
     </BackGround>
