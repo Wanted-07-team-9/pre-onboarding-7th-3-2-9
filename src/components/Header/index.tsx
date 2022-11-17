@@ -24,10 +24,9 @@ const Header = ({pageName} : any ) => {
           </BellWrapper>
         </UserInfo>
         <UserName>
-          핀트
+          미미님
         </UserName>
       </RightItem>
-
     </HeaderLayout>
   )
 }

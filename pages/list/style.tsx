@@ -18,4 +18,5 @@ export const ContentWrapper = styled.div`
 
 export const TableWrapper = styled.section`
   background-color: #F0F2F5;
+  padding: 1rem 0;
 `

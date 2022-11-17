@@ -1,5 +1,11 @@
 import styled from "styled-components"
 
+
+export const TableLayout = styled.section`
+  display:flex;
+  justify-content:center;
+  min-height: 40rem;
+`
 export const StyledTd = styled.div`
   &.zero{
     color: black;
@@ -46,8 +52,3 @@ export const StyledTable = styled.thead`
 }
 `
 
-export const TableLayout = styled.section`
-  display:flex;
-  justify-content:center;
-  align-items:center;
-`

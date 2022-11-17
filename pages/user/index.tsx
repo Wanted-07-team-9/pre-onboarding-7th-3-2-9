@@ -27,11 +27,10 @@ const User = () => {
           {isError && <div>error</div>}
           {data &&
             (
-              <>
                 <TableWrapper>
                   <Table columns={columns} data={data.userData} isAccount={false} />
+                  <Pagination total={data.totalData} page={page} setPage={setPage} />
                 </TableWrapper>
-                <Pagination total={data.totalData} page={page} setPage={setPage} /></>
             )
           }
         </FixedWrapper>

@@ -17,7 +17,9 @@ flex-direction: column;
 align-items:center;
 `
 export const MainWrapper = styled.div`
-  
+footer{
+  margin-top: 3rem;
+}
 `
 export const StyledHeader = styled.section`
   display:flex; 
