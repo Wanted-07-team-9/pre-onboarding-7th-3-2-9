@@ -8,16 +8,23 @@ import {
   BankOutlined,
   LoginOutlined,
 } from '@ant-design/icons';
-
+import { removeTokenStorage } from '../../utils/accessToken';
 import 'antd/dist/antd.css';
 import { Button, Menu } from 'antd';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 
 const Aside: React.FC = () => {
+  const route = useRouter();
   const [collapsed, setCollapsed] = useState(false);
 
   const toggleCollapsed = () => {
     setCollapsed(!collapsed);
+  };
+
+  const logOutHandler = () => {
+    removeTokenStorage();
+    route.push('/');
   };
 
   return (
@@ -44,7 +51,7 @@ const Aside: React.FC = () => {
           <Link href="user">사용자</Link>
         </Menu.Item>
         <Menu.Item key="four" icon={<LoginOutlined />}>
-          <Link href="/">로그아웃</Link>
+          <span onClick={logOutHandler}>로그아웃</span>
         </Menu.Item>
       </Menu>
     </S.MainSideLayout>
