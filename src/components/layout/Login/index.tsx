@@ -29,15 +29,19 @@ const LoginIndex = () => {
 
   return (
     <>
-      <Login onSubmit={onSubmit} />
-      <Copyright>Copyright © December and Company Inc.</Copyright>
-      <ResponsiveLabel>
-        본 사이트는 1920 X 1080 해상도 PC 사용에 최적화 되어 있습니다.
-      </ResponsiveLabel>
+      <LoginDiv>
+        <Login onSubmit={onSubmit} />
+        <Copyright>Copyright © December and Company Inc.</Copyright>
+        <ResponsiveLabel>
+          본 사이트는 1920 X 1080 해상도 PC 사용에 최적화 되어 있습니다.
+        </ResponsiveLabel>
+      </LoginDiv>
     </>
   );
 };
-
+const LoginDiv = styled.div`
+  padding-top: 1px;
+`;
 const Copyright = styled.p`
   font-size: 12px;
   color: #767676;
