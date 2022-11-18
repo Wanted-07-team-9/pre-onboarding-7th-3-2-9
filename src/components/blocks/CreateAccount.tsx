@@ -9,15 +9,16 @@ import TextField from '@mui/material/TextField';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import InputLabel from '@mui/material/InputLabel';
+import Stack from '@mui/material/Stack';
 import styled from 'styled-components';
 import toast from 'react-hot-toast';
 
-import { BROKERS } from 'utils/DataEnum';
 import AxiosRequest from 'core/services';
 import { IMutateData, IUserData } from 'core/services/types';
-import { getAccountNumber } from 'utils/GenerateData';
 import { useMutateAccount } from 'core/services/hooks/useMutateAccount';
 import { useFormattedNowDate } from 'core/services/hooks/useFormattedDate';
+import { getAccountNumber } from 'utils/GenerateData';
+import { BROKERS } from 'utils/DataEnum';
 
 const CreateAccount = ({ dialogClose }: { dialogClose: () => void }) => {
   const { data: session } = useSession();
@@ -160,14 +161,14 @@ const CreateAccount = ({ dialogClose }: { dialogClose: () => void }) => {
                 required
               />
             </FormControl>
-            <div>
+            <Stack direction="row" spacing={2} sx={{ mt: 2 }}>
               <Button variant="contained" color="inherit" onClick={dialogClose}>
                 취소
               </Button>
               <Button variant="contained" type="submit" color="success" disabled={isSubmitting}>
                 계좌 등록
               </Button>
-            </div>
+            </Stack>
           </CreateForm>
         )}
       </Formik>

@@ -16,9 +16,18 @@ import RowItem from 'components/blocks/Accounts/RowItem';
 import AccountFooter from 'components/blocks/Accounts/Footer';
 import AccountFilterBar from 'components/blocks/Accounts/Filter';
 import { ACCOUNT_COLUMN } from 'utils/DataEnum';
-import RowSkeleton from 'components/blocks/Accounts/RowSkeleton';
+import TableSkeleton from 'components/blocks/Accounts/Skeleton/TableSkeleton';
+import { IAccountData } from 'core/services/types';
 
-const Accounts = ({ data, isLoading }) => {
+interface IAccountResponse {
+  data: {
+    data: IAccountData;
+    totalCount: number;
+  };
+  isLoading: boolean;
+}
+
+const Accounts = ({ data, isLoading }: IAccountResponse) => {
   const router = useRouter();
 
   const onRowClick = (e: React.MouseEvent<HTMLTableRowElement>) => {
@@ -52,7 +61,7 @@ const Accounts = ({ data, isLoading }) => {
             </TableHead>
             <TableBody>
               {isLoading || !data ? (
-                <RowSkeleton />
+                <TableSkeleton />
               ) : (
                 <>
                   {data?.totalCount > 0 ? (
