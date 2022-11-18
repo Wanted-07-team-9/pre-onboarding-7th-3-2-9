@@ -13,11 +13,11 @@ import { queriesState } from 'core/states';
 import { getAccountPath } from 'utils/AccountPath';
 import PaginationSkeleton from '../Skeleton/PaginationSkeleton';
 
-const AccountFooter = ({ totalCount }) => {
+const AccountFooter = ({ totalCount, isLoading }: { totalCount: number; isLoading: boolean }) => {
   const router = useRouter();
   const [queries, setQueries] = useRecoilState(queriesState);
 
-  totalCount = Math.ceil(parseInt(totalCount) / queries.limit);
+  totalCount = Math.ceil(totalCount / queries.limit);
 
   const onPageChange = (e: React.ChangeEvent<unknown>, page: number) => {
     setQueries({ ...queries, page });
@@ -36,7 +36,7 @@ const AccountFooter = ({ totalCount }) => {
     <StyledFooterDiv>
       <div></div>
       <div>
-        {!totalCount ? (
+        {isLoading ? (
           <PaginationSkeleton />
         ) : (
           <Pagination
