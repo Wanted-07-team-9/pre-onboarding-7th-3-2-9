@@ -5,6 +5,9 @@ import MuiTypography from '@mui/material/Typography';
 import styled from '@emotion/styled';
 import Skeleton from '@mui/material/Skeleton';
 
+type ExtraProps = {
+  component?: React.ElementType;
+};
 const Typography = styled(MuiTypography)<ExtraProps>({
   margin: '16px 0',
 });

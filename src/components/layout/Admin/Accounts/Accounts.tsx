@@ -21,7 +21,7 @@ import { IAccountData } from 'core/services/types';
 
 interface IAccountResponse {
   data: {
-    data: IAccountData;
+    data: IAccountData[];
     totalCount: number;
   };
   isLoading: boolean;
@@ -87,7 +87,7 @@ const Accounts = ({ data, isLoading }: IAccountResponse) => {
           </Table>
         </TableContainer>
       </div>
-      <AccountFooter totalCount={data?.totalCount ? parseInt(data?.totalCount) : 0} />
+      <AccountFooter totalCount={data?.totalCount ? data?.totalCount : 0} />
     </>
   );
 };
