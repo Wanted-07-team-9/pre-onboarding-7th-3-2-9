@@ -87,7 +87,7 @@ const Accounts = ({ data, isLoading }: IAccountResponse) => {
           </Table>
         </TableContainer>
       </div>
-      <AccountFooter totalCount={data?.totalCount ? data?.totalCount : 0} />
+      <AccountFooter totalCount={data?.totalCount ? data?.totalCount : 0} isLoading={isLoading} />
     </>
   );
 };
