@@ -4,13 +4,7 @@
 
 ### 로그인 ID / PASSWORD
 
-### `1234@1234.com` // `1234`
-
-#
-
-### 0️⃣ json-server 배포
-
-- localhost가 아닌 heroku에 json-server를 배포하여 사용
+### `newface@dco.com` // `newface123!`
 
 #
 
@@ -24,7 +18,7 @@
 
 ## **📰 프로젝트 설명**
 
-- 검색창 구현 + 검색어 추천 기능 구현 서비스입니다.
+- 투자 관리 서비스의 관리자 기능 구현
 
 #
 
@@ -80,7 +74,6 @@ pre-onboarding-7th-3-2-9 % npm build
 - [4️⃣ Assignment](#4️⃣-assignment)
 - [5️⃣ Assignment](#5️⃣-assignment)
 - [6️⃣ Assignment](#6️⃣-assignment)
-- [7️⃣ Assignment](#7️⃣-assignment)
 
 #
 

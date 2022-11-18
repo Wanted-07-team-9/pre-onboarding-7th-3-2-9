@@ -16,6 +16,7 @@ import RowItem from 'components/blocks/Accounts/RowItem';
 import AccountFooter from 'components/blocks/Accounts/Footer';
 import AccountFilterBar from 'components/blocks/Accounts/Filter';
 import { ACCOUNT_COLUMN } from 'utils/DataEnum';
+import RowSkeleton from 'components/blocks/Accounts/RowSkeleton';
 
 const Accounts = ({ data, isLoading }) => {
   const router = useRouter();
@@ -36,24 +37,24 @@ const Accounts = ({ data, isLoading }) => {
 
   return (
     <>
-      {isLoading || !data ? (
-        <></>
-      ) : (
-        <>
-          <AccountFilterBar />
-          <div style={{ margin: '10px 0' }}>
-            <TableContainer component={Paper} sx={{ minHeight: '50%', maxHeight: '70vh' }}>
-              <Table stickyHeader aria-label="sticky table" sx={{ maxHeight: '10px' }}>
-                <TableHead>
-                  <TableRow>
-                    {ACCOUNT_COLUMN.map((val, index) => (
-                      <TableCell key={index}>
-                        <span>{val}</span>
-                      </TableCell>
-                    ))}
-                  </TableRow>
-                </TableHead>
-                <TableBody>
+      <AccountFilterBar />
+      <div style={{ margin: '10px 0' }}>
+        <TableContainer component={Paper} sx={{ minHeight: '50%', maxHeight: '70vh' }}>
+          <Table stickyHeader aria-label="sticky table" sx={{ maxHeight: '10px' }}>
+            <TableHead>
+              <TableRow>
+                {ACCOUNT_COLUMN.map((val, index) => (
+                  <TableCell key={index}>
+                    <span>{val}</span>
+                  </TableCell>
+                ))}
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {isLoading || !data ? (
+                <RowSkeleton />
+              ) : (
+                <>
                   {data?.totalCount > 0 ? (
                     data.data?.map((row, index) => (
                       <RowItem
@@ -71,13 +72,13 @@ const Accounts = ({ data, isLoading }) => {
                       </TableCell>
                     </TableRow>
                   )}
-                </TableBody>
-              </Table>
-            </TableContainer>
-          </div>
-          <AccountFooter totalCount={data?.totalCount ? parseInt(data?.totalCount) : 0} />
-        </>
-      )}
+                </>
+              )}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </div>
+      <AccountFooter totalCount={data?.totalCount ? parseInt(data?.totalCount) : 0} />
     </>
   );
 };
