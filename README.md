@@ -20,6 +20,8 @@
 
 ### 로그인 ID / PASSWORD
 
+### `1234@1234.com` // `1234`
+
 ### `newface@dco.com` // `newface123!`
 
 #
