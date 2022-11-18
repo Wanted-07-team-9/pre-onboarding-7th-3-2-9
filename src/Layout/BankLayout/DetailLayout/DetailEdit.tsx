@@ -17,9 +17,7 @@ function DetailEdit({ onFilterSubmit }) {
         {({ values, handleChange }) => (
           <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
             <Select name="active" value={values.active} onChange={handleChange} displayEmpty>
-              <MenuItem value="">
-                <em>선택</em>
-              </MenuItem>
+              <em>선택</em>
               <MenuItem value={'true'}>활성</MenuItem>
               <MenuItem value={'false'}>비활성</MenuItem>
             </Select>

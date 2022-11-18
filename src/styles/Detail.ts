@@ -7,24 +7,46 @@ export const DetailLayout = styled.div`
   align-items: center;
 `;
 export const DetailCard = styled.div`
-  width: 500px;
-  height: 100%;
+  width: 100%;
+  max-width: 400px;
+  height: fit-content;
   padding: 10px;
   box-sizing: border-box;
   box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
   border-radius: 5px;
   display: flex;
-  gap: 30px;
+  justify-content: center;
+  flex-direction: column;
+  ul {
+    margin: auto;
+    width: 100%;
+  }
+  li {
+    margin-left: -20px;
+    width: 100%;
+    border-bottom: 1px solid #aaa;
+    padding: 10px 0px;
+  }
+`;
+export const ButtonBox = styled.div`
+  display: flex;
+  gap: 10px;
+  flex-direction: row-reverse;
+  margin-top: 20px;
 `;
 
 export const EditButton = styled.button`
-  width: 80px;
+  width: 100px;
   height: 30px;
-  margin-top: 160px;
-  margin-right: 10px;
   border: none;
   color: #fff;
   border-radius: 5px;
   background-color: #1891ff;
   cursor: pointer;
+`;
+
+export const EditSelectBox = styled.span`
+  display: flex;
+  align-items: center;
+  gap: 30px;
 `;

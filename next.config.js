@@ -10,7 +10,7 @@ const nextConfig = {
       fallback: [
         {
           source: '/:path*',
-          destination: 'http://localhost:4000/:path*',
+          destination: 'https://wanted-3-2-9-json-server.herokuapp.com/:path*',
         },
       ],
     };

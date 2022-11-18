@@ -5,6 +5,7 @@ export const GloboalStyles = createGlobalStyle`
   box-sizing: border-box;
   font-family: 'Nanum Gothic' !important;
   box-sizing: border-box;
+  list-style: none;
 }
 html {
   min-width:400px ;

@@ -7,11 +7,12 @@ import Aside from '../Layout/BankLayout/Aside';
 import Heading from '../Layout/BankLayout/Heading';
 import useUserService from '../hooks/useUserService';
 import BankBoard from '../Layout/BankLayout/BankBoard';
+import { AdminRoute } from '../hooks/useLoginToken';
 
 const Main = () => {
   useMain();
   useUserService();
-
+  AdminRoute();
   return (
     <S.MainLayout>
       <Aside />
