@@ -21,9 +21,11 @@ import { IAccountData } from 'core/services/types';
 import ConfirmDialog from 'components/blocks/ConfirmDialog';
 import { useRouter } from 'next/router';
 import { useFormatLocaleDate } from 'core/services/hooks/useFormattedDate';
+import DetailSkeleton from 'components/blocks/Accounts/Skeleton/DetailSkeleton';
 
 interface IAccountDetail {
   data: IAccountData;
+  isLoading: boolean;
   isEdit: boolean;
   setIsEdit: Dispatch<SetStateAction<boolean>>;
   onEditAccount: (values: { name: string }) => void;
@@ -39,6 +41,7 @@ const Typography = styled(MuiTypography)<ExtraProps>({
 
 const AccountDetail = ({
   data,
+  isLoading,
   isEdit,
   setIsEdit,
   onEditAccount,
@@ -81,7 +84,9 @@ const AccountDetail = ({
 
   return (
     <>
-      {data ? (
+      {isLoading || !data ? (
+        <DetailSkeleton />
+      ) : (
         <>
           <CardContent>
             {isEdit ? (
@@ -214,8 +219,6 @@ const AccountDetail = ({
             ]}
           />
         </>
-      ) : (
-        <></>
       )}
     </>
   );

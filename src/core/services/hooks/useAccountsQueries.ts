@@ -10,7 +10,7 @@ const useAccountsQueries = (queries: UseAccountsQueriesProps[]) => {
       queryFn: async () => {
         const { headers, data } = await AxiosRequest.get(item.url, item.config);
         const mergedData = {
-          totalCount: headers['x-total-count'] || 0,
+          totalCount: +headers['x-total-count'] || 0,
           data: data,
         };
         return mergedData;

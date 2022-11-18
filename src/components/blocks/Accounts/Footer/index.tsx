@@ -11,6 +11,7 @@ import { SelectChangeEvent } from '@mui/material/Select';
 
 import { queriesState } from 'core/states';
 import { getAccountPath } from 'utils/AccountPath';
+import PaginationSkeleton from '../Skeleton/PaginationSkeleton';
 
 const AccountFooter = ({ totalCount }) => {
   const router = useRouter();
@@ -35,16 +36,20 @@ const AccountFooter = ({ totalCount }) => {
     <StyledFooterDiv>
       <div></div>
       <div>
-        <Pagination
-          count={totalCount}
-          page={queries.page}
-          onChange={onPageChange}
-          siblingCount={2}
-          variant="outlined"
-          color="primary"
-          className="pagination"
-          sx={{ ul: { flexWrap: 'nowrap' } }}
-        />
+        {!totalCount ? (
+          <PaginationSkeleton />
+        ) : (
+          <Pagination
+            count={totalCount}
+            page={queries.page}
+            onChange={onPageChange}
+            siblingCount={2}
+            variant="outlined"
+            color="primary"
+            className="pagination"
+            sx={{ ul: { flexWrap: 'nowrap' } }}
+          />
+        )}
       </div>
       <div>
         <FormControl sx={{ m: 1, minWidth: 120 }} size="small">

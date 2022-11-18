@@ -10,6 +10,7 @@ import AccountDetail from './AccountDetail';
 import useAccountQuery from 'core/services/hooks/useAccountQuery';
 import { useMutateAccount } from 'core/services/hooks/useMutateAccount';
 import { useFormattedNowDate } from 'core/services/hooks/useFormattedDate';
+import { UseQueryResult } from '@tanstack/react-query';
 
 const AccountDetailIndex = () => {
   const router = useRouter();
@@ -22,7 +23,7 @@ const AccountDetailIndex = () => {
       Authorization: `Bearer ${session?.accessToken}`,
     },
   };
-  const { data }: { data: IAccountData } = useAccountQuery({
+  const { data, isLoading }: { data: IAccountData } & UseQueryResult = useAccountQuery({
     queryKey: ['account', account_id],
     url: `/accounts/${account_id}`,
     config,
@@ -79,6 +80,7 @@ const AccountDetailIndex = () => {
 
   const props = {
     data: data,
+    isLoading: isLoading,
     isEdit: isEdit,
     setIsEdit: setIsEdit,
     onEditAccount: onEditAccount,
