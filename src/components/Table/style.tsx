@@ -1,12 +1,12 @@
 import styled from "styled-components"
 
 
-export const TableLayout = styled.section`
+export const TableLayout = styled.div`
   display:flex;
   justify-content:center;
   min-height: 40rem;
 `
-export const StyledTd = styled.div`
+export const StyledTd = styled.td`
   &.zero{
     color: black;
   }
@@ -18,7 +18,7 @@ export const StyledTd = styled.div`
   }
 `
 
-export const StyledTable = styled.thead`
+export const StyledTable = styled.table`
   font-size: 1.5rem;
   thead:before {
     content:"@";
