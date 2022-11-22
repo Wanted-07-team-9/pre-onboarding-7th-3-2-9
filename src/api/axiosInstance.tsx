@@ -11,7 +11,7 @@ axiosInstance.interceptors.request.use(
   function (config: AxiosRequestConfig<any>) {
     const accessToken = typeof window !== 'undefined' ? sessionStorage.getItem('token') : null;
     if (accessToken) {
-      config.headers.Authorization =accessToken
+      config.headers!.Authorization =accessToken
     }
     return config;
   },
