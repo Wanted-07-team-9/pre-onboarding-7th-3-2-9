@@ -1,4 +1,6 @@
-export const BROKER_LIST_OPTON = [
+import { IObjectKey, IBrokerOption } from "../types/interfaces"
+
+export const BROKER_LIST_OPTON : IBrokerOption[] = [
   {
     brokerCode: "209",
     brokerName: "유안타증권"
@@ -101,7 +103,7 @@ export const BROKER_LIST_OPTON = [
   }
 ]
 
-export const BROKER_LIST = {
+export const BROKER_LIST : IObjectKey = {
   "209": "유안타증권",
   "218": "현대증권",
   "230": "미래에셋증권",
@@ -129,7 +131,7 @@ export const BROKER_LIST = {
   "271": "토스증권"
 }
 
-const BROKER_FORMAT = {
+export const BROKER_FORMAT : IObjectKey = {
   "209": "00-00000000-00",
   "218": "00-0000000-000",
   "230": "00-000000-0000",
@@ -157,7 +159,7 @@ const BROKER_FORMAT = {
   "271": "00-000-0000000"
 }
 
-export const ACCOUNT_STATUS = {
+export const ACCOUNT_STATUS : IObjectKey = {
   "9999": "관리자확인필요",
   "1": "입금대기",
   "2": "운용중",
