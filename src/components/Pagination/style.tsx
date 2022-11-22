@@ -16,7 +16,7 @@ export const Button = styled.button`
   background: #0F253C;
   color: white;
   font-size: 1rem;
-
+  
   &:hover {
     background: #468FF7;
     cursor: pointer;
@@ -28,7 +28,7 @@ export const Button = styled.button`
     cursor: revert;
     transform: revert;
   }
-
+  
   &[aria-current] {
     background: #5160EA;
     font-weight: bold;

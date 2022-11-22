@@ -8,20 +8,23 @@ import { Container, FixedWrapper, ContentWrapper, TableWrapper } from './style'
 import EditForm from '../../src/components/EditForm';
 import DetailTable from '../../src/components/DetailTable';
 import { useRouter } from 'next/router';
-const AccountDetail = (props) => {
+import { IServerSideProps, IEditAccount } from '../../src/types/interfaces';
+
+const AccountDetail = (props : IServerSideProps) => {
   const router = useRouter()
   const queryClient = useQueryClient()
   const { data, isLoading, isError } = useQuery(
     ['accountData'], ()=>fetchAccountDetail(props.id),{
-      refetchInterval : 500
+      enabled: Boolean(props.id)
     })
 
-  const onEdit = (inputData) => {
+  const onEdit = async (inputData : IEditAccount) : Promise<unknown> => {
     if(inputData.is_active === "true" || inputData.is_active==='false'){
       inputData.is_active = JSON.parse(inputData.is_active)
     }
-    editAccount(props.id, inputData)
+    return await editAccount(props.id, inputData)
   }
+
   const handleDelete =  () => {
     deleteAccount(props.id)
     router.push('/list')

@@ -11,7 +11,7 @@ const DetailTable = ({data} : any) => {
       </CellWrapper>
       <CellWrapper>
         <div className='category'>계좌번호</div>
-        <div>{convertAccountNumber(data.number)}</div>
+        <div>{convertAccountNumber(data?.broker_id, data.number)}</div>
       </CellWrapper>
       <CellWrapper>
         <div className='category'>운용상태</div>
