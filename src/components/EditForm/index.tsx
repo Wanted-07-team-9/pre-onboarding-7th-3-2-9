@@ -48,8 +48,8 @@ const EditForm = ({ mutate, data, handleDelete }: any) => {
             <InputWrapper>
             <label htmlFor='계좌활성화여부'>계좌활성화여부</label>
             <select  {...register('is_active')}>
-              <option value={true} selected={true === is_active_status}>O</option>
-              <option value={false} selected={false === is_active_status}>X</option>
+              <option value={'true'} selected={true === is_active_status}>O</option>
+              <option value={'false'} selected={false === is_active_status}>X</option>
             </select>
             </InputWrapper>
           </ColumnSection>

@@ -66,8 +66,8 @@ const CreateForm = ({mutate} : any) => {
             <label htmlFor='계좌활성화여부'>계좌활성화여부</label>
             </LabelWrapper>
             <select  {...register('is_active')}>
-              <option value={true}>O</option>
-              <option value={false}>X</option>
+              <option value={'true'}>O</option>
+              <option value={'false'}>X</option>
             </select>
             </InputWrapper>
           <EventWrapper>
