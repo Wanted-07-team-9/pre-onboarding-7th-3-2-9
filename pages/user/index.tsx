@@ -16,7 +16,6 @@ const User = () => {
   const { data, isLoading, isError } = useQuery(
     ['userList', page], () => fetchUser(page)
   )
-
   return(
     <Container>
       <Sider />
@@ -29,7 +28,7 @@ const User = () => {
             (
                 <TableWrapper>
                   <Table columns={columns} data={data.userData} isAccount={false} />
-                  <Pagination total={data.totalData} page={page} setPage={setPage} />
+                  <Pagination total={data.totalData!} page={page} setPage={setPage} />
                 </TableWrapper>
             )
           }

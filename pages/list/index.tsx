@@ -8,6 +8,7 @@ import { Container, FixedWrapper, ContentWrapper, TableWrapper } from './style'
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 import { fetchAccount, createAccount } from "../../src/api/api"
 import CreateForm from "../../src/components/CreateForm"
+import { ICreateAccount } from "../../src/types/interfaces"
 
 const List = () => {
   const queryClient = useQueryClient()
@@ -16,17 +17,19 @@ const List = () => {
   ]
   const [page, setPage] = useState(1)
   const { data, isLoading, isError } = useQuery(
-    ['accountList', page], () => fetchAccount(page)
-  )
-  const handleCreateAccount = (createAccountData) => {
+    ['accountList', page], () => fetchAccount(page))
+  const handleCreateAccount = async (createAccountData : ICreateAccount ) : Promise<unknown>=> {
     if(createAccountData.is_active === "true" || createAccountData.is_active==='false'){
       createAccountData.is_active = JSON.parse(createAccountData.is_active)
     }
-    createAccount(createAccountData)
+    createAccountData.created_at = new Date ()
+    return await createAccount(createAccountData)
   }
-  const {mutate} = useMutation(handleCreateAccount,{
-    onSuccess : () => queryClient.invalidateQueries(['accountList'])
-  })
+  const {mutate} = useMutation(handleCreateAccount,
+    {
+    onSuccess : () => queryClient.invalidateQueries(['accountList',page])
+  }
+  )
   return (
     <Container>
       <Sider />
@@ -40,7 +43,7 @@ const List = () => {
                 <TableWrapper>
                   <CreateForm mutate={mutate}/>
                   <Table columns={columns} data={data.accountData} isAccount={true} />
-                  <Pagination total={data.totalData} page={page} setPage={setPage} />
+                  <Pagination total={data.totalData!} page={page} setPage={setPage} />
                 </TableWrapper>
             )
           }
