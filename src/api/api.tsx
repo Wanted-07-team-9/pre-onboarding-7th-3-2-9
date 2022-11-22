@@ -1,5 +1,5 @@
 import { axiosInstance } from "./axiosInstance";
-import { IForm } from "../types/interfaces";
+import { ICreateAccount, IEditAccount, IForm } from "../types/interfaces";
 
 export const login  = async (data : IForm) => {
   const {data : loginData} =  await axiosInstance.post('/login', {
@@ -13,7 +13,7 @@ export const login  = async (data : IForm) => {
   }
 }
 
-export const fetchAccount = async(page:any) => {
+export const fetchAccount = async(page:number) => {
   const response = await axiosInstance.get('/accounts',{
     params : {
       _page: page,
@@ -25,7 +25,7 @@ export const fetchAccount = async(page:any) => {
   return {accountData, totalData }
 }
 
-export const fetchUser = async(page:any) => {
+export const fetchUser = async(page:number) => {
   const response= await axiosInstance.get('/users',{
     params : {
       _page: page,
@@ -37,19 +37,19 @@ export const fetchUser = async(page:any) => {
   return {userData, totalData}
 }
 
-export const fetchAccountDetail = async(id? : any)  : Promise<any> => {
+export const fetchAccountDetail = async(id : string)  : Promise<IEditAccount> => {
   const {data} = await axiosInstance.get(`/accounts/${id}`)
   return data
 }
 
-export const editAccount = async(id, data) => {
+export const editAccount = async(id:number, data : IEditAccount):Promise<void> => {
   await axiosInstance.patch(`/accounts/${id}`,data)
 }
 
-export const deleteAccount = async(id) => {
+export const deleteAccount = async(id : number) : Promise<void> => {
   await axiosInstance.delete(`/accounts/${id}`)
 }
 
-export const createAccount = async(data) => {
+export const createAccount = async(data:ICreateAccount) : Promise<void> => {
   await axiosInstance.post(`/accounts/`,data)
 }
