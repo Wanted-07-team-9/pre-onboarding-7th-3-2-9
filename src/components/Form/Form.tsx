@@ -10,7 +10,7 @@ const Form = () => {
   const router = useRouter()
   const onSubmit =  (data : IForm) => {
     login(data)
-    router.push('/list')
+    router.push('/list?page=1')
   }
   return(
     <StyledForm onSubmit={handleSubmit(onSubmit)}>

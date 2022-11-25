@@ -18,7 +18,7 @@ const Table = ({ columns, data, isAccount }: any) => {
       </thead>
       <tbody>
         {isAccount ? (
-          data.map((account : IAccount) => (
+          data?.map((account : IAccount) => (
             <tr key={account.id}>
               <Link href={`/list/${account.id}`}>
               <td><a>{convertBrokerId(account.broker_id)}</a></td>

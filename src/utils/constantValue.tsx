@@ -170,23 +170,23 @@ export const ACCOUNT_STATUS : IObjectKey = {
 
 export const ACCOUNT_STATUS_OPTION = [
   {
-    statusCode: 9999,
+    statusCode: '9999',
     accountStatus: '관리자확인필요'
   },
   {
-    statusCode: 1,
+    statusCode: '1',
     accountStatus: '입금대기'
   },
   {
-    statusCode: 2,
+    statusCode: '2',
     accountStatus: '운용중'
   },
   {
-    statusCode: 3,
+    statusCode: '3',
     accountStatus: '투자중지'
   },
   {
-    statusCode: 4,
+    statusCode: '4',
     accountStatus: '해지'
   },
 ]

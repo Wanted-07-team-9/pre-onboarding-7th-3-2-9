@@ -14,7 +14,7 @@ const CreateForm = ({mutate} : any) => {
           <LabelWrapper>
           <label htmlFor='증권사'>증권사</label>
           </LabelWrapper>
-            <select {...register('broker_id')}>
+            <select id='증권사' {...register('broker_id')}>
               {BROKER_LIST_OPTON.map((option, idx) => (
                 <option key={idx} value={option.brokerCode}>{option.brokerName}</option>
               ))}
@@ -33,7 +33,7 @@ const CreateForm = ({mutate} : any) => {
           <label htmlFor='운용상태'>운용상태</label>
           </LabelWrapper>
 
-            <select {...register('status')} >
+            <select id='운용상태' {...register('status')} >
               {ACCOUNT_STATUS_OPTION.map((option, idx) => (
                 <option key={idx} value={option.statusCode}>{option.accountStatus}</option>
               ))}
