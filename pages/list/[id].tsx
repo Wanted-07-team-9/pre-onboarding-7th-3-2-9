@@ -1,6 +1,6 @@
 import React from 'react'
-import { editAccount, fetchAccountDetail, deleteAccount } from '../../src/api/api'
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { editAccount, deleteAccount, fetchAccountServer, fetchAccountClient } from '../../src/api/api'
+import { dehydrate, QueryClient, useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import Header from "../../src/components/Header"
 import Sider from "../../src/components/Sider"
 import Footer from "../../src/components/Footer"
@@ -8,13 +8,14 @@ import { Container, FixedWrapper, ContentWrapper, TableWrapper } from './style'
 import EditForm from '../../src/components/EditForm';
 import DetailTable from '../../src/components/DetailTable';
 import { useRouter } from 'next/router';
-import { IServerSideProps, IEditAccount } from '../../src/types/interfaces';
+import type { IServerSideProps, IEditAccount } from '../../src/types/interfaces';
+
 
 const AccountDetail = (props : IServerSideProps) => {
   const router = useRouter()
   const queryClient = useQueryClient()
   const { data, isLoading, isError } = useQuery(
-    ['accountData'], ()=>fetchAccountDetail(props.id),{
+    ['account', props.id], ()=>fetchAccountClient(props.id),{
       enabled: Boolean(props.id)
     })
 
@@ -30,7 +31,7 @@ const AccountDetail = (props : IServerSideProps) => {
     router.push('/list')
   }
   const { mutate } = useMutation(onEdit, {
-    onSuccess: () => queryClient.invalidateQueries(['accountData']),
+    onSuccess: () => queryClient.invalidateQueries(['account']),
   })
   return (
     <Container>
@@ -58,8 +59,12 @@ export default AccountDetail
 export async function getServerSideProps(context:any ) {
   const {params} = context
   const id = params.id;
+  const queryClient = new QueryClient()
+  const accessToken = context.req.cookies.accessToken
+  await queryClient.prefetchQuery(['account', id], ()=>fetchAccountServer(id, accessToken))
   return {
 props : {
+  dehydratedState : dehydrate(queryClient),
   id
 }
   }
