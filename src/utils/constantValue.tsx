@@ -190,3 +190,11 @@ export const ACCOUNT_STATUS_OPTION = [
     accountStatus: '해지'
   },
 ]
+
+export const ACCOUNTS_COLUMNS = [
+  '증권사', '계좌번호', '계좌상태', '계좌명', '평가금액', '입금금액', '수익률', '계좌활성화여부', '계좌개설일'
+]
+
+export const USERS_COLUMNS= [
+  '고객명', '이메일 주소','주민등록상 성별코드', '생년월일', '휴대폰 번호 ', '최근로그인',  '가입일'
+]

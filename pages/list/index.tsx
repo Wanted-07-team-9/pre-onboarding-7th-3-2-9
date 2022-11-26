@@ -3,24 +3,20 @@ import Sider from "../../src/components/Sider"
 import Footer from "../../src/components/Footer"
 import Pagination from "../../src/components/Pagination"
 import Table from "../../src/components/Table"
-import { useState } from "react"
 import { Container, FixedWrapper, ContentWrapper, TableWrapper } from './style'
 import { useMutation, useQuery, useQueryClient, dehydrate, QueryClient } from "@tanstack/react-query"
 import { createAccount, fetchAccountsClient, fetchAccountsServer } from "../../src/api/api"
 import CreateForm from "../../src/components/CreateForm"
 import type { ICreateAccount } from "../../src/types/interfaces"
-// import Filter from "../../src/components/Filter"
-import { useRouter } from "next/router"
+import Filter from "../../src/components/Filter"
+import { RouterInfo } from "../../src/utils/routerInfo"
+import { ACCOUNTS_COLUMNS } from "../../src/utils/constantValue"
 
 const List = () => {
   const queryClient = useQueryClient()
-  const router = useRouter()
-  const columns = [
-    '증권사', '계좌번호', '계좌상태', '계좌명', '평가금액', '입금금액', '수익률', '계좌활성화여부', '계좌개설일'
-  ]
-  const [page, setPage] = useState(1)
+  const {page, active, broker, status, q} = RouterInfo()
   const { data, isLoading, isError } = useQuery(
-    ['accounts',router.query.page],()=>fetchAccountsClient(router.query.page))
+    ['accounts',page, active, broker, status,q],()=>fetchAccountsClient(page, active, broker, status,q))
   const handleCreateAccount = async (createAccountData: ICreateAccount): Promise<unknown> => {
     if (createAccountData.is_active === "true" || createAccountData.is_active === 'false') {
       createAccountData.is_active = JSON.parse(createAccountData.is_active)
@@ -45,9 +41,9 @@ const List = () => {
             (
               <TableWrapper>
                 <CreateForm mutate={mutate} />
-                {/* <Filter/> */}
-                <Table columns={columns} data={data.accountData} isAccount={true} />
-                <Pagination total={data.totalData!} page={page} setPage={setPage} />
+                <Filter/>
+                <Table columns={ACCOUNTS_COLUMNS} data={data.accountData} isAccount={true} />
+                <Pagination total={data.totalData!} page={page} />
               </TableWrapper>
             )
           }
@@ -65,7 +61,12 @@ export default List
 export const getServerSideProps = async (context : any) => {
   const queryClient = new QueryClient();
   const accessToken = context.req.cookies.accessToken
-  await queryClient.prefetchQuery(['accounts',context.query.page], ()=>fetchAccountsServer(context.query.page, accessToken))
+  const page = context.query.page || 1
+  const active = context.query.active || null
+  const broker = context.query.broker || null
+  const status = context.query.status || null
+  const q = context.query.q || null
+  await queryClient.prefetchQuery(['accounts',page, active, broker, status, q], ()=>fetchAccountsServer(page, active, broker, status, q, accessToken))
   return {
     props: {
       dehydratedState: dehydrate(queryClient)
