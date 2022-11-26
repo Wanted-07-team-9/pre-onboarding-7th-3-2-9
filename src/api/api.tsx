@@ -2,16 +2,34 @@ import { axiosInstance } from "./axiosInstance";
 import type {  ICreateAccount,  IEditAccount, IForm } from "../types/interfaces";
 import axios from "axios";
 import cookie from 'react-cookies'
+import { Flip, toast } from "react-toastify";
 
 export const login  = async (data : IForm) => {
-  const {data : loginData} =  await axiosInstance.post('/login', {
-    email: data.email,
-    password: data.password
-  })
-  const token = loginData.accessToken
-    cookie.save('accessToken', `Bearer ${token}`, {
-    path : '/',
-  })
+  try{
+    const response =  await axiosInstance.post('/login', {
+      email: data.email,
+      password: data.password
+    })
+    if(response.status===200){
+      const {data : loginData} = response
+      const token = loginData.accessToken
+      cookie.save('accessToken', `Bearer ${token}`, {
+      path : '/',
+    })
+    toast.success('로그인 성공',{
+      hideProgressBar: true,
+      draggable:false,
+      transition:Flip
+    })
+    return true
+    }
+  }catch(e){
+    toast.info('회원정보를 확인해주세요',{
+      draggable:false,
+      transition:Flip
+    })
+    return  false
+  }
 }
 
 export const fetchAccount = async(page:number) => {
@@ -80,7 +98,7 @@ export const fetchAccountsServer = async (page:any, active:any, broker : any, st
   return {accountData, totalData}
 }
 
-export const fetchAccountsClient = async (page: any, active : any,  broker : any, status : any, q : any) => {
+export const fetchAccountsClient = async (page: any, active : any,  broker : any, status : any, q : any)  => {
   const response = await axiosInstance.get('/accounts', {
     params: {
       _page: page,

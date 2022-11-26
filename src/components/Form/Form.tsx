@@ -8,9 +8,11 @@ import Image from 'next/image'
 const Form = () => {
   const { register, handleSubmit } = useForm<IForm>();
   const router = useRouter()
-  const onSubmit =  (data : IForm) => {
-    login(data)
-    router.push('/list?page=1')
+  const onSubmit =  async(data : IForm) => {
+    const response = await login(data)
+    if(response){
+      setTimeout(()=>router.push('/list?page=1'),800)
+    }
   }
   return(
     <StyledForm onSubmit={handleSubmit(onSubmit)}>

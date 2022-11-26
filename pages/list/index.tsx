@@ -1,14 +1,16 @@
 import Pagination from "../../src/components/Pagination"
 import Table from "../../src/components/Table"
-import {TableWrapper } from '../../src/components/Table/style'
+import { TableWrapper } from '../../src/components/Table/style'
 import { useMutation, useQuery, useQueryClient, dehydrate, QueryClient } from "@tanstack/react-query"
 import { createAccount, fetchAccountsClient, fetchAccountsServer } from "../../src/api/api"
 import CreateForm from "../../src/components/CreateForm"
 import type { ICreateAccount } from "../../src/types/interfaces"
 import Filter from "../../src/components/Filter"
-import { RouterInfo } from "../../src/utils/routerInfo"
+import { RouterInfo } from "../../src/utils/RouterInfo"
 import { ACCOUNTS_COLUMNS } from "../../src/utils/constantValue"
 import Layout from "../../src/container"
+import Loading from "../../src/components/InfoScreen/Loading"
+import Toast from "../../src/components/Toast"
 
 const List = () => {
   const queryClient = useQueryClient()
@@ -29,22 +31,18 @@ const List = () => {
   )
   return (
     <Layout>
-      {isLoading && <div>loading</div>}
-      {isError && <div>error</div>}
-      {data &&
-        (
-          <TableWrapper>
-            <CreateForm mutate={mutate} />
-            <Filter />
-            <Table columns={ACCOUNTS_COLUMNS} data={data.accountData} isAccount={true} />
-            <Pagination total={data.totalData!} page={page} />
-          </TableWrapper>
-        )
-      }
+      <Toast/>
+      {isLoading && <Loading status='loading' />}
+      {isError && <Loading status='error' />}
+      {data && <TableWrapper>
+        <CreateForm mutate={mutate} />
+        <Filter />
+        <Table columns={ACCOUNTS_COLUMNS} data={data.accountData} isAccount={true} />
+        <Pagination total={data.totalData!} page={page} />
+      </TableWrapper>}
     </Layout>
   )
 }
-
 
 export default List
 
