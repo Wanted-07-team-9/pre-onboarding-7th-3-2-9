@@ -61,14 +61,18 @@ export const createAccount = async(data:ICreateAccount) : Promise<void> => {
 }
 
 
-export const fetchAccountsServer = async (page:any, token : string) => {
+export const fetchAccountsServer = async (page:any, active:any, broker : any, status : any, q : any,  token : string) => {
   const response = await axios.get('http://localhost:4000/accounts', {
     params: {
       _page: page,
       _limit: 20,
+      is_active : active,
+      broker_id :  broker,
+      status : status,
+      q: q
     },
     headers: {
-      Authorization: `Bearer ${token}`
+      Authorization: token
     }
   })
   const totalData = response.headers['x-total-count']
@@ -76,11 +80,15 @@ export const fetchAccountsServer = async (page:any, token : string) => {
   return {accountData, totalData}
 }
 
-export const fetchAccountsClient = async (page: any) => {
+export const fetchAccountsClient = async (page: any, active : any,  broker : any, status : any, q : any) => {
   const response = await axiosInstance.get('/accounts', {
     params: {
       _page: page,
       _limit: 20,
+      is_active : active,
+      broker_id :  broker,
+      status : status,
+      q: q
     },
   })
   const totalData = response.headers['x-total-count']
