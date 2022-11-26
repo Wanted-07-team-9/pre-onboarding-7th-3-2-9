@@ -7,6 +7,7 @@ import DetailTable from '../../src/components/DetailTable';
 import { useRouter } from 'next/router';
 import type { IServerSideProps, IEditAccount } from '../../src/types/interfaces';
 import Layout from '../../src/container';
+import Loading from '../../src/components/InfoScreen/Loading';
 
 const AccountDetail = (props: IServerSideProps) => {
   const router = useRouter()
@@ -34,8 +35,8 @@ const AccountDetail = (props: IServerSideProps) => {
     <Layout>
       <TableWrapper>
         <div>
-          {isLoading && <div>loading</div>}
-          {isError && <div>error</div>}
+          {isLoading && <Loading status='loading'/>}
+          {isError &&  <Loading status='error'/>}
           {data && <DetailTable data={data} />}
         </div>
       </TableWrapper>

@@ -6,6 +6,7 @@ import { useQuery } from "@tanstack/react-query"
 import { fetchUser } from "../../src/api/api"
 import { USERS_COLUMNS } from '../../src/utils/constantValue'
 import Layout from "../../src/container"
+import Loading from "../../src/components/InfoScreen/Loading"
 
 const User = () => {
   const [page, setPage] = useState(1)
@@ -14,7 +15,7 @@ const User = () => {
   )
   return (
     <Layout>
-      {isLoading && <div>loading</div>}
+      {isLoading && <Loading status='lodading'/>}
       {isError && <div>error</div>}
       {data &&
         (
