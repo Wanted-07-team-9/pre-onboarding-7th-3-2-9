@@ -28,7 +28,7 @@ const AccountDetail = (props : IServerSideProps) => {
 
   const handleDelete =  () => {
     deleteAccount(props.id)
-    router.push('/list')
+    router.push('/list?page=1')
   }
   const { mutate } = useMutation(onEdit, {
     onSuccess: () => queryClient.invalidateQueries(['account']),

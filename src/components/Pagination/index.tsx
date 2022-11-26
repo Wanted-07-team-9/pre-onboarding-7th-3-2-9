@@ -1,28 +1,33 @@
 import { useRouter } from 'next/router';
-import { Dispatch, SetStateAction } from 'react';
+import { RouterInfo } from '../../utils/routerInfo';
 import {Nav, Button} from './style'
-import { useRecoilState } from "recoil";
-import {queriesState} from '../../recoil/atom'
 
-interface IPaginationProps {
-  total : string ;
-  page : number;
-  setPage : Dispatch<SetStateAction<number>>
-}
-
-
-const Pagination = ({total, page, setPage} : IPaginationProps) => {
-  const [filterState, setFilterState] = useRecoilState(queriesState)
+const Pagination = ({total  }  : any) => {
   const router = useRouter()
+  const {pathName, page, active, broker, status, q} = RouterInfo()
+  const getAccountPath = (broker : any, active: any,status: any, q:any, idx:any ) => {
+    return `${pathName}?broker=${broker || ''}&active=${active || ''}&status=${status || ''}&q=${q|| ''}&page=${idx}`
+  }
   const handleClickNumber = (i: number) : void => {
-    const data = {'_page' : i+1}
-    setFilterState({...filterState,...data})
-    router.push(`/list?page=${i+1}`)
+    router.push(getAccountPath(broker, active, status, q, i+1))
   }
   const numPages = Math.ceil(Number(total) / 20);
+
+  const handlePreviousNumber = (page: number) : void => {
+    if(page===1){
+      return
+    }
+    router.push(getAccountPath(broker, active, status, q, page-1))
+  }
+  const handleNextNumber = (page: number) : void => {
+    if(page===numPages){
+      return
+    }
+    router.push(getAccountPath(broker, active, status, q, page+1))
+  }
   return(
       <Nav>
-        <Button onClick={() => setPage(page - 1)} disabled={page === 1}>
+        <Button onClick={()=>handlePreviousNumber(Number(page))}>
           &lt;
         </Button>
         {numPages && Array(numPages)
@@ -31,12 +36,12 @@ const Pagination = ({total, page, setPage} : IPaginationProps) => {
             <Button
               key={i + 1}
               onClick={()=>handleClickNumber(i)}
-              className = {String(i+1) === router.query.page ? 'selected': '' }
+              className = {String(i+1) === page ? 'selected': '' }
             >
               {i + 1}
             </Button>
           ))}
-        <Button onClick={() => setPage(page + 1)} disabled={page === numPages}>
+        <Button onClick={()=>handleNextNumber(Number(page))}>
           &gt;
         </Button>
       </Nav>
