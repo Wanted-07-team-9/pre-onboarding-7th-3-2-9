@@ -1,5 +1,9 @@
 import styled from "styled-components"
 
+export const TableWrapper = styled.section`
+  background-color: #F0F2F5;
+  height:100%;
+`
 
 export const TableLayout = styled.div`
   display:flex;

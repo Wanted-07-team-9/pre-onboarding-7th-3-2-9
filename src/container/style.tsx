@@ -15,8 +15,3 @@ export const ContentWrapper = styled.div`
   position:relative;
   width:100%;
 `
-
-export const TableWrapper = styled.section`
-  background-color: #F0F2F5;
-  padding: 1rem 0;
-`
