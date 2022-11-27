@@ -7,7 +7,6 @@ export const TableWrapper = styled.section`
 
 export const TableLayout = styled.div`
   display:flex;
-  justify-content:center;
   min-height: 40rem;
 `
 export const StyledTd = styled.td`
@@ -21,9 +20,10 @@ export const StyledTd = styled.td`
     color : blue;
   }
 `
-
 export const StyledTable = styled.table`
   font-size: 1.5rem;
+  width: 160rem;
+	table-layout: fixed;
   thead:before {
     content:"@";
     display:block;
@@ -34,6 +34,9 @@ export const StyledTable = styled.table`
     font-weight: bold;
     background-color : #FAFAFA;
   }
+  tr{
+    height: 1.5rem;
+  }
   thead th {
   padding: 0.5rem;
 }
@@ -42,6 +45,7 @@ export const StyledTable = styled.table`
     color: inherit;
   }
   td{
+    line-height: 16px;
     padding : 0.3rem 0.5rem;
     text-align: right;
     &.broker{
@@ -50,7 +54,7 @@ export const StyledTable = styled.table`
       }
     }
   }
-  tr{
+  tr.data{
     :hover{
       background-color : #EEE6C4;
     }
@@ -58,11 +62,5 @@ export const StyledTable = styled.table`
   th{
     border: 1px solid #D9D9D9
   }
-  tbody:before {
-    content:"@";
-    display:block;
-    line-height:10px;
-    text-indent:-99999px;
-}
 `
 

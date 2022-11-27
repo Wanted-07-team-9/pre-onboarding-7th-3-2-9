@@ -1,11 +1,18 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link"
 import { convertBrokerId, convertAccountStatus, convertAccountNumber, convertComma, convertIsoToTimeStamp, convertPhoneNumber } from '../../utils/convertFn';
 import {StyledTd, StyledTable, TableLayout} from './style'
-import { IAccount, IUser } from "../../types/interfaces";
+import type { IAccount, IUser, ICUstomerName } from "../../types/interfaces";
 
-const Table = ({ columns, data, isAccount }: any) => {
-
+const Table = ({ columns, data, isAccount, userData }: any) => {
+  const [customerNameObj, setCustomerNameObj] = useState<ICUstomerName >({})
+  useEffect(()=>{
+    let customerName : ICUstomerName = {}
+    if(userData){
+      userData.forEach((el : IUser) => customerName[el.id] = el.name)
+      setCustomerNameObj(customerName)
+    }
+  },[userData])
   return (
     <TableLayout>      
         <StyledTable>
@@ -19,7 +26,8 @@ const Table = ({ columns, data, isAccount }: any) => {
       <tbody>
         {isAccount ? (
           data?.map((account : IAccount) => (
-            <tr key={account.id}>
+            <tr className="data" key={account.id}>
+              <td>{customerNameObj[account.user_id]}</td>
               <Link href={`/list/${account.id}`}>
               <td className="broker"><a>{convertBrokerId(account.broker_id)}</a></td>
               </Link>
