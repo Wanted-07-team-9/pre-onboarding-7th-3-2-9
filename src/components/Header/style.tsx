@@ -39,7 +39,7 @@ export const UserName = styled.div`
   padding:5%;
   white-space:nowrap;
   margin: 0 1rem;
-  color: white;
+  color: var(--color-white);
   border-radius: 0.4rem;
 `
 export const BellWrapper = styled.div`

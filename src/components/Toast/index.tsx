@@ -14,8 +14,8 @@ const StyledContainer = styled(ToastContainer)`
   .Toastify__toast {
     font-size: 1.5rem;
     text-align:left;
-    background-color: #0F253C;
-    color: white;
+    background-color: var(--color-navy);
+    color: var(--color-white);
     font-weight: bold;
   }
   .Toastify__toast-body {

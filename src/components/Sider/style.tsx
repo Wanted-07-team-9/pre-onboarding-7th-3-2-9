@@ -7,7 +7,7 @@ export const SiderLayout = styled.section`
   background-color:var(--color-black);
   color:var(--color-white);
   height:100vh;
-  width:15%;
+  width:21rem;
   
   li{
     font-size: 1.3rem;

@@ -7,7 +7,7 @@ export const Container = styled.div`
 `
 
 export const FixedWrapper = styled.section`
-  padding-bottom : 3rem;
+  padding-bottom : 1rem;
   width:100%;
 `
 

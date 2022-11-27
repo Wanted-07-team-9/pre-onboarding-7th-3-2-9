@@ -39,16 +39,23 @@ export const EventWrapper = styled.div`
   display:flex;
   flex-direction: column;
   margin-top: 1rem;
-  .event{
+  button{
     margin-bottom: 1.5rem;
     background-color: #5160EA;
-    color : white;
+    color : var(--color-white);
     border-radius:2rem;
     padding: 0.5rem;
     border: none;
     :hover{
       cursor: pointer;
-      background-color: #468FF7;;
+      background-color: var(--color-blue);;
+    }
+    &#delete{
+      background-color: tomato;
+      :hover{
+      cursor: pointer;
+      background-color: orange;
+    }
     }
   }
 `
