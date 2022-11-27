@@ -8,7 +8,9 @@ export const HeaderLayout = styled.section`
   text-align:center;
 `
 export const PageNameWrapper = styled.div`
-
+  margin-left: 1rem;
+  font-size: 2rem;
+  font-weight: bold;
 `
 
 
@@ -29,6 +31,7 @@ export const RightItem = styled.section`
 export const UserInfo = styled.div`
   white-space:nowrap;
   margin: 0 1rem;
+  font-size: 1.5rem;
 `
 
 export const UserName = styled.div`
@@ -36,6 +39,8 @@ export const UserName = styled.div`
   padding:5%;
   white-space:nowrap;
   margin: 0 1rem;
+  color: white;
+  border-radius: 0.4rem;
 `
 export const BellWrapper = styled.div`
   position:relative;

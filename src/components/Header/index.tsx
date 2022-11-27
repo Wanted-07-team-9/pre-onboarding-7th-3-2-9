@@ -5,7 +5,7 @@ const Header = ({pageName} : any ) => {
   return(
     <HeaderLayout>
       <LeftItem>
-      <Image src='/svg/LIST.svg' alt='리스트' width={20} height={20}  />
+      <Image src='/svg/LIST.svg' alt='리스트' width={30} height={30}  />
       <PageNameWrapper>{pageName}</PageNameWrapper>
       </LeftItem>
       <RightItem>
