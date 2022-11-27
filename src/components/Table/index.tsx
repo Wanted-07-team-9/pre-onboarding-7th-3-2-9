@@ -21,7 +21,7 @@ const Table = ({ columns, data, isAccount }: any) => {
           data?.map((account : IAccount) => (
             <tr key={account.id}>
               <Link href={`/list/${account.id}`}>
-              <td><a>{convertBrokerId(account.broker_id)}</a></td>
+              <td className="broker"><a>{convertBrokerId(account.broker_id)}</a></td>
               </Link>
               <td>{convertAccountNumber(account.broker_id, account.number)}</td>
               <td>{convertAccountStatus(account.status)}</td>

@@ -40,14 +40,20 @@ export const StyledTable = styled.table`
   a{
     text-decoration:none;
     color: inherit;
-    :hover{
-      cursor: pointer;
-      color : #5160EA;
-    }
   }
   td{
     padding : 0.3rem 0.5rem;
     text-align: right;
+    &.broker{
+      :hover{
+        cursor: pointer;
+      }
+    }
+  }
+  tr{
+    :hover{
+      background-color : #EEE6C4;
+    }
   }
   th{
     border: 1px solid #D9D9D9
