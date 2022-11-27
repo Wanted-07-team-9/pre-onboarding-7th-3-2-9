@@ -11,16 +11,15 @@ import { ACCOUNTS_COLUMNS } from "../../src/utils/constantValue"
 import Layout from "../../src/container"
 import Loading from "../../src/components/InfoScreen/Loading"
 import Toast from "../../src/components/Toast"
+import React, { useState } from "react"
 
 const List = () => {
+  const [isModalOpen, setIsModalOpen] = useState(false)
   const queryClient = useQueryClient()
   const { page, active, broker, status, q } = RouterInfo()
   const { data, isLoading, isError } = useQuery(
     ['accounts', page, active, broker, status, q], () => fetchAccountsClient(page, active, broker, status, q))
   const handleCreateAccount = async (createAccountData: ICreateAccount): Promise<unknown> => {
-    if (createAccountData.is_active === "true" || createAccountData.is_active === 'false') {
-      createAccountData.is_active = JSON.parse(createAccountData.is_active)
-    }
     createAccountData.created_at = new Date()
     return await createAccount(createAccountData)
   }
@@ -31,15 +30,18 @@ const List = () => {
   )
   return (
     <Layout>
-      <Toast/>
+      <Toast />
       {isLoading && <Loading status='loading' />}
       {isError && <Loading status='error' />}
-      {data && <TableWrapper>
-        <CreateForm mutate={mutate} />
-        <Filter />
-        <Table columns={ACCOUNTS_COLUMNS} data={data.accountData} isAccount={true} />
-        <Pagination total={data.totalData!} page={page} />
-      </TableWrapper>}
+      {data &&
+        <React.Fragment>
+          {isModalOpen && <CreateForm mutate={mutate} setIsModalOpen={setIsModalOpen} />}
+          <TableWrapper>
+            <Filter setIsModalOpen={setIsModalOpen} />
+            <Table columns={ACCOUNTS_COLUMNS} data={data.accountData} isAccount={true} />
+            <Pagination total={data.totalData!} page={page} />
+          </TableWrapper>
+        </React.Fragment>}
     </Layout>
   )
 }
