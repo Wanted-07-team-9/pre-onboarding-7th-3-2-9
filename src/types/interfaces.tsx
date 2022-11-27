@@ -1,3 +1,5 @@
+import {Dispatch, SetStateAction} from 'react'
+
 export interface IForm {
   email: string;
   password: string;
@@ -67,4 +69,29 @@ export interface IUser{
   photo : string;
   updated_at : string;
   uuid : string;
+}
+export interface ICUstomerName {
+  [key : number] : string
+}
+
+export interface ICreateFormProp {
+  mutate: any;
+  setIsModalOpen : Dispatch<SetStateAction<boolean>>
+}
+
+export interface IFilter {
+  setIsModalOpen : Dispatch<SetStateAction<boolean>>;
+}
+
+export interface IStatus {
+  status: string
+}
+
+export interface IParam {
+  pathName: string | null;
+  page: string |  string[] | null;
+  active: string | string[] |null;
+  broker: string | string[] | null;
+  status: string | string[] | null;
+  q: string | string []| null;
 }

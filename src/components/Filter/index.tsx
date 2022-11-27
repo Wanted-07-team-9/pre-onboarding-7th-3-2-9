@@ -2,11 +2,8 @@ import { useRouter } from "next/router";
 import { useForm } from "react-hook-form";
 import styled from "styled-components";
 import { ACCOUNT_STATUS_OPTION, BROKER_LIST_OPTON } from "../../utils/constantValue";
-import {Dispatch, SetStateAction} from 'react'
+import type { IFilter } from "../../types/interfaces";
 
-interface IFilter {
-  setIsModalOpen : Dispatch<SetStateAction<boolean>>;
-}
 
 const Filter = ({ setIsModalOpen } : IFilter) => {
   const { register, handleSubmit } = useForm();
@@ -70,14 +67,14 @@ const StyledFIlteWrapper = styled.section`
   button{
     border-radius:0.4rem;
     padding: 0.5rem;
-    color : white;
+    color : var(--color-white);
     border: none;
-    background-color:#468FF7;
+    background-color:var(--color-blue);
     white-space : nowrap; 
     min-width: 6rem;
     :hover{
       cursor: pointer;
-      background-color:#0F253C;
+      background-color:var(--color-navy);
     }
   }
   form{
@@ -90,7 +87,7 @@ const StyledFIlteWrapper = styled.section`
   #createBtn{
     background-color : #5160EA;
     :hover {
-      background-color: #0F253C;
+      background-color: var(--color-navy);
     }
     select{
       margin-right: 2rem;

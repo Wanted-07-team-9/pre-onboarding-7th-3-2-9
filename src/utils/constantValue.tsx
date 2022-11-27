@@ -1,4 +1,4 @@
-import { IObjectKey, IBrokerOption } from "../types/interfaces"
+import type { IObjectKey, IBrokerOption } from "../types/interfaces"
 
 export const BROKER_LIST_OPTON : IBrokerOption[] = [
   {
@@ -192,7 +192,7 @@ export const ACCOUNT_STATUS_OPTION = [
 ]
 
 export const ACCOUNTS_COLUMNS = [
-  '증권사', '계좌번호', '계좌상태', '계좌명', '평가금액', '입금금액', '수익률', '계좌활성화여부', '계좌개설일'
+'고객명', '증권사', '계좌번호', '계좌상태', '계좌명', '평가금액', '입금금액', '수익률', '계좌활성화여부', '계좌개설일'
 ]
 
 export const USERS_COLUMNS= [

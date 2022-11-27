@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router';
-import { RouterInfo } from '../../utils/routerInfo';
+import { RouterInfo } from '../../utils/RouterInfo';
 import {Nav, Button} from './style'
 
 const Pagination = ({total  }  : any) => {

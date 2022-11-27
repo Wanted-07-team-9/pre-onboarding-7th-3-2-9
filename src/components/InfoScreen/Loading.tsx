@@ -1,10 +1,7 @@
 import styled from "styled-components"
 import { Oval, Comment } from 'react-loader-spinner'
 import React from "react"
-
-interface IStatus {
-  status: string
-}
+import type { IStatus } from "../../types/interfaces"
 
 const Loading = ({ status }: IStatus) => {
   return (

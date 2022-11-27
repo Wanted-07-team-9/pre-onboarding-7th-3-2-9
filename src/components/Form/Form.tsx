@@ -1,5 +1,5 @@
 import { useForm } from "react-hook-form";
-import { IForm } from "../../types/interfaces";
+import type { IForm } from "../../types/interfaces";
 import { login } from "../../api/api";
 import { StyledForm,LoginText,ImgWrapper } from "./style";
 import { useRouter } from "next/router";
