@@ -65,7 +65,7 @@ const Sider = () => {
               </StyledA>
             </li>
           </Link> : <></>}
-        <Link href='/user'>
+        <Link href='/user?page=1'>
           <li className={pathName === '/user' ? 'selected' : ''} >
             <StyledA>
               <ImgWrapper>

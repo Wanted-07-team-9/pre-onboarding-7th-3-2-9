@@ -34,7 +34,7 @@ const AccountDetail = (props: IServerSideProps) => {
   return (
     <Layout>
       <TableWrapper>
-        <div>
+        <div className='detail'>
           {isLoading && <Loading status='loading'/>}
           {isError &&  <Loading status='error'/>}
           {data && <DetailTable data={data} />}

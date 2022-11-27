@@ -54,7 +54,7 @@ const EditForm = ({ mutate, data, handleDelete }: any) => {
             </InputWrapper>
           </ColumnSection>
           <EventWrapper>
-          <button type="button" className='event'  onClick={handleDelete}>삭제하기</button>
+          <button type="button" id='delete' onClick={handleDelete}>삭제하기</button>
           <button className='event'>수정하기</button>
           </EventWrapper>
         </FormWrapper>
