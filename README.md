@@ -56,11 +56,11 @@
 </p>
 
 
+## **🌱 commit message 규칙**
+
 <details>
 <summary>커밋 규칙</summary>
 <div markdown="1">
-
-## commit message 규칙
 
 ⭐ feat : 새로운 기능에 대한 커밋
 
