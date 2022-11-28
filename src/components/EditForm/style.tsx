@@ -21,6 +21,7 @@ export const InputWrapper = styled.section`
   display: flex;
   flex-direction: column;
   margin-bottom: 1rem;
+  min-height:3.5rem;
   label{
     display: inline-block ;
     font-weight: bold;
@@ -31,6 +32,9 @@ export const InputWrapper = styled.section`
   }
   select{
     display: inline-block ;
+  }
+  div{
+    font-size : 1.5rem;
   }
 `
 
