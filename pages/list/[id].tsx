@@ -12,13 +12,13 @@ import Loading from '../../src/components/InfoScreen/Loading';
 const AccountDetail = (props: IServerSideProps) => {
   const router = useRouter()
   const queryClient = useQueryClient()
-  const results = useQueries({
+  const fetchData = useQueries({
     queries : [
       {queryKey : ['account', props.id], queryFn :() => fetchAccountClient(props.id)},
       {queryKey :  ['userList'], queryFn : fetchUserClient}
     ]
   })
-  const [accountData, usersData] = results
+  const [accountData, usersData] = fetchData
 
   const onEdit = async (inputData: IEditAccount): Promise<unknown> => {
     if (inputData.is_active === "true" || inputData.is_active === 'false') {
