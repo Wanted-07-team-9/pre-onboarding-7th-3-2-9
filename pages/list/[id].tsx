@@ -1,6 +1,6 @@
 import React from 'react'
-import { editAccount, deleteAccount, fetchAccountServer, fetchAccountClient } from '../../src/api/api'
-import { dehydrate, QueryClient, useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { editAccount, deleteAccount, fetchAccountServer, fetchAccountClient, fetchUserServer, fetchUserClient } from '../../src/api/api'
+import { dehydrate, QueryClient, useMutation, useQueryClient, useQueries } from '@tanstack/react-query';
 import { TableWrapper } from '../../src/components/Table/style'
 import EditForm from '../../src/components/EditForm';
 import DetailTable from '../../src/components/DetailTable';
@@ -12,10 +12,13 @@ import Loading from '../../src/components/InfoScreen/Loading';
 const AccountDetail = (props: IServerSideProps) => {
   const router = useRouter()
   const queryClient = useQueryClient()
-  const { data, isLoading, isError } = useQuery(
-    ['account', props.id], () => fetchAccountClient(props.id), {
-    enabled: Boolean(props.id)
+  const results = useQueries({
+    queries : [
+      {queryKey : ['account', props.id], queryFn :() => fetchAccountClient(props.id)},
+      {queryKey :  ['userList'], queryFn : fetchUserClient}
+    ]
   })
+  const [accountData, usersData] = results
 
   const onEdit = async (inputData: IEditAccount): Promise<unknown> => {
     if (inputData.is_active === "true" || inputData.is_active === 'false') {
@@ -35,12 +38,12 @@ const AccountDetail = (props: IServerSideProps) => {
     <Layout>
       <TableWrapper>
         <div className='detail'>
-          {isLoading && <Loading status='loading'/>}
-          {isError &&  <Loading status='error'/>}
-          {data && <DetailTable data={data} />}
+          {accountData.isLoading || usersData.isLoading  &&<Loading status='loading'/>}
+          {accountData.isError || usersData.isError && <Loading status='error'/>}
+          {accountData.data && usersData.data && <DetailTable data={accountData.data} usersData={usersData.data} />}
         </div>
       </TableWrapper>
-      {data && <EditForm mutate={mutate} data={data} handleDelete={handleDelete} />}
+      {accountData.data && usersData.data && <EditForm mutate={mutate} data={accountData.data} usersData={usersData.data} handleDelete={handleDelete} />}
     </Layout>
   )
 }
@@ -52,7 +55,11 @@ export async function getServerSideProps(context: any) {
   const id = params.id;
   const queryClient = new QueryClient()
   const accessToken = context.req.cookies.accessToken
-  await queryClient.prefetchQuery(['account', id], () => fetchAccountServer(id, accessToken))
+  await Promise.all([
+    queryClient.prefetchQuery(['account', id], () => fetchAccountServer(id, accessToken)),
+    queryClient.prefetchQuery(['userList'], () => fetchUserServer(accessToken))
+  ])
+
   return {
     props: {
       dehydratedState: dehydrate(queryClient),
