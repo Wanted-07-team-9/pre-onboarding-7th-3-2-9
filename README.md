@@ -37,7 +37,7 @@
  - 데이터 필터링 기능 구현 : 페이지의 query값을 기반으로 하여 필터링을 관리하였습니다.
 <p align="center">
   <br>
-  <img src="./images/common/필터.gif">
+  <img src="./images/필터.gif">
   <br>
 </p>
 
