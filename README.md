@@ -45,13 +45,13 @@
 
 <p align="center">
   <br>
-  <img src="./images/common/수정.gif">
+  <img src="./images/수정.gif">
   <br>
 </p>
 
 <p align="center">
   <br>
-  <img src="./images/common/생성.gif">
+  <img src="./images/생성.gif">
   <br>
 </p>
 
