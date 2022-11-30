@@ -45,7 +45,7 @@ export const fetchUserListClient = async(page:string | string[] |null) => {
 }
 
 export const fetchUserListServer = async(page:string | string[] | number , token:string | undefined) => {
-  const response= await axios.get('http://localhost:4000/users',{
+  const response= await axios.get('https://wanted-3-2-9-json-server.herokuapp.com/users',{
     params : {
       _page: page,
       _limit: 20,
@@ -60,7 +60,7 @@ export const fetchUserListServer = async(page:string | string[] | number , token
 }
 
 export const fetchUserServer = async (token:string | undefined) => {
-  const {data} = await axios.get('http://localhost:4000/users', {
+  const {data} = await axios.get('https://wanted-3-2-9-json-server.herokuapp.com/users', {
     headers: {
       Authorization: token
     }
@@ -92,7 +92,7 @@ export const createAccount = async(data:ICreateAccount) : Promise<void> => {
 }
 
 export const fetchAccountsServer = async (page:string | string[], active:string | string[] | null, broker : string | string[] | null, status : string | string[] | null, q : string | string[] | null,  token : string | undefined) => {
-  const response = await axios.get('http://localhost:4000/accounts', {
+  const response = await axios.get('https://wanted-3-2-9-json-server.herokuapp.com/accounts', {
     params: {
       _page: page,
       _limit: 20,
@@ -127,7 +127,7 @@ export const fetchAccountsClient = async (page:string | string[] |null, active :
 }
 
 export const fetchAccountServer = async(id : string | string[] | undefined, token : string | undefined) : Promise<IEditAccount> => {
-  const {data} = await axios.get(`http://localhost:4000/accounts/${id}`, {
+  const {data} = await axios.get(`https://wanted-3-2-9-json-server.herokuapp.com/accounts/${id}`, {
     headers: {
       Authorization: token
     }
