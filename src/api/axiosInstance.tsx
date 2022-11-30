@@ -4,7 +4,7 @@ import cookie from 'react-cookies'
 
 export const axiosInstance = axios.create({
   timeout: 5000,
-  baseURL : 'https://wanted-3-2-9-json-server.herokuapp.com/',
+  baseURL : 'https://wanted-3-2-9-json-server.herokuapp.com',
   headers: {
     'Content-Type': 'application/json',
   }
