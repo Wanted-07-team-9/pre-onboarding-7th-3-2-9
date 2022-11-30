@@ -1,7 +1,11 @@
 import Image from 'next/image'
 import { HeaderLayout, LeftItem, PageNameWrapper, RightItem, UserInfo, BellWrapper, Alarm, UserName } from './style'
 
-const Header = ({pageName} : any ) => {
+interface IPageName {
+  pageName : string
+}
+
+const Header = ({pageName} : IPageName) => {
   return(
     <HeaderLayout>
       <LeftItem>

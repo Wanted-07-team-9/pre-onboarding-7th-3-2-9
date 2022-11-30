@@ -1,9 +1,15 @@
+import React from "react"
 import Footer from "../components/Footer"
 import Header from "../components/Header"
 import Sider from "../components/Sider"
 import { RouterInfo } from "../utils/RouterInfo"
 import {Container, ContentWrapper, FixedWrapper } from './style'
-const Layout = ({children} : any) => {
+
+interface IChildren {
+  children : React.ReactNode
+}
+
+const Layout = ({children} : IChildren) => {
   const {pathName} = RouterInfo()
   return(
     <Container>

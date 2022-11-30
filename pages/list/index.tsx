@@ -13,9 +13,10 @@ import Loading from "../../src/components/InfoScreen/Loading"
 import Toast from "../../src/components/Toast"
 import React, { useState } from "react"
 import { Wrapper } from "../../src/container/style"
+import { GetServerSideProps } from "next"
 
 const List = () => {
-  const [isModalOpen, setIsModalOpen] = useState(false)
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
   const queryClient = useQueryClient()
   const { page, active, broker, status, q } = RouterInfo()
   const results = useQueries({
@@ -47,8 +48,8 @@ const List = () => {
           {isModalOpen && <CreateForm mutate={mutate} setIsModalOpen={setIsModalOpen} />}
           <TableWrapper>
             <Filter setIsModalOpen={setIsModalOpen} />
-            <Table columns={ACCOUNTS_COLUMNS} data={accountsData.data.accountData}s isAccount={true}  userData={usersData?.data}/>
-            <Pagination total={accountsData.data.totalData!} page={page} />
+            <Table columns={ACCOUNTS_COLUMNS} data={accountsData.data.accountData} isAccount={true}  userData={usersData?.data}/>
+            <Pagination total={accountsData.data.totalData!}  />
           </TableWrapper>
         </React.Fragment>}
         </Wrapper>
@@ -59,10 +60,10 @@ const List = () => {
 export default List
 
 
-export const getServerSideProps = async (context: any) => {
+export const getServerSideProps  : GetServerSideProps = async (context) => {
   const queryClient = new QueryClient();
   const accessToken = context.req.cookies.accessToken
-  const page = context.query.page || 1
+  const page = context.query.page || '1'
   const active = context.query.active || null
   const broker = context.query.broker || null
   const status = context.query.status || null

@@ -44,7 +44,7 @@ export const fetchUserListClient = async(page:string | string[] |null) => {
   return {userData, totalData}
 }
 
-export const fetchUserListServer = async(page:number, token:string) => {
+export const fetchUserListServer = async(page:string | string[] | number , token:string | undefined) => {
   const response= await axios.get('http://localhost:4000/users',{
     params : {
       _page: page,
@@ -59,7 +59,7 @@ export const fetchUserListServer = async(page:number, token:string) => {
   return {userData, totalData}
 }
 
-export const fetchUserServer = async (token:string) => {
+export const fetchUserServer = async (token:string | undefined) => {
   const {data} = await axios.get('http://localhost:4000/users', {
     headers: {
       Authorization: token
@@ -91,7 +91,7 @@ export const createAccount = async(data:ICreateAccount) : Promise<void> => {
   await axiosInstance.post(`/accounts/`,data)
 }
 
-export const fetchAccountsServer = async (page:any, active:any, broker : any, status : any, q : any,  token : string) => {
+export const fetchAccountsServer = async (page:string | string[], active:string | string[] | null, broker : string | string[] | null, status : string | string[] | null, q : string | string[] | null,  token : string | undefined) => {
   const response = await axios.get('http://localhost:4000/accounts', {
     params: {
       _page: page,
@@ -110,7 +110,7 @@ export const fetchAccountsServer = async (page:any, active:any, broker : any, st
   return {accountData, totalData}
 }
 
-export const fetchAccountsClient = async (page:string | string[] |null, active : any,  broker : any, status : any, q : any)  => {
+export const fetchAccountsClient = async (page:string | string[] |null, active : string | string[] |null,  broker : string | string[] |null, status : string | string[] |null, q : string | string[] |null)  => {
   const response = await axiosInstance.get('/accounts', {
     params: {
       _page: page,
@@ -126,7 +126,7 @@ export const fetchAccountsClient = async (page:string | string[] |null, active :
   return {accountData, totalData}
 }
 
-export const fetchAccountServer = async(id : number, token : string) : Promise<IEditAccount> => {
+export const fetchAccountServer = async(id : string | string[] | undefined, token : string | undefined) : Promise<IEditAccount> => {
   const {data} = await axios.get(`http://localhost:4000/accounts/${id}`, {
     headers: {
       Authorization: token

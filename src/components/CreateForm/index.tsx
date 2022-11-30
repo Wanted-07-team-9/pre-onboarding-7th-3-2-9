@@ -1,15 +1,15 @@
 import { useForm } from 'react-hook-form'
 import { BROKER_LIST_OPTON, } from '../../utils/constantValue'
-import { useRef } from 'react'
+import React, { useRef } from 'react'
 import type { ICreateFormProp } from '../../types/interfaces';
 import { Container, Background, ModalBlock, InputWrapper, LabelWrapper, EventWrapper } from './style';
 
 const CreateForm = ({ mutate, setIsModalOpen }: ICreateFormProp) => {
   const { register, handleSubmit } = useForm()
   const modalRef = useRef(null)
-  const cllickBackground = (e: any) => {
+  const cllickBackground = (e : React.MouseEvent<HTMLElement>) => {
     if (modalRef.current === e.target) {
-      setIsModalOpen((prev: any) => (!prev))
+      setIsModalOpen((prev) => (!prev))
     }
   }
 
@@ -49,7 +49,7 @@ const CreateForm = ({ mutate, setIsModalOpen }: ICreateFormProp) => {
                 <input id='입금금액'{...register('payments')} />
               </InputWrapper>
               <EventWrapper>
-                <button type='button' className='cancel' onClick={()=>setIsModalOpen((prev : any)=>!prev)}>취소 하기</button>
+                <button type='button' className='cancel' onClick={()=>setIsModalOpen((prev)=>!prev)}>취소 하기</button>
                 <button className='create'>계좌 생성</button>
               </EventWrapper>
             </section>

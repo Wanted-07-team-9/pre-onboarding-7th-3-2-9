@@ -1,8 +1,14 @@
 import { DetailWrapper, FlexWrapper, CellWrapper } from "./style"
 import { convertBrokerId, convertAccountNumber, convertAccountStatus, convertComma, convertIsoToTimeStamp } from "../../utils/convertFn"
 import { findCustomerName } from "../../utils/findCustomerName"
+import { IAccount, IUserData } from "../../types/interfaces"
 
-const DetailTable = ({ data, usersData }: any) => {
+interface IDetail {
+  data : IAccount;
+  usersData :IUserData[];
+}
+
+const DetailTable = ({ data, usersData }: IDetail) => {
   const CUSTOMER_NAME = findCustomerName(usersData, data.user_id)
   return (
     <DetailWrapper>

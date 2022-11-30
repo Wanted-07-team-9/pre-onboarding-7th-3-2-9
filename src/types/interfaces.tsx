@@ -10,7 +10,7 @@ export interface IAccount {
   assets : string;
   broker_id : string;
   created_at : string;
-  is_active : boolean;
+  is_active : string;
   name : string;
   number : string;
   payments : string;
@@ -54,7 +54,7 @@ export interface IObjectKey {
   [key:string] : string;
 }
 
-export interface IUser{
+export interface IUserData{
   address : string;
   age : number;
   birth_date : string;
@@ -64,7 +64,7 @@ export interface IUser{
   gender_origin : number;
   id : number;
   last_login : string;
-  name : string;
+  name : string ;
   phone_number : string;
   photo : string;
   updated_at : string;

@@ -8,6 +8,7 @@ import Layout from "../../src/container"
 import Loading from "../../src/components/InfoScreen/Loading"
 import { Wrapper } from "../../src/container/style"
 import { RouterInfo } from "../../src/utils/RouterInfo"
+import { GetServerSideProps } from "next"
 const User = () => {
   const {page}   = RouterInfo()
   const { data, isLoading, isError } = useQuery(
@@ -22,7 +23,7 @@ const User = () => {
           (
             <TableWrapper>
               <Table columns={USERS_COLUMNS} data={data.userData} isAccount={false} />
-              <Pagination total={data.totalData!} page={page} />
+              <Pagination total={data.totalData!}/>
             </TableWrapper>
           )
         }
@@ -31,7 +32,7 @@ const User = () => {
   )
 }
 
-export const getServerSideProps = async(context : any) => {
+export const getServerSideProps : GetServerSideProps = async(context) => {
   const queryClient = new QueryClient();
   const accessToken = context.req.cookies.accessToken
   const page = context.query.page || 1

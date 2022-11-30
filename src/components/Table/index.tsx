@@ -2,14 +2,21 @@ import React, { useEffect, useState } from "react";
 import Link from "next/link"
 import { convertBrokerId, convertAccountStatus, convertAccountNumber, convertComma, convertIsoToTimeStamp, convertPhoneNumber } from '../../utils/convertFn';
 import {StyledTd, StyledTable, TableLayout} from './style'
-import type { IAccount, IUser, ICUstomerName } from "../../types/interfaces";
+import type { IAccount, IUserData, ICUstomerName } from "../../types/interfaces";
 
-const Table = ({ columns, data, isAccount, userData }: any) => {
+interface ITable {
+  columns : string[];
+  data : [];
+  isAccount : boolean;
+  userData? : IUserData[];
+}
+
+const Table = ({ columns, data, isAccount, userData }: ITable) => {
   const [customerNameObj, setCustomerNameObj] = useState<ICUstomerName >({})
   useEffect(()=>{
     let customerName : ICUstomerName = {}
     if(userData){
-      userData.forEach((el : IUser) => customerName[el.id] = el.name)
+      userData.forEach((el : IUserData) => customerName[el.id] = el.name)
       setCustomerNameObj(customerName)
     }
   },[userData])
@@ -18,7 +25,7 @@ const Table = ({ columns, data, isAccount, userData }: any) => {
         <StyledTable>
       <thead>
         <tr >
-          {columns.map((column : string[], idx: number) => (
+          {columns.map((column : string, idx: number) => (
             <th key={idx}>{column}</th>
           ))}
         </tr>
@@ -43,7 +50,7 @@ const Table = ({ columns, data, isAccount, userData }: any) => {
             </tr>
           ))
         ) : (
-          data.map((user : IUser) => (
+          data?.map((user : IUserData) => (
             <tr key={user.id}>
               <td>{user.name}</td>
               <td>{user.email}</td>

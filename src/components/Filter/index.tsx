@@ -4,15 +4,21 @@ import styled from "styled-components";
 import { ACCOUNT_STATUS_OPTION, BROKER_LIST_OPTON } from "../../utils/constantValue";
 import type { IFilter } from "../../types/interfaces";
 
+// interface IFilterParam{
+//   active : string;
+//   broker : string;
+//   q : string;
+//   status : string
+// }
 
 const Filter = ({ setIsModalOpen } : IFilter) => {
   const { register, handleSubmit } = useForm();
   const router = useRouter()
-  const getAccountPath = (broker: any, active: any, status: any, q: any) => {
+  const getAccountPath = (broker: string, active: string, status: string, q: string) => {
     return `/list?broker=${broker || ''}&active=${active || ''}&status=${status || ''}&q=${q || ''}&page=1`
   }
 
-  const handleFilter = (data: any) => {
+  const handleFilter = (data:any ) : void => {
     router.push(getAccountPath(data.broker, data.active, data.status, data.q))
   }
 
@@ -54,7 +60,7 @@ const Filter = ({ setIsModalOpen } : IFilter) => {
         <button>검색</button>
       </form>
       <div className="create">
-        <button id='createBtn' onClick={() => setIsModalOpen((prev: any) => !prev)}>계좌 등록</button>
+        <button id='createBtn' onClick={() => setIsModalOpen((prev) => !prev)}>계좌 등록</button>
       </div>
     </StyledFIlteWrapper>
 

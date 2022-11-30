@@ -2,8 +2,18 @@ import { useForm } from 'react-hook-form'
 import { BROKER_LIST_OPTON, ACCOUNT_STATUS_OPTION } from "../../utils/constantValue"
 import { EditFormWrapper, FormWrapper, ColumnSection, InputWrapper, EventWrapper } from "./style"
 import { findCustomerName } from '../../utils/findCustomerName'
+import React from 'react';
+import { IAccount, IUserData } from '../../types/interfaces';
 
-const EditForm = ({ mutate, data,usersData, handleDelete }: any) => {
+interface IEditForm {
+  mutate : any;
+  data : IAccount;
+  usersData : IUserData[];
+  handleDelete : React.MouseEventHandler<HTMLButtonElement>;
+}
+
+
+const EditForm = ({ mutate, data,usersData, handleDelete }: IEditForm) => {
   const { register, handleSubmit } = useForm()
   const is_active_status = (data ? JSON.parse(data.is_active) : '')
   const CUSTOMER_NAME = findCustomerName(usersData, data.user_id)

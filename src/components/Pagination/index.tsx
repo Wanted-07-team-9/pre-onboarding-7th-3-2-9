@@ -2,32 +2,37 @@ import { useRouter } from 'next/router';
 import { RouterInfo } from '../../utils/RouterInfo';
 import {Nav, Button} from './style'
 
-const Pagination = ({total  }  : any) => {
+interface  IPagination {
+  total : string
+}
+
+const Pagination = ({total}  : IPagination) => {
   const router = useRouter()
   const {pathName, page, active, broker, status, q} = RouterInfo()
-  const getAccountPath = (broker : any, active: any,status: any, q:any, idx:any ) => {
+  
+  const getAccountPath = (broker : string | string[] | null, active: string | string[] | null,status: string | string[] | null, q:string | string[] | null, idx: number) => {
     return `${pathName}?broker=${broker || ''}&active=${active || ''}&status=${status || ''}&q=${q|| ''}&page=${idx}`
   }
-  const handleClickNumber = (i: number) : void => {
-    router.push(getAccountPath(broker, active, status, q, i+1))
+  const handleClickNumber = (i : number) : void => {
+    router.push(getAccountPath(broker, active, status, q, Number(i)+1))
   }
   const numPages = Math.ceil(Number(total) / 20);
 
-  const handlePreviousNumber = (page: number) : void => {
-    if(page===1){
+  const handlePreviousNumber = (page: string |  string[] | null) : void => {
+    if(page==='1'){
       return
     }
-    router.push(getAccountPath(broker, active, status, q, page-1))
+    router.push(getAccountPath(broker, active, status, q, Number(page)-1))
   }
-  const handleNextNumber = (page: number) : void => {
-    if(page===numPages){
+  const handleNextNumber = (page: string |  string[] | null) : void => {
+    if(Number(page)===numPages){
       return
     }
-    router.push(getAccountPath(broker, active, status, q, page+1))
+    router.push(getAccountPath(broker, active, status, q, Number(page)+1))
   }
   return(
       <Nav>
-        <Button onClick={()=>handlePreviousNumber(Number(page))}>
+        <Button onClick={()=>handlePreviousNumber(page)}>
           &lt;
         </Button>
         {numPages && Array(numPages)
@@ -41,7 +46,7 @@ const Pagination = ({total  }  : any) => {
               {i + 1}
             </Button>
           ))}
-        <Button onClick={()=>handleNextNumber(Number(page))}>
+        <Button onClick={()=>handleNextNumber(page)}>
           &gt;
         </Button>
       </Nav>

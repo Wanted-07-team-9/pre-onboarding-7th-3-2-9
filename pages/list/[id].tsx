@@ -8,6 +8,7 @@ import { useRouter } from 'next/router';
 import type { IServerSideProps, IEditAccount } from '../../src/types/interfaces';
 import Layout from '../../src/container';
 import Loading from '../../src/components/InfoScreen/Loading';
+import { GetServerSideProps } from 'next';
 
 const AccountDetail = (props: IServerSideProps) => {
   const router = useRouter()
@@ -50,9 +51,9 @@ const AccountDetail = (props: IServerSideProps) => {
 
 export default AccountDetail
 
-export async function getServerSideProps(context: any) {
+export  const  getServerSideProps : GetServerSideProps = async (context) => {
   const { params } = context
-  const id = params.id;
+  const id = params?.id;
   const queryClient = new QueryClient()
   const accessToken = context.req.cookies.accessToken
   await Promise.all([
