@@ -1,4 +1,4 @@
-import { Layout,  MainContainer,MainWrapper, StyledHeader } from "./style"
+import { Layout,  MainContainer,MainWrapper, StyledHeader } from "../style/style"
 import Image from 'next/image'
 import Form from "../src/components/Form/Form";
 import Toast from "../src/components/Toast";
