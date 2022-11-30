@@ -1,5 +1,14 @@
-## **📰 프로젝트 설명**
+## **✨ 배포 링크**
 
+### [배포 바로가기](https://pre-onboarding-7th-3-2-9-neon.vercel.app/)
+
+### 로그인 ID / PASSWORD
+
+### `1234@1234.com` // `1234`
+
+
+
+## **📰 프로젝트 설명**
 [회고](https://velog.io/@anotherhoon/Week-3-1-%EA%B3%BC%EC%A0%9C-%EC%97%90%EB%9F%AC%EC%A0%95%EB%A6%AC)
 
 - 투자 관리 서비스의 관리자 기능 구현
