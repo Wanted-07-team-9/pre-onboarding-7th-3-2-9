@@ -9,7 +9,7 @@
 
 
 ## **📰 프로젝트 설명**
-[회고](https://velog.io/@anotherhoon/Week-3-1-%EA%B3%BC%EC%A0%9C-%EC%97%90%EB%9F%AC%EC%A0%95%EB%A6%AC)
+[회고](https://velog.io/@anotherhoon/Week-3-1-%ED%9A%8C%EA%B3%A0)
 
 - 투자 관리 서비스의 관리자 기능 구현
 
