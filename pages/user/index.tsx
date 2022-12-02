@@ -33,8 +33,13 @@ const User = () => {
 }
 
 export const getServerSideProps : GetServerSideProps = async(context) => {
-  const queryClient = new QueryClient();
+
   const accessToken = context.req.cookies.accessToken
+  if(!accessToken){
+    context.res.writeHead(303, {Location : '/'})
+    context.res.end()
+  }
+  const queryClient = new QueryClient();
   const page = context.query.page || 1
   await queryClient.prefetchQuery(['userList', page],() => fetchUserListServer(page, accessToken))
   return{

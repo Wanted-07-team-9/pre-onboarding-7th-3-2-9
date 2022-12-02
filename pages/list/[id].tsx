@@ -52,10 +52,14 @@ const AccountDetail = (props: IServerSideProps) => {
 export default AccountDetail
 
 export  const  getServerSideProps : GetServerSideProps = async (context) => {
+  const accessToken = context.req.cookies.accessToken
+  if(!accessToken){
+    context.res.writeHead(303, {Location : '/'})
+    context.res.end()
+  }
+  const queryClient = new QueryClient()
   const { params } = context
   const id = params?.id;
-  const queryClient = new QueryClient()
-  const accessToken = context.req.cookies.accessToken
   await Promise.all([
     queryClient.prefetchQuery(['account', id], () => fetchAccountServer(id, accessToken)),
     queryClient.prefetchQuery(['userList'], () => fetchUserServer(accessToken))

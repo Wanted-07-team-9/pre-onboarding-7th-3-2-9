@@ -61,8 +61,13 @@ export default List
 
 
 export const getServerSideProps  : GetServerSideProps = async (context) => {
+  
   const queryClient = new QueryClient();
   const accessToken = context.req.cookies.accessToken
+  if(!accessToken){
+    context.res.writeHead(303, {Location : '/'})
+    context.res.end()
+  }
   const page = context.query.page || '1'
   const active = context.query.active || null
   const broker = context.query.broker || null
