@@ -9,6 +9,7 @@ export const GlobalStyles = createGlobalStyle`
     --color-black : #051528;
     --color-white :#ffffff;
     --color-blue : #468FF7;
+    --color-navy : #0F253C;
   }
   html {
     font-size: 62.5%;

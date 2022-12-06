@@ -25,7 +25,6 @@ export const CellWrapper = styled.section`
   div{
     width:100%;
     height:100%;
-    /* background-color:#ffffff; */
     text-align: right;
     padding: 1rem;
   }
@@ -33,5 +32,8 @@ export const CellWrapper = styled.section`
     font-weight: bold;;
     background-color: #F0F2F5;
     text-align: left;
+  }
+  .content{
+    min-width: 25.5rem;
   }
 `

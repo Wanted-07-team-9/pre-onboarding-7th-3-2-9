@@ -1,20 +1,29 @@
-import { useRouter } from "next/router"
 import { useEffect, useState } from "react"
 import Link from 'next/link'
 import Image from 'next/image'
 import { SiderLayout, LogoWrapper, ImgWrapper,StyledA } from "./style"
+import { RouterInfo } from "../../utils/RouterInfo"
+import { removeCookie } from "../../utils/cookie"
+import { useRouter } from "next/router"
 
 const Sider = () => {
+  const  router = useRouter()
   const [isToggleOpen, setIsToggleOpen] = useState<boolean>(false)
-  const router = useRouter()
+  const {pathName} = RouterInfo()
   const handleToggle = () => {
     setIsToggleOpen(!isToggleOpen)
   }
+  const handleLogOut = () => {
+    removeCookie()
+    setTimeout(()=>
+      router.push('/'),1500
+    )
+  }
   useEffect(() => {
-    if (router.pathname === '/list') {
+    if (pathName === '/list' || pathName ==='/list/[id]') {
       setIsToggleOpen(true)
     }
-  }, [router.pathname])
+  }, [pathName])
   
   return (
     <SiderLayout>
@@ -46,8 +55,8 @@ const Sider = () => {
           </ImgWrapper>
         } </li>
         {isToggleOpen ?
-          <Link href='/list'>
-            <li className={router.pathname === '/list' ? 'selected' : ''}>
+          <Link href='/list?page=1'>
+            <li className={pathName === '/list'  || pathName==='/list/[id]'? 'selected' : ''}>
               <StyledA className="list">
                 <ImgWrapper>
                 <Image src='/svg/GRAPH.svg' alt='user' width={13} height={13} />
@@ -56,8 +65,8 @@ const Sider = () => {
               </StyledA>
             </li>
           </Link> : <></>}
-        <Link href='/user'>
-          <li className={router.pathname === '/user' ? 'selected' : ''} >
+        <Link href='/user?page=1'>
+          <li className={pathName === '/user' ? 'selected' : ''} >
             <StyledA>
               <ImgWrapper>
               <Image src='/svg/UserIcon.svg' alt='user' width={13} height={13} />
@@ -66,7 +75,7 @@ const Sider = () => {
             </StyledA>
           </li>
         </Link>
-        <li>
+        <li onClick={handleLogOut}>
           <ImgWrapper>
           <Image src='/svg/LOGOUT.svg' alt='user' width={13} height={13} />
           </ImgWrapper>

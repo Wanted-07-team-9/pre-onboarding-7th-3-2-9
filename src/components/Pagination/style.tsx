@@ -5,7 +5,7 @@ export const Nav = styled.nav`
   justify-content: center;
   align-items: center;
   gap: 4px;
-  margin: 3rem;
+  margin: 2rem 0;
 `;
 
 export const Button = styled.button`
@@ -13,12 +13,11 @@ export const Button = styled.button`
   border-radius: 8px;
   padding: 8px;
   margin: 0;
-  background: #0F253C;
-  color: white;
+  background: var(--color-navy);
+  color: var(--color-white);
   font-size: 1rem;
-
   &:hover {
-    background: #468FF7;
+    background: var(--color-blue);
     cursor: pointer;
     transform: translateY(-2px);
   }
@@ -28,8 +27,7 @@ export const Button = styled.button`
     cursor: revert;
     transform: revert;
   }
-
-  &[aria-current] {
+  &.selected {
     background: #5160EA;
     font-weight: bold;
     cursor: revert;

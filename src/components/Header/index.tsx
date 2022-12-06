@@ -1,11 +1,15 @@
 import Image from 'next/image'
 import { HeaderLayout, LeftItem, PageNameWrapper, RightItem, UserInfo, BellWrapper, Alarm, UserName } from './style'
 
-const Header = ({pageName} : any ) => {
+interface IPageName {
+  pageName : string
+}
+
+const Header = ({pageName} : IPageName) => {
   return(
     <HeaderLayout>
       <LeftItem>
-      <Image src='/svg/LIST.svg' alt='리스트' width={20} height={20}  />
+      <Image src='/svg/LIST.svg' alt='리스트' width={30} height={30}  />
       <PageNameWrapper>{pageName}</PageNameWrapper>
       </LeftItem>
       <RightItem>

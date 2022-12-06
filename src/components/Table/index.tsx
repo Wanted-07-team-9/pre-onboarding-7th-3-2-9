@@ -1,40 +1,56 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link"
 import { convertBrokerId, convertAccountStatus, convertAccountNumber, convertComma, convertIsoToTimeStamp, convertPhoneNumber } from '../../utils/convertFn';
 import {StyledTd, StyledTable, TableLayout} from './style'
+import type { IAccount, IUserData, ICUstomerName } from "../../types/interfaces";
 
-const Table = ({ columns, data, isAccount }: any) => {
+interface ITable {
+  columns : string[];
+  data : [];
+  isAccount : boolean;
+  userData? : IUserData[];
+}
 
+const Table = ({ columns, data, isAccount, userData }: ITable) => {
+  const [customerNameObj, setCustomerNameObj] = useState<ICUstomerName >({})
+  useEffect(()=>{
+    let customerName : ICUstomerName = {}
+    if(userData){
+      userData.forEach((el : IUserData) => customerName[el.id] = el.name)
+      setCustomerNameObj(customerName)
+    }
+  },[userData])
   return (
     <TableLayout>      
         <StyledTable>
       <thead>
         <tr >
-          {columns.map((column, idx: any) => (
+          {columns.map((column : string, idx: number) => (
             <th key={idx}>{column}</th>
           ))}
         </tr>
       </thead>
       <tbody>
         {isAccount ? (
-          data.map((account) => (
-            <tr key={account.id}>
+          data?.map((account : IAccount) => (
+            <tr className="data" key={account.id}>
+              <td>{customerNameObj[account.user_id]}</td>
               <Link href={`/list/${account.id}`}>
-              <a><td>{convertBrokerId(account.broker_id)}</td></a>
+              <td className="broker"><a>{convertBrokerId(account.broker_id)}</a></td>
               </Link>
-              <td>{convertAccountNumber(account.number)}</td>
+              <td>{convertAccountNumber(account.broker_id, account.number)}</td>
               <td>{convertAccountStatus(account.status)}</td>
               <td>{account.name}</td>
               <td>{convertComma(account.assets)}</td>
               <td>{convertComma(account.payments)}</td>
-              <StyledTd className={account.assets-account.payments  >= 0 ? (account.assets - account.payments === 0 ? 'zeor' : 'plus'): 'minus'
-                }>{convertComma(account.assets-account.payments)}</StyledTd>
+              <StyledTd className={Number(account.assets)-Number(account.payments) >= 0 ? (Number(account.assets) - Number(account.payments) === 0 ? 'zeor' : 'plus'): 'minus'
+                }>{convertComma(Number(account.assets)-Number(account.payments))}</StyledTd>
               <td>{account.is_active ? '활성화' : '비활성화'}</td>
               <td>{convertIsoToTimeStamp(account.created_at)}</td>
             </tr>
           ))
         ) : (
-          data.map((user) => (
+          data?.map((user : IUserData) => (
             <tr key={user.id}>
               <td>{user.name}</td>
               <td>{user.email}</td>

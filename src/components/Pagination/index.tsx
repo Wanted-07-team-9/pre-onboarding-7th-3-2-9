@@ -1,24 +1,52 @@
+import { useRouter } from 'next/router';
+import { RouterInfo } from '../../utils/RouterInfo';
 import {Nav, Button} from './style'
 
-const Pagination = ({total, page, setPage} : any) => {
-  const numPages = Math.ceil(total / 20);
+interface  IPagination {
+  total : string
+}
+
+const Pagination = ({total}  : IPagination) => {
+  const router = useRouter()
+  const {pathName, page, active, broker, status, q} = RouterInfo()
+  
+  const getAccountPath = (broker : string | string[] | null, active: string | string[] | null,status: string | string[] | null, q:string | string[] | null, idx: number) => {
+    return `${pathName}?broker=${broker || ''}&active=${active || ''}&status=${status || ''}&q=${q|| ''}&page=${idx}`
+  }
+  const handleClickNumber = (i : number) : void => {
+    router.push(getAccountPath(broker, active, status, q, Number(i)+1))
+  }
+  const numPages = Math.ceil(Number(total) / 20);
+
+  const handlePreviousNumber = (page: string |  string[] | null) : void => {
+    if(page==='1'){
+      return
+    }
+    router.push(getAccountPath(broker, active, status, q, Number(page)-1))
+  }
+  const handleNextNumber = (page: string |  string[] | null) : void => {
+    if(Number(page)===numPages){
+      return
+    }
+    router.push(getAccountPath(broker, active, status, q, Number(page)+1))
+  }
   return(
       <Nav>
-        <Button onClick={() => setPage(page - 1)} disabled={page === 1}>
+        <Button onClick={()=>handlePreviousNumber(page)}>
           &lt;
         </Button>
         {numPages && Array(numPages)
-          .fill()
+          .fill(undefined)
           .map((_, i) => (
             <Button
               key={i + 1}
-              onClick={() => setPage(i + 1)}
-              aria-current={page === i + 1 ? "page" : null}
+              onClick={()=>handleClickNumber(i)}
+              className = {String(i+1) === page ? 'selected': '' }
             >
               {i + 1}
             </Button>
           ))}
-        <Button onClick={() => setPage(page + 1)} disabled={page === numPages}>
+        <Button onClick={()=>handleNextNumber(page)}>
           &gt;
         </Button>
       </Nav>

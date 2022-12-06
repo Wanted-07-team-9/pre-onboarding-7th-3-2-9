@@ -1,10 +1,13 @@
-import { Layout,  MainContainer,MainWrapper, StyledHeader } from "./style"
+import { Layout,  MainContainer,MainWrapper, StyledHeader } from "../style/style"
 import Image from 'next/image'
 import Form from "../src/components/Form/Form";
+import Toast from "../src/components/Toast";
+import { GetServerSideProps } from "next"
 
 const Home = () => {
   return (
     <Layout>
+      <Toast />
       <MainContainer>
         <MainWrapper>
         <StyledHeader>
@@ -18,5 +21,17 @@ const Home = () => {
     </Layout>
   )
 }
+
+export const getServerSideProps : GetServerSideProps    = async(context)  => {
+  const accessToken = context.req.cookies.accessToken
+  if(accessToken){
+    context.res.writeHead(303, {Location : '/list?page=1'})
+    context.res.end()
+  }
+  return{
+    props : {}
+  }
+}
+
 
 export default Home

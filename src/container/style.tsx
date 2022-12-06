@@ -3,10 +3,12 @@ import styled from "styled-components"
 export const Container = styled.div`
   display:flex;
   flex-direction: row;
+  width:100%;
 `
 
 export const FixedWrapper = styled.section`
-  padding-bottom : 3rem;
+  padding-bottom : 1rem;
+  width:100%;
 `
 
 
@@ -16,7 +18,9 @@ export const ContentWrapper = styled.div`
   width:100%;
 `
 
-export const TableWrapper = styled.section`
-  background-color: #F0F2F5;
-  padding: 1rem 0;
+export const Wrapper = styled.section`
+  display : flex;
+  justify-content:center;
+  width: 100%;
+  padding: 5rem 0;
 `

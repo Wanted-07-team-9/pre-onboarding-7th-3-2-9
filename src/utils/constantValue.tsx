@@ -1,4 +1,6 @@
-export const BROKER_LIST_OPTON = [
+import type { IObjectKey, IBrokerOption } from "../types/interfaces"
+
+export const BROKER_LIST_OPTON : IBrokerOption[] = [
   {
     brokerCode: "209",
     brokerName: "유안타증권"
@@ -101,7 +103,7 @@ export const BROKER_LIST_OPTON = [
   }
 ]
 
-export const BROKER_LIST = {
+export const BROKER_LIST : IObjectKey = {
   "209": "유안타증권",
   "218": "현대증권",
   "230": "미래에셋증권",
@@ -129,7 +131,7 @@ export const BROKER_LIST = {
   "271": "토스증권"
 }
 
-const BROKER_FORMAT = {
+export const BROKER_FORMAT : IObjectKey = {
   "209": "00-00000000-00",
   "218": "00-0000000-000",
   "230": "00-000000-0000",
@@ -157,7 +159,7 @@ const BROKER_FORMAT = {
   "271": "00-000-0000000"
 }
 
-export const ACCOUNT_STATUS = {
+export const ACCOUNT_STATUS : IObjectKey = {
   "9999": "관리자확인필요",
   "1": "입금대기",
   "2": "운용중",
@@ -168,23 +170,31 @@ export const ACCOUNT_STATUS = {
 
 export const ACCOUNT_STATUS_OPTION = [
   {
-    statusCode: 9999,
+    statusCode: '9999',
     accountStatus: '관리자확인필요'
   },
   {
-    statusCode: 1,
+    statusCode: '1',
     accountStatus: '입금대기'
   },
   {
-    statusCode: 2,
+    statusCode: '2',
     accountStatus: '운용중'
   },
   {
-    statusCode: 3,
+    statusCode: '3',
     accountStatus: '투자중지'
   },
   {
-    statusCode: 4,
+    statusCode: '4',
     accountStatus: '해지'
   },
+]
+
+export const ACCOUNTS_COLUMNS = [
+'고객명', '증권사', '계좌번호', '계좌상태', '계좌명', '평가금액', '입금금액', '수익률', '계좌활성화여부', '계좌개설일'
+]
+
+export const USERS_COLUMNS= [
+  '고객명', '이메일 주소','주민등록상 성별코드', '생년월일', '휴대폰 번호 ', '최근로그인',  '가입일'
 ]
